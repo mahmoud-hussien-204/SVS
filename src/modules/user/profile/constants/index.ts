@@ -1,0 +1,50 @@
+export const constantProfileTabs = [
+  {
+    label: "Global Settings",
+    value: "/user/profile/global-settings",
+  },
+  {
+    label: "Edit Profile",
+    value: "/user/profile/edit-profile",
+  },
+  {
+    label: "Phone Verification",
+    value: "/user/profile/phone-verification",
+  },
+  {
+    label: "Security",
+    value: "/user/profile/security",
+  },
+];
+
+export const constantCountries = [
+  {
+    label: "Select Country",
+    value: "",
+    disabled: true,
+  },
+  {value: "af", label: "Afghanistan"},
+  {value: "al", label: "Albania"},
+  {value: "dz", label: "Algeria"},
+  {value: "ds", label: "American Samoa"},
+  {value: "ad", label: "Andorra"},
+  {value: "ao", label: "Angola"},
+  {value: "ai", label: "Anguilla"},
+  {value: "aq", label: "Antarctica"},
+  {value: "ag", label: "Antigua and Barbuda"},
+  {value: "ar", label: "Argentina"},
+  {value: "am", label: "Armenia"},
+  {value: "aw", label: "Aruba"},
+  {value: "au", label: "Australia"},
+  {value: "at", label: "Austria"},
+  {value: "az", label: "Azerbaijan"}, // This one is selected
+  {value: "bs", label: "Bahamas"},
+  {value: "bh", label: "Bahrain"},
+  {value: "bd", label: "Bangladesh"},
+  {value: "bb", label: "Barbados"},
+  {value: "by", label: "Belarus"},
+  {value: "be", label: "Belgium"},
+  {value: "bz", label: "Belize"},
+  {value: "bj", label: "Benin"},
+  {value: "bm", label: "Bermuda"},
+];

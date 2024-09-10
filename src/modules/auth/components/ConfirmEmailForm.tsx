@@ -1,0 +1,50 @@
+import AppHelper from "@/helpers/appHelper";
+
+import useAuthJourney from "../hooks/useAuthJourney";
+
+import FormCardTitle from "./FormCardTitle";
+
+import IconLink from "@/components/icons/IconLink";
+
+import {IconSuccess} from "@/components/icons/IconSuccess";
+
+const ConfirmEmailForm = () => {
+  const {userEmail} = useAuthJourney();
+
+  return (
+    <div>
+      <FormCardTitle
+        title='Almost done!'
+        subtitle='Last step, Click confirmation link in the email to verify your account'
+      />
+
+      <div className='my-2rem flex items-center gap-1.5rem'>
+        <IconSuccess
+          svgProps={{
+            className: "w-8rem",
+          }}
+        />
+        <div>
+          <h6 className='mb-1.25rem text-20 font-semibold'>Thank you!</h6>
+          <p className='text-14 leading-[1.3125rem] text-neutral-content'>
+            We sent an email to &nbsp;
+            <span className='text-primary'>{AppHelper.hashEmail(userEmail as string)}</span>&nbsp;
+            Click confirmation link in the email to verify your account
+          </p>
+        </div>
+      </div>
+
+      <a
+        href='https://mail.google.com/'
+        target='_blank'
+        rel='noreferrer'
+        className='text-1rem btn btn-primary min-h-3.25rem w-full font-semibold text-black'
+      >
+        <IconLink />
+        Open Email App and Confirm
+      </a>
+    </div>
+  );
+};
+
+export default ConfirmEmailForm;
