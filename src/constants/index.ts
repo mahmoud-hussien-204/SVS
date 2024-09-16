@@ -44,3 +44,9 @@ export const constantLanguage = [
 ];
 
 export const baseURL = import.meta.env.VITE_APP_API_URL;
+
+export const constantRoles = [
+  {label: "Select Role", value: "", disabled: true},
+  {label: "Admin", value: 1},
+  {label: "User", value: 2},
+];

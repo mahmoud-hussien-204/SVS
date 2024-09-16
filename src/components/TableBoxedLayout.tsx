@@ -21,6 +21,7 @@ import IconEdit from "./icons/IconEdit";
 import IconEye from "./icons/IconEye";
 
 import IconTrash from "./icons/IconTrash";
+import IconLock from "./icons/IconLock";
 
 interface IProps {
   children: React.ReactNode;
@@ -43,9 +44,16 @@ export const TableBoxedLayoutTR = ({children}: IProps) => {
   return <tr className='only:!bg-transparent odd:bg-base-200'>{children}</tr>;
 };
 
-export const TableBoxedLayoutTH = ({children}: IProps) => {
+export const TableBoxedLayoutTH = ({children, className}: IProps) => {
   return (
-    <th className='h-3.5rem px-1rem text-start text-12 font-normal text-neutral-300'>{children}</th>
+    <th
+      className={AppHelper.classes(
+        "h-3.5rem px-1rem text-start text-12 font-normal text-neutral-300",
+        className
+      )}
+    >
+      {children}
+    </th>
   );
 };
 
@@ -196,7 +204,7 @@ export const TableBoxedLayoutActionButtonMakePrimary = ({data = {}}: IButtonProp
   );
 };
 
-export const TableBoxedLayoutActionButtonMakeEdit = ({data = {}}: IButtonProps) => {
+export const TableBoxedLayoutActionButtonEdit = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.edit}
@@ -213,7 +221,7 @@ export const TableBoxedLayoutActionButtonMakeEdit = ({data = {}}: IButtonProps) 
   );
 };
 
-export const TableBoxedLayoutActionButtonMakeView = ({data = {}}: IButtonProps) => {
+export const TableBoxedLayoutActionButtonView = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.view}
@@ -230,7 +238,7 @@ export const TableBoxedLayoutActionButtonMakeView = ({data = {}}: IButtonProps) 
   );
 };
 
-export const TableBoxedLayoutActionButtonMakeDelete = ({data = {}}: IButtonProps) => {
+export const TableBoxedLayoutActionButtonDelete = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.confirmation}
@@ -245,6 +253,27 @@ export const TableBoxedLayoutActionButtonMakeDelete = ({data = {}}: IButtonProps
       data={{
         className: "max-w-[30rem]",
         message: "Are you sure you want to delete this record?",
+        ...(data as object),
+      }}
+    />
+  );
+};
+
+export const TableBoxedLayoutActionButtonSuspend = ({data = {}}: IButtonProps) => {
+  return (
+    <TableBoxedLayoutActionButton
+      modal={EnumModals.suspended}
+      title='Suspend'
+      icon={
+        <IconLock
+          svgProps={{
+            className: "w-1rem",
+          }}
+        />
+      }
+      data={{
+        className: "max-w-[30rem]",
+        message: "Are you sure you want to suspend this user?",
         ...(data as object),
       }}
     />
