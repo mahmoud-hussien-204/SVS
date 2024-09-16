@@ -28,3 +28,28 @@ interface IModalComponentProps {
   hide: () => void;
   data: unknown;
 }
+
+type IPagination = {
+  page: number;
+  take: number;
+  itemsPerPage: number;
+  total: number;
+  pageCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};
+
+interface IResponse<T> {
+  data: T;
+  meta: IPagination;
+}
+
+interface IError extends Error {
+  message: string;
+}
+
+type TypeQueryParams = {
+  page?: string;
+  take?: string;
+  search?: string;
+};
