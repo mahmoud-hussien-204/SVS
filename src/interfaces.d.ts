@@ -1,13 +1,39 @@
+interface IUserResponse {
+  access_token: string;
+  access_type: string;
+  user_info: Userinfo;
+  g2f_verify: boolean;
+  email_verified: number;
+}
+
 interface IUser {
-  name: string;
-  email: string;
-  role: IUserRole;
-  permissions: string[];
   id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  reset_code: null;
+  role: IUserRole;
   token: string;
-  photo: string;
-  status: IUserStatus;
+  status: number;
+  country_code: string;
   phone: string;
+  phone_verified: number;
+  country: string;
+  gender: number;
+  birth_date: string;
+  photo: string;
+  g2f_enabled: string;
+  google2fa_secret: string | null;
+  is_verified: number;
+  language: string;
+  device_id: null;
+  device_type: number;
+  push_notification_status: number;
+  email_notification_status: number;
+  created_at: string;
+  updated_at: string;
+  verification_codes: null;
+  email_verified_at: string;
 }
 
 type IUserStatus = keyof typeof import("./enums").EnumUserStatus;

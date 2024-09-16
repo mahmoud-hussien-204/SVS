@@ -24,7 +24,9 @@ const ProfileMenu = () => {
             alt='avatar'
             className='h-2rem w-2rem rounded-full object-cover'
           />
-          <h6 className='text-14'>{userData?.name}</h6>
+          <h6 className='line-clamp-1 max-w-32 text-14'>
+            {userData?.first_name + " " + userData?.last_name}
+          </h6>
         </div>
       }
     >

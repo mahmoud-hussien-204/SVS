@@ -48,3 +48,13 @@ export const constantCountries = [
   {value: "bj", label: "Benin"},
   {value: "bm", label: "Bermuda"},
 ];
+
+export const constantGender = [
+  {
+    label: "Select Gender",
+    value: "",
+    disabled: true,
+  },
+  {value: 1, label: "Male"},
+  {value: 2, label: "Female"},
+];

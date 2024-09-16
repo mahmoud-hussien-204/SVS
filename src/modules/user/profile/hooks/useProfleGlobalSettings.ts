@@ -6,8 +6,12 @@ import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiUpdateProfileGlobalSettings} from "../services";
+
 const schema: Yup.ObjectSchema<IProfileGlobalSettings> = Yup.object().shape({
-  language: Yup.string().required("Please select language"),
+  lang: Yup.string().required("Please select language"),
 });
 
 const useProfileGlobalSettings = () => {
@@ -16,11 +20,16 @@ const useProfileGlobalSettings = () => {
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: IProfileGlobalSettings) => {
-    console.log(values);
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiUpdateProfileGlobalSettings,
+    mutationKey: ["update-user-global-settings"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IProfileGlobalSettings) => {
+    mutate(values);
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useProfileGlobalSettings;

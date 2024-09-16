@@ -19,7 +19,7 @@ import IconEye from "@/components/icons/IconEye";
 import Button from "@/components/Button";
 
 const LoginForm = () => {
-  const {form, handleSubmit} = useLoginForm();
+  const {form, handleSubmit, isPending} = useLoginForm();
 
   const {inputType, toggleVisibility} = usePasswordVisibility();
 
@@ -68,7 +68,7 @@ const LoginForm = () => {
         <ErrorMessage>{form.formState.errors.password?.message}</ErrorMessage>
       </div>
 
-      <Button type='submit' className='w-full'>
+      <Button type='submit' className='w-full' isLoading={isPending}>
         Login
       </Button>
     </form>

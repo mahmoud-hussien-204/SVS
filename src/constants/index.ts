@@ -42,3 +42,5 @@ export const constantLanguage = [
   {label: "Chinese (Simplified)", value: "zh-CN"},
   {label: "Chinese (Traditional)", value: "zh-TW"},
 ];
+
+export const baseURL = import.meta.env.VITE_APP_API_URL;

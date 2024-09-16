@@ -1,4 +1,4 @@
-import { EnumAppKeys } from "@/enums";
+import {EnumAppKeys} from "@/enums";
 
 export default class AuthHelper {
   static getUserData(): IUser {

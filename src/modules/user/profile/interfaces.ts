@@ -1,5 +1,5 @@
 export interface IProfileGlobalSettings {
-  language: string;
+  lang: string;
 }
 
 export interface IUpdatePassword {
@@ -13,11 +13,12 @@ export interface IEnableTwoFactorAuthentication {
 }
 
 export interface IEditProfile {
-  fullName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
-  photo: string;
   country: string;
+  gender: number;
 }
 
 export interface IPhoneVerification {

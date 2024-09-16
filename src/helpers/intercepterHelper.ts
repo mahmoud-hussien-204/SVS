@@ -1,10 +1,9 @@
+import {baseURL} from "@/constants";
 import AuthHelper from "@/modules/auth/helpers/AuthHelper";
 
 import {toast} from "react-toastify";
 
 export default class InterceptorHelper {
-  private static baseUrl = process.env.VITE_APP_BASE_URL;
-
   // intercept request
   static async interceptRequest(options: RequestInit = {}): Promise<RequestInit> {
     // get token
@@ -38,7 +37,7 @@ export default class InterceptorHelper {
     const message = responseJson?.message;
 
     // handle response error
-    if (!response.ok) {
+    if (!response.ok || !responseJson.success) {
       toast.error(message);
 
       return Promise.reject(responseJson);
@@ -57,7 +56,7 @@ export default class InterceptorHelper {
     // handle request
     const requestOptions = await InterceptorHelper.interceptRequest(options);
 
-    const response = await fetch(InterceptorHelper.baseUrl + "" + url, requestOptions);
+    const response = await fetch(baseURL + "" + url, requestOptions);
 
     // handle response
     const responseOption = await InterceptorHelper.interceptResponse<T>(response, options.method);

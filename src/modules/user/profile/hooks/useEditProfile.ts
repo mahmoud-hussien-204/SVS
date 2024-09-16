@@ -8,34 +8,49 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import useAuth from "@/modules/auth/hooks/useAuth";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiUpdateUserProfile} from "../services";
+
 const schema: Yup.ObjectSchema<IEditProfile> = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
+  first_name: Yup.string().required("Full name is required"),
+  last_name: Yup.string().required("Full name is required"),
   email: Yup.string().required("Email is required"),
   phone: Yup.string().required("Phone is required"),
-  photo: Yup.string().required("Photo is required"),
   country: Yup.string().required("Country is required"),
+  gender: Yup.number().required("Gender is required"),
 });
 
 const useEditProfile = () => {
-  const {userData} = useAuth();
+  const {userData, saveUser} = useAuth();
 
   const form = useForm<IEditProfile>({
     resolver: yupResolver(schema),
     mode: "onTouched",
     defaultValues: {
-      country: "",
+      country: userData?.country || "",
       email: userData?.email || "",
-      fullName: userData?.name || "",
+      first_name: userData?.first_name || "",
+      last_name: userData?.last_name || "",
       phone: userData?.phone || "",
-      photo: userData?.photo || "",
+      gender: userData?.gender || 0,
     },
   });
 
-  const handleSubmit = form.handleSubmit((values: IEditProfile) => {
-    console.log(values);
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiUpdateUserProfile,
+    mutationKey: ["update-user-profile"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IEditProfile) => {
+    mutate(values, {
+      onSuccess: () => {
+        saveUser({...userData, ...values});
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useEditProfile;
