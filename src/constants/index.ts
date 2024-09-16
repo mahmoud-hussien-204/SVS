@@ -42,3 +42,9 @@ export const constantLanguage = [
   {label: "Chinese (Simplified)", value: "zh-CN"},
   {label: "Chinese (Traditional)", value: "zh-TW"},
 ];
+
+export const constantRoles = [
+  {label: "Select Role", value: "", disabled: true},
+  {label: "Admin", value: 1},
+  {label: "User", value: 2},
+];

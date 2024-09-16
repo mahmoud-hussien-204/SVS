@@ -55,4 +55,5 @@ export enum EnumModals {
   invite = "invite",
   enableTwoFactorAuthentication = "enableTwoFactorAuthentication",
   updatePassword = "updatePassword",
+  suspended = "suspended",
 }
