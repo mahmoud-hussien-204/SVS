@@ -8,8 +8,6 @@ import adminRoutes from "@/modules/admin/Router";
 
 import userRoutes from "@/modules/user/Router";
 
-import landingRoutes from "@/modules/landing/Router";
-
 export const router = createBrowserRouter([
   {
     path: "*",
@@ -23,7 +21,7 @@ export const router = createBrowserRouter([
     path: "/",
     lazy: () => import("@/layouts/RootLayout"),
     errorElement: <ErrorLayout />,
-    children: [...landingRoutes, ...adminRoutes, ...userRoutes],
+    children: [...adminRoutes, ...userRoutes],
   },
   ...authRoutes,
 ]);

@@ -1,6 +1,6 @@
 import ProtectedRouter from "@/components/ProtectedRouter";
 
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
 import Header from "@/components/Header";
 
@@ -13,11 +13,7 @@ import WithRole from "@/components/WithRole";
 import TransitionPage from "@/components/TransitionPage";
 
 export const Component = () => {
-  const {pathname} = useLocation();
-
-  return pathname.endsWith("/") ? (
-    <Outlet />
-  ) : (
+  return (
     <ProtectedRouter>
       <WithRole>
         <TransitionPage>

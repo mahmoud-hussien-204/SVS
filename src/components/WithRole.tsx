@@ -20,7 +20,7 @@ const WithRole = ({children}: IProps) => {
   }
 
   if (pathname === "/") {
-    return children;
+    return <Navigate to={userRole} />;
   }
 
   if (!pathname.startsWith(userRole)) {

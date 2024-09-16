@@ -6,6 +6,8 @@ import {Outlet} from "react-router";
 
 import ImageAuthHero from "@/assets/auth2.png";
 
+import Logo from "@/components/Logo";
+
 export const Component = () => {
   return (
     <ProtectedRouter>
@@ -23,7 +25,8 @@ export const Component = () => {
           </div>
 
           <div className='flex flex-col items-start px-container-padding py-5rem sm:px-5rem lg:px-3rem'>
-            <img src='/logo.svg' alt='Logo' className='mb-5rem h-2.5rem' />
+            {/* <img src='/logo.webp' alt='Logo' className='mb-5rem max-h-8rem' /> */}
+            <Logo />
             <div className='flex w-full flex-1 items-center'>
               <div className='w-full'>
                 <Outlet />

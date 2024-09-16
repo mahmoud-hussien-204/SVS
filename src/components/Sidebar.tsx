@@ -1,3 +1,5 @@
+import Logo from "./Logo";
+
 import Nav from "./Nav";
 
 const Sidebar = () => {
@@ -7,7 +9,7 @@ const Sidebar = () => {
     >
       {/* start logo  */}
       <div className='mb-1.5rem flex h-header-height items-center px-container-padding'>
-        <img src='/logo.svg' alt='SGT' className='' />
+        <Logo />
       </div>
       {/* ********* end  */}
 
