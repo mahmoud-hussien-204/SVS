@@ -50,7 +50,7 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Orders",
+      title: "Buy Coin Orders",
       path: "/admin/orders",
       icon: "orders",
       end: true,
@@ -64,18 +64,18 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Ledgers",
+      title: "Transactions",
       icon: "ledgers",
-      path: "/admin/ledgers",
+      path: "/admin/transactions",
       isSubmenu: true,
       subMenu: [
         {
-          title: "Withdrawal Requests",
-          path: "/admin/ledgers-withdrawal-requests",
+          title: "Withdrawals Requests",
+          path: "/admin/transactions-withdrawals",
         },
         {
           title: "Deposit Requests",
-          path: "/admin/ledgers-deposit-requests",
+          path: "/admin/transactions-deposit",
         },
       ],
     },
@@ -89,10 +89,10 @@ export const constantSidebar: ISidebarItem = {
           title: "Plans",
           path: "/admin/membership-plans",
         },
-        {
-          title: "Bonus History",
-          path: "/admin/membership-history",
-        },
+        // {
+        //   title: "Bonus History",
+        //   path: "/admin/membership-history",
+        // },
       ],
     },
     {

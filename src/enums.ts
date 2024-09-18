@@ -56,4 +56,8 @@ export enum EnumModals {
   enableTwoFactorAuthentication = "enableTwoFactorAuthentication",
   updatePassword = "updatePassword",
   suspended = "suspended",
+  accept = "accept",
+  reject = "reject",
+  makePrimary = "makePrimary",
+  settings = "settings",
 }

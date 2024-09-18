@@ -1,12 +1,8 @@
-import {fakeDataUsersList} from "@/fakeData";
-
-import Status from "@/components/Status";
+import {fakeDataBuyCoinOrders} from "@/fakeData";
 
 import {
-  TableBoxedLayoutActionButtonDelete,
-  TableBoxedLayoutActionButtonEdit,
-  TableBoxedLayoutActionButtonSuspend,
-  TableBoxedLayoutActionButtonView,
+  TableBoxedLayoutActionButtonAccept,
+  TableBoxedLayoutActionButtonReject,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
   TableBoxedLayoutTBody,
@@ -22,41 +18,45 @@ import PageLimit from "@/components/PageLimit";
 
 import Pagination from "@/components/Pagination";
 
+import Status from "@/components/Status";
+
 import dayjs from "dayjs";
 
-const UsersList = () => {
+const BuyCoinOrdersList = () => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
         <TableBoxedLayoutTHead>
           <TableBoxedLayoutTR>
-            <TableBoxedLayoutTH>User Name</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Email</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Role</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Amount</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Payable Coin</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Payment</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Address</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Status</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Created at</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Date</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Actions</TableBoxedLayoutTH>
           </TableBoxedLayoutTR>
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataUsersList.map((item) => (
+          {fakeDataBuyCoinOrders.map((item) => (
             <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.userName}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.role}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.payableCoin}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.paymentType}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <Status status={item.status} />
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
+                {dayjs(item.date).format("MMMM D, YYYY h:mm A")}
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonView data={item} />
-                  <TableBoxedLayoutActionButtonEdit data={item} />
-                  <TableBoxedLayoutActionButtonSuspend data={{id: item.id}} />
-                  <TableBoxedLayoutActionButtonDelete data={{id: item.id}} />
+                  <TableBoxedLayoutActionButtonAccept data={item} />
+                  <TableBoxedLayoutActionButtonReject data={item} />
                 </TableBoxedLayoutActions>
               </TableBoxedLayoutTD>
             </TableBoxedLayoutTR>
@@ -72,4 +72,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default BuyCoinOrdersList;
