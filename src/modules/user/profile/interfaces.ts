@@ -25,3 +25,7 @@ export interface IPhoneVerification {
   code: string;
   phone: string;
 }
+
+export interface IUpdatePhotoResponse {
+  image:string
+}

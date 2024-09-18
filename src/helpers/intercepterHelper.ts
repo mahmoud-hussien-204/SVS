@@ -35,10 +35,9 @@ export default class InterceptorHelper {
     const responseJson = await response.json();
 
     const message = responseJson?.message;
-    console.log(responseJson);
 
     // handle response error
-    if (!response.ok || !responseJson.success) {
+    if (!response.ok || responseJson.success == false) {
       toast.error(message);
 
       return Promise.reject(responseJson);
@@ -49,7 +48,7 @@ export default class InterceptorHelper {
       toast.success(message);
     }
 
-    return responseJson;
+    return responseJson as IResponse<T>;
   }
 
   // intercept function

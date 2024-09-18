@@ -1,7 +1,7 @@
 export interface IDashboardData {
   title: string;
   balance: Balance;
-  total_buy_coin: string;
+  total_buy_coin: number;
   sixmonth_diposites: any[];
   last_six_month: string[];
   completed_withdraw: number;
@@ -12,7 +12,7 @@ export interface IDashboardData {
   monthly_withdrawal: Monthlydeposit;
   coin: any[];
   monthly_buy_coin: Monthlydeposit;
-  blocked_coin: string;
+  blocked_coin: number;
 }
 
 interface Monthlydeposit {
@@ -31,8 +31,8 @@ interface Monthlydeposit {
 }
 
 interface Balance {
-  available_coin: string;
-  available_used: string;
+  available_coin: number;
+  available_used: number;
   BTC: string;
   USDT: string;
   ETH: string;

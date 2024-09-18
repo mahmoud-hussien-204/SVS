@@ -1,7 +1,7 @@
 interface IUserResponse {
   access_token: string;
   access_type: string;
-  user_info: Userinfo;
+  user_info: IUser;
   g2f_verify: boolean;
   email_verified: number;
 }

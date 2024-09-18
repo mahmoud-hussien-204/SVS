@@ -2,12 +2,12 @@ import IconPen from "@/components/icons/IconPen";
 import useMutation from "@/hooks/useMutation";
 
 import useAuth from "@/modules/auth/hooks/useAuth";
-import {apiUploadProfilePhoto} from "../services";
+import { apiUploadProfilePhoto } from "../services";
 
 function ChangeUserImage() {
-  const {userData, saveUser} = useAuth();
+  const { userData, saveUser } = useAuth();
 
-  const {mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: apiUploadProfilePhoto,
     mutationKey: ["upload-profile-image"],
   });
@@ -19,8 +19,9 @@ function ChangeUserImage() {
     formData.append("file_one", file);
 
     mutate(formData, {
-      onSuccess: (data: any) => {
-        const user: any = {...userData};
+      onSuccess: (data) => {
+        if (!userData) return
+        const user = { ...userData };
         user.photo = data.data.image;
         saveUser(user);
       },
