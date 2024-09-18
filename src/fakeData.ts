@@ -187,6 +187,8 @@ export const fakeDataMyWallets = [
     coinType: "BTC",
     balance: 1.2345,
     updatedAt: "2024-09-01",
+    userName: "Alice",
+    userEmail: "jUwZx@example.com",
   },
   {
     id: 2,
@@ -194,6 +196,8 @@ export const fakeDataMyWallets = [
     coinType: "ETH",
     balance: 10.6789,
     updatedAt: "2024-09-02",
+    userName: "Bob",
+    userEmail: "jUwZx@example.com",
   },
   {
     id: 3,
@@ -201,6 +205,8 @@ export const fakeDataMyWallets = [
     coinType: "XRP",
     balance: 5000.1234,
     updatedAt: "2024-09-03",
+    userName: "Charlie",
+    userEmail: "jUwZx@example.com",
   },
   {
     id: 4,
@@ -208,6 +214,8 @@ export const fakeDataMyWallets = [
     coinType: "LTC",
     balance: 250.5678,
     updatedAt: "2024-09-04",
+    userName: "Dana",
+    userEmail: "jUwZx@example.com",
   },
   {
     id: 5,
@@ -215,6 +223,8 @@ export const fakeDataMyWallets = [
     coinType: "ADA",
     balance: 10000.9876,
     updatedAt: "2024-09-05",
+    userName: "Eve",
+    userEmail: "jUwZx@example.com",
   },
 ];
 
@@ -502,5 +512,68 @@ export const fakeDataCoinsList = [
     feesPercentage: 0.15,
     status: "Active",
     updatedAt: "2024-09-09",
+  },
+];
+
+export const fakeDataBuyCoinOrders = [
+  {
+    email: "user1@example.com",
+    coinAmount: 10,
+    payableCoin: 9.5,
+    paymentType: "Bitcoin",
+    address: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    date: "2024-09-18",
+    id: "TX001",
+    status: "Completed",
+  },
+  {
+    email: "user2@example.com",
+    coinAmount: 15,
+    payableCoin: 14.8,
+    paymentType: "Ethereum",
+    address: "0xAbc12345Def67890GhiJklMnOpq12345",
+    date: "2024-09-17",
+    id: "TX002",
+    status: "Pending",
+  },
+  {
+    email: "user3@example.com",
+    coinAmount: 20,
+    payableCoin: 19.9,
+    paymentType: "Litecoin",
+    address: "LcKuT1TGF9JydXVb3fAfqkYm8gHsAzzefQ",
+    date: "2024-09-16",
+    id: "TX003",
+    status: "Failed",
+  },
+  {
+    email: "user4@example.com",
+    coinAmount: 50,
+    payableCoin: 49.5,
+    paymentType: "Ripple",
+    address: "rDgY9SbbdXghUNJ6sBxTsQZLfQwHmM2cz",
+    date: "2024-09-15",
+    id: "TX004",
+    status: "Completed",
+  },
+  {
+    email: "user5@example.com",
+    coinAmount: 5,
+    payableCoin: 4.9,
+    paymentType: "Bitcoin",
+    address: "1BoatSLRHtKNngkdXEeobR76b53LETtpyT",
+    date: "2024-09-14",
+    id: "TX005",
+    status: "Pending",
+  },
+  {
+    email: "user6@example.com",
+    coinAmount: 100,
+    payableCoin: 99.8,
+    paymentType: "Ethereum",
+    address: "0x12345Def67890GhiJklMnOpq12345Abc",
+    date: "2024-09-13",
+    id: "TX006",
+    status: "Completed",
   },
 ];

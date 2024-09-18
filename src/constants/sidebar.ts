@@ -50,7 +50,7 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Orders",
+      title: "Buy Coin Orders",
       path: "/admin/orders",
       icon: "orders",
       end: true,
@@ -64,20 +64,10 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Ledgers",
+      title: "Transactions",
       icon: "ledgers",
-      path: "/admin/ledgers",
-      isSubmenu: true,
-      subMenu: [
-        {
-          title: "Withdrawal Requests",
-          path: "/admin/ledgers-withdrawal-requests",
-        },
-        {
-          title: "Deposit Requests",
-          path: "/admin/ledgers-deposit-requests",
-        },
-      ],
+      path: "/admin/transactions",
+      isSubmenu: false,
     },
     {
       title: "Membership",

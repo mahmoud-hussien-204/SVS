@@ -21,7 +21,14 @@ import IconEdit from "./icons/IconEdit";
 import IconEye from "./icons/IconEye";
 
 import IconTrash from "./icons/IconTrash";
+
 import IconLock from "./icons/IconLock";
+
+import IconClose from "./icons/IconClose";
+
+import IconCheck from "./icons/IconCheck";
+
+const confirmationModalWidth = "max-w-[30rem]";
 
 interface IProps {
   children: React.ReactNode;
@@ -196,7 +203,7 @@ export const TableBoxedLayoutActionButtonMakePrimary = ({data = {}}: IButtonProp
         />
       }
       data={{
-        className: "max-w-[30rem]",
+        className: confirmationModalWidth,
         message: "Are you sure you want to make this as primary?",
         ...(data as object),
       }}
@@ -251,7 +258,7 @@ export const TableBoxedLayoutActionButtonDelete = ({data = {}}: IButtonProps) =>
         />
       }
       data={{
-        className: "max-w-[30rem]",
+        className: confirmationModalWidth,
         message: "Are you sure you want to delete this record?",
         ...(data as object),
       }}
@@ -272,8 +279,50 @@ export const TableBoxedLayoutActionButtonSuspend = ({data = {}}: IButtonProps) =
         />
       }
       data={{
-        className: "max-w-[30rem]",
+        className: confirmationModalWidth,
         message: "Are you sure you want to suspend this user?",
+        ...(data as object),
+      }}
+    />
+  );
+};
+
+export const TableBoxedLayoutActionButtonAccept = ({data = {}}: IButtonProps) => {
+  return (
+    <TableBoxedLayoutActionButton
+      modal={EnumModals.accept}
+      title='Accept'
+      icon={
+        <IconCheck
+          svgProps={{
+            className: "w-1rem text-success",
+          }}
+        />
+      }
+      data={{
+        className: confirmationModalWidth,
+        message: "Are you sure you want to accept this request?",
+        ...(data as object),
+      }}
+    />
+  );
+};
+
+export const TableBoxedLayoutActionButtonReject = ({data = {}}: IButtonProps) => {
+  return (
+    <TableBoxedLayoutActionButton
+      modal={EnumModals.reject}
+      title='Reject'
+      icon={
+        <IconClose
+          svgProps={{
+            className: "w-1rem text-error",
+          }}
+        />
+      }
+      data={{
+        className: confirmationModalWidth,
+        message: "Are you sure you want to reject this request?",
         ...(data as object),
       }}
     />
