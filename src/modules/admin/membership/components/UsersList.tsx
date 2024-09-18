@@ -1,12 +1,10 @@
-import {fakeDataUsersList} from "@/fakeData";
+import {fakeDataPlansList} from "@/fakeData";
 
 import Status from "@/components/Status";
 
 import {
   TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActionButtonEdit,
-  TableBoxedLayoutActionButtonSuspend,
-  TableBoxedLayoutActionButtonView,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
   TableBoxedLayoutTBody,
@@ -30,9 +28,12 @@ const UsersList = () => {
       <TableBoxedLayoutContainer>
         <TableBoxedLayoutTHead>
           <TableBoxedLayoutTR>
-            <TableBoxedLayoutTH>User Name</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Email</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Role</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Plan Name </TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Minimum Amount</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Duration</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Bonus</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Bonus Type</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Bonus Coin Type</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Status</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Created at</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Actions</TableBoxedLayoutTH>
@@ -40,11 +41,14 @@ const UsersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataUsersList.map((item) => (
+          {fakeDataPlansList.map((item) => (
             <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.userName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.role}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.planName}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.minimumAmount}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.duration}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.bonus}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.bonusType}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.bonusCoinType}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <Status status={item.status} />
               </TableBoxedLayoutTD>
@@ -53,9 +57,7 @@ const UsersList = () => {
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonView data={item} />
                   <TableBoxedLayoutActionButtonEdit data={item} />
-                  <TableBoxedLayoutActionButtonSuspend data={{id: item.id}} />
                   <TableBoxedLayoutActionButtonDelete data={{id: item.id}} />
                 </TableBoxedLayoutActions>
               </TableBoxedLayoutTD>

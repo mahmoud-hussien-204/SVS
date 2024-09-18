@@ -1,13 +1,13 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-interface IProps extends IModalComponentProps {
-  data: {
-    message: string;
-    subTitle?: string;
-  };
+interface IProps {
+  message: string;
+  subTitle?: string;
 }
 
-const AcceptForm = ({data}: IProps) => {
+const AcceptForm = ({data: dataProps}: IModalComponentProps) => {
+  const data = dataProps as IProps;
+
   return (
     <form noValidate>
       <ConfirmationForm isLoading={false} message={data.message} submitButtonTitle='Yes, Accept' />

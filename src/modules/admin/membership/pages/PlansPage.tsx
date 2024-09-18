@@ -12,16 +12,14 @@ import Modal from "@/components/Modal";
 
 import DeleteForm from "../components/DeleteForm";
 
-import ViewUserForm from "../components/ViewUserForm";
-
 import EditUserForm from "../components/EditUserForm";
 
 import AddUserForm from "../components/AddUserForm";
 
-import SuspendForm from "../components/SuspendForm";
+import SettingsForm from "../components/SettingsForm";
 
 export const Component = () => {
-  usePageTitle("Users List");
+  usePageTitle("Plans List");
   return (
     <ModalProvider>
       <TransitionPage>
@@ -31,15 +29,9 @@ export const Component = () => {
         </div>
       </TransitionPage>
 
-      <Modal
-        view={ViewUserForm}
-        edit={EditUserForm}
-        add={AddUserForm}
-        suspended={SuspendForm}
-        delete={DeleteForm}
-      />
+      <Modal edit={EditUserForm} add={AddUserForm} delete={DeleteForm} settings={SettingsForm} />
     </ModalProvider>
   );
 };
 
-Component.displayName = "UsersPage";
+Component.displayName = "PlansPage";

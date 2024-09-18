@@ -1,11 +1,4 @@
-type ClassValue =
-  | ClassArray
-  | ClassDictionary
-  | string
-  | number
-  | boolean
-  | null
-  | undefined;
+type ClassValue = ClassArray | ClassDictionary | string | number | boolean | null | undefined;
 
 interface ClassDictionary {
   [id: string]: boolean | undefined | null;
@@ -16,6 +9,12 @@ type ClassArray = Array<ClassValue>;
 export default class AppHelper {
   static sliceContent(str: string, len = 25) {
     return str.length > len ? str.slice(0, len) + "..." : str;
+  }
+
+  static handleAddress(str: string) {
+    const count = 4;
+    if (str.length < 8) return str;
+    return str.slice(0, count) + " .... " + str.slice(count, count * 2);
   }
 
   static hashEmail(email: string) {

@@ -193,7 +193,7 @@ export const TableBoxedLayoutActionButtonSwap = ({data}: IButtonProps) => {
 export const TableBoxedLayoutActionButtonMakePrimary = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
-      modal={EnumModals.confirmation}
+      modal={EnumModals.makePrimary}
       title='Make Primary'
       icon={
         <IconPrimary
@@ -204,7 +204,6 @@ export const TableBoxedLayoutActionButtonMakePrimary = ({data = {}}: IButtonProp
       }
       data={{
         className: confirmationModalWidth,
-        message: "Are you sure you want to make this as primary?",
         ...(data as object),
       }}
     />
@@ -248,7 +247,7 @@ export const TableBoxedLayoutActionButtonView = ({data = {}}: IButtonProps) => {
 export const TableBoxedLayoutActionButtonDelete = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
-      modal={EnumModals.confirmation}
+      modal={EnumModals.delete}
       title='Delete'
       icon={
         <IconTrash
@@ -259,7 +258,6 @@ export const TableBoxedLayoutActionButtonDelete = ({data = {}}: IButtonProps) =>
       }
       data={{
         className: confirmationModalWidth,
-        message: "Are you sure you want to delete this record?",
         ...(data as object),
       }}
     />
@@ -280,7 +278,6 @@ export const TableBoxedLayoutActionButtonSuspend = ({data = {}}: IButtonProps) =
       }
       data={{
         className: confirmationModalWidth,
-        message: "Are you sure you want to suspend this user?",
         ...(data as object),
       }}
     />
@@ -301,7 +298,6 @@ export const TableBoxedLayoutActionButtonAccept = ({data = {}}: IButtonProps) =>
       }
       data={{
         className: confirmationModalWidth,
-        message: "Are you sure you want to accept this request?",
         ...(data as object),
       }}
     />
@@ -322,7 +318,6 @@ export const TableBoxedLayoutActionButtonReject = ({data = {}}: IButtonProps) =>
       }
       data={{
         className: confirmationModalWidth,
-        message: "Are you sure you want to reject this request?",
         ...(data as object),
       }}
     />

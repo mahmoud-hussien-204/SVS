@@ -67,7 +67,17 @@ export const constantSidebar: ISidebarItem = {
       title: "Transactions",
       icon: "ledgers",
       path: "/admin/transactions",
-      isSubmenu: false,
+      isSubmenu: true,
+      subMenu: [
+        {
+          title: "Withdrawals Requests",
+          path: "/admin/transactions-withdrawals",
+        },
+        {
+          title: "Deposit Requests",
+          path: "/admin/transactions-deposit",
+        },
+      ],
     },
     {
       title: "Membership",
@@ -79,10 +89,10 @@ export const constantSidebar: ISidebarItem = {
           title: "Plans",
           path: "/admin/membership-plans",
         },
-        {
-          title: "Bonus History",
-          path: "/admin/membership-history",
-        },
+        // {
+        //   title: "Bonus History",
+        //   path: "/admin/membership-history",
+        // },
       ],
     },
     {

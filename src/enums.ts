@@ -58,4 +58,6 @@ export enum EnumModals {
   suspended = "suspended",
   accept = "accept",
   reject = "reject",
+  makePrimary = "makePrimary",
+  settings = "settings",
 }
