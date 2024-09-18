@@ -4,7 +4,7 @@ import {IUserData} from "../interfaces";
 
 type IProps = Pick<IUserData, "id">;
 
-const SuspendForm = ({data: dataProps}: IModalComponentProps) => {
+const DeleteForm = ({data: dataProps}: IModalComponentProps) => {
   const data = dataProps as IProps;
 
   const handleSubmit = () => {
@@ -13,9 +13,9 @@ const SuspendForm = ({data: dataProps}: IModalComponentProps) => {
 
   return (
     <form noValidate name='delete-user-form' id='delete-user-form' onSubmit={handleSubmit}>
-      <ConfirmationForm isLoading={false} message='Are you sure you want to Suspend this user?' />
+      <ConfirmationForm isLoading={false} message='Are you sure you want to delete this user?' />
     </form>
   );
 };
 
-export default SuspendForm;
+export default DeleteForm;
