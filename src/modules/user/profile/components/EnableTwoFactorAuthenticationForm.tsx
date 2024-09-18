@@ -11,9 +11,16 @@ import Label from "@/components/Label";
 import Input from "@/components/Input";
 
 import useEnableTwoFactorAuthentication from "../hooks/useEnableTwoFactorAuthentication";
+import useQuery from "@/hooks/useQuery";
+import {apiGetQrCode2FA} from "../services";
 
 const EnableTwoFactorAuthenticationForm = () => {
   const {form, handleSubmit} = useEnableTwoFactorAuthentication();
+  const {data, isLoading} = useQuery({
+    queryKey: ["get-two-factor-authentication-qrCode"],
+    queryFn: apiGetQrCode2FA,
+    retry: 2,
+  });
 
   return (
     <form

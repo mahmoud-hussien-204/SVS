@@ -35,6 +35,7 @@ export default class InterceptorHelper {
     const responseJson = await response.json();
 
     const message = responseJson?.message;
+    console.log(responseJson);
 
     // handle response error
     if (!response.ok || !responseJson.success) {

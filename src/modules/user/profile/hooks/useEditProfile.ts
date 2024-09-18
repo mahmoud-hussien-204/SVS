@@ -45,7 +45,9 @@ const useEditProfile = () => {
   const handleSubmit = form.handleSubmit((values: IEditProfile) => {
     mutate(values, {
       onSuccess: () => {
-        saveUser({...userData, ...values});
+        const data: any = {...userData, ...values};
+
+        saveUser(data);
       },
     });
   });

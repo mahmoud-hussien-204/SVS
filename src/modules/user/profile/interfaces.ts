@@ -3,9 +3,9 @@ export interface IProfileGlobalSettings {
 }
 
 export interface IUpdatePassword {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  new_password: string;
+  confirmPassword?: string;
 }
 
 export interface IEnableTwoFactorAuthentication {

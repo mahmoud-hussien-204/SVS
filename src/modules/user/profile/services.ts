@@ -1,6 +1,6 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IEditProfile, IProfileGlobalSettings} from "./interfaces";
+import {IEditProfile, IProfileGlobalSettings, IUpdatePassword} from "./interfaces";
 
 export const apiUpdateProfileGlobalSettings = async (values: IProfileGlobalSettings) => {
   return InterceptorHelper.intercept<IUserResponse>("/user/save-preference", {
@@ -21,4 +21,15 @@ export const apiUploadProfilePhoto = async (values: FormData) => {
     body: values,
     method: "POST",
   });
+};
+
+export const apiChnaggePassword = async (values: IUpdatePassword) => {
+  return InterceptorHelper.intercept("/user/change-password-save", {
+    body: JSON.stringify(values),
+    method: "POST",
+  });
+};
+
+export const apiGetQrCode2FA = async () => {
+  return InterceptorHelper.intercept("/user/qrcode/generate");
 };

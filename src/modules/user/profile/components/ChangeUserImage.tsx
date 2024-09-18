@@ -19,8 +19,10 @@ function ChangeUserImage() {
     formData.append("file_one", file);
 
     mutate(formData, {
-      onSuccess: (data) => {
-        saveUser({...userData, photo: data.data.image});
+      onSuccess: (data: any) => {
+        const user: any = {...userData};
+        user.photo = data.data.image;
+        saveUser(user);
       },
     });
   };
