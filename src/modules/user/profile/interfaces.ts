@@ -5,7 +5,7 @@ export interface IProfileGlobalSettings {
 export interface IUpdatePassword {
   password: string;
   new_password: string;
-  confirmPassword?: string;
+  confirm_new_password?: string;
 }
 
 export interface IEnableTwoFactorAuthentication {
@@ -27,5 +27,5 @@ export interface IPhoneVerification {
 }
 
 export interface IUpdatePhotoResponse {
-  image:string
+  image: string;
 }

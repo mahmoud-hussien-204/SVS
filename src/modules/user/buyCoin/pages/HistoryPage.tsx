@@ -1,12 +1,16 @@
 import Box from "@/components/Box";
+
 import PageLimit from "@/components/PageLimit";
+
 import Pagination from "@/components/Pagination";
 
 import Search from "@/components/Search";
+
 import Status from "@/components/Status";
 
 import {
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -16,14 +20,29 @@ import {
 
 import TransitionPage from "@/components/TransitionPage";
 
-import {fakeDataBuyCoinHistory} from "@/fakeData";
-
 import usePageTitle from "@/hooks/usePageTitle";
+
+import useQuery from "@/hooks/useQuery";
 
 import dayjs from "dayjs";
 
+import {apiGetButyCoinHistory} from "../services";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
 export const Component = () => {
   usePageTitle("Buy Coin History");
+
+  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryFn: () => apiGetButyCoinHistory(pageSearchParams, limitSearchParams, searchSearchParams),
+    queryKey: ["buy-coin-history", pageSearchParams, limitSearchParams, searchSearchParams],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
   return (
     <TransitionPage>
       <div className='max-w-[450px]'>
@@ -32,7 +51,7 @@ export const Component = () => {
 
       <div className='mt-2rem'>
         <Box>
-          <TableBoxedLayoutContainer>
+          <TableBoxedLayoutContainer className={isLoading ? "border-separate" : ""}>
             <TableBoxedLayoutTHead>
               <TableBoxedLayoutTR>
                 <TableBoxedLayoutTH>Address</TableBoxedLayoutTH>
@@ -44,25 +63,35 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {fakeDataBuyCoinHistory.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.paymentType}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <Status status={item.status} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+              {isLoading
+                ? Array.from({length: 10}).map((_, index) => (
+                    <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                    </TableBoxedLayoutTR>
+                  ))
+                : data?.data?.map((item) => (
+                    <TableBoxedLayoutTR key={item.id}>
+                      <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.coin}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>
+                        <Status status={item.status} />
+                      </TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>
+                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                      </TableBoxedLayoutTD>
+                    </TableBoxedLayoutTR>
+                  ))}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 
           <div className='mt-2rem flex items-center justify-between'>
             <PageLimit />
-            <Pagination totalPages={5} />
+            <Pagination totalPages={totalPages} />
           </div>
         </Box>
       </div>

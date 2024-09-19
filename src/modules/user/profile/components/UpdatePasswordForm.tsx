@@ -42,14 +42,14 @@ const UpdatePasswordForm = () => {
         <div className='mb-2rem'>
           <Label htmlFor='update-password-confirm-password-form'>Confirm Password</Label>
           <Input
-            {...form.register("confirmPassword")}
+            {...form.register("confirm_new_password")}
             type='password'
             id='update-password-confirm-password-form'
             placeholder='Confirm Password'
-            isError={!!form.formState.errors.confirmPassword}
+            isError={!!form.formState.errors.confirm_new_password}
             autoComplete='new-password'
           />
-          <ErrorMessage>{form.formState.errors.confirmPassword?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.confirm_new_password?.message}</ErrorMessage>
         </div>
       </div>
 

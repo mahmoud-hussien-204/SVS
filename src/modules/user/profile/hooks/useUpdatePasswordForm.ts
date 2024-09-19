@@ -13,7 +13,7 @@ import {apiChnaggePassword} from "../services";
 const schema: Yup.ObjectSchema<IUpdatePassword> = Yup.object().shape({
   password: Yup.string().required("Current password is required"),
   new_password: Yup.string().required("New password is required"),
-  confirmPassword: Yup.string()
+  confirm_new_password: Yup.string()
     .required("Confirm password is required")
     .oneOf([Yup.ref("new_password")], "Passwords must match"),
 });
@@ -31,8 +31,8 @@ const useUpdatePasswordForm = () => {
 
   const handleSubmit = form.handleSubmit((values: IUpdatePassword) => {
     console.log(values);
-    const {confirmPassword, ...rest} = values;
-    mutate(rest);
+    // const {confirmPassword, ...rest} = values;
+    mutate(values);
   });
 
   return {form, handleSubmit, isPending};

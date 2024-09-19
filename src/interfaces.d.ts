@@ -56,18 +56,13 @@ interface IModalComponentProps {
 }
 
 type IPagination = {
-  page: number;
-  take: number;
-  itemsPerPage: number;
-  total: number;
-  pageCount: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
+  recordsTotal: number;
+  recordsFiltered: number;
+  draw: string;
 };
 
-interface IResponse<T> {
+interface IResponse<T> extends IPagination {
   data: T;
-  meta: IPagination;
 }
 
 interface IError extends Error {

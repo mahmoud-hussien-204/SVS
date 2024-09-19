@@ -12,6 +12,7 @@ import Pagination from "@/components/Pagination";
 
 import {
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -19,12 +20,28 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataSwapHistory} from "@/fakeData";
-
 import dayjs from "dayjs";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import useQuery from "@/hooks/useQuery";
+
+import {apiGetSwapHistory} from "../services";
 
 export const Component = () => {
   usePageTitle("Swap History");
+
+  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryFn: () => apiGetSwapHistory(pageSearchParams, limitSearchParams, searchSearchParams),
+    queryKey: ["swap-history", pageSearchParams, limitSearchParams, searchSearchParams],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
+
   return (
     <TransitionPage>
       <div className='w-[450px] max-w-full'>
@@ -45,24 +62,35 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {fakeDataSwapHistory.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.fromWallet}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.toWallet}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.requestedAmount}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.convertedAmount}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+              {isLoading
+                ? Array.from({length: 10}).map((_, index) => (
+                    <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                      <TableBoxedLayoutSkeleton />
+                    </TableBoxedLayoutTR>
+                  ))
+                : data?.data.map((item) => (
+                    <TableBoxedLayoutTR key={item.id}>
+                      <TableBoxedLayoutTD>{item.from_wallet_id}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.to_wallet_id}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.requested_amount}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.converted_amount}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>
+                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                      </TableBoxedLayoutTD>
+                    </TableBoxedLayoutTR>
+                  ))}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 
           <div className='mt-2rem flex items-center justify-between'>
             <PageLimit />
-            <Pagination totalPages={5} />
+            <Pagination totalPages={totalPages} />
           </div>
         </Box>
       </div>
