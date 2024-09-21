@@ -57,7 +57,7 @@ export const Component = () => {
       </div>
 
       <div className='grid gap-6 xl:grid-cols-3'>
-        <DepositAndWithdrawal />
+        <DepositAndWithdrawal deposits={dashboardData?.deposit} withdrawals={dashboardData?.withdrawal} />
         <SalesByCategory />
       </div>
 

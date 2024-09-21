@@ -51,6 +51,18 @@ const WithdrawForm = ({ data }: IModalComponentProps) => {
           />
           <ErrorMessage>{form.formState.errors.amount?.message}</ErrorMessage>
         </div>
+
+        <div className='mb-1.25rem'>
+          <Label htmlFor='withdraw-form-amount'>2FA Code</Label>
+          <Input
+            type='text'
+            {...form.register("code")}
+            placeholder='Enter amount'
+            id='withdraw-form-amount'
+            isError={!!form.formState.errors.code}
+          />
+          <ErrorMessage>{form.formState.errors.code?.message}</ErrorMessage>
+        </div>
         <div className='mb-1.25rem'>
           <Label htmlFor='withdraw-form-comment'>Note</Label>
           <Textarea

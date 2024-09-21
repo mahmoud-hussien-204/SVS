@@ -2,8 +2,8 @@ import Box from "@/components/Box";
 
 import {
   TableBoxedLayoutActionButtonDeposit,
-  TableBoxedLayoutActionButtonMakePrimary,
-  TableBoxedLayoutActionButtonSwap,
+  // TableBoxedLayoutActionButtonMakePrimary,
+  // TableBoxedLayoutActionButtonSwap,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
@@ -16,9 +16,13 @@ import {
 } from "@/components/TableBoxedLayout";
 
 import dayjs from "dayjs";
-import { IWallet } from "../interfaces";
 
-const MyWalletList = ({ Wallets, isLoading }: { Wallets: IWallet[], isLoading: boolean }) => {
+import { IWallet } from "../interfaces";
+import Pagination from "@/components/Pagination";
+import PageLimit from "@/components/PageLimit";
+
+interface IProps { Wallets: IWallet[], isLoading: boolean, totalPages: number }
+const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -54,8 +58,8 @@ const MyWalletList = ({ Wallets, isLoading }: { Wallets: IWallet[], isLoading: b
                   <TableBoxedLayoutActions>
                     <TableBoxedLayoutActionButtonDeposit data={item} />
                     <TableBoxedLayoutActionButtonWithdraw data={item} />
-                    <TableBoxedLayoutActionButtonSwap />
-                    <TableBoxedLayoutActionButtonMakePrimary />
+                    {/* <TableBoxedLayoutActionButtonSwap /> */}
+                    {/* <TableBoxedLayoutActionButtonMakePrimary /> */}
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
@@ -63,10 +67,10 @@ const MyWalletList = ({ Wallets, isLoading }: { Wallets: IWallet[], isLoading: b
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
-      {/* <div className='mt-2rem flex items-center justify-between'>
+      <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
         <Pagination totalPages={totalPages} />
-      </div> */}
+      </div>
     </Box>
   );
 };

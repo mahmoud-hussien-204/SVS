@@ -10,11 +10,11 @@ import InviteForm from "../components/InviteForm";
 
 import Head from "../components/Head";
 
-import {Navigate, useSearchParams} from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 import Tabs from "@/components/Tabs";
 
-import {constantTabs} from "../constants";
+import { constantTabs } from "../constants";
 
 import MyReferralsList from "../components/MyReferralsList";
 
@@ -31,7 +31,7 @@ export const Component = () => {
 
   const isTab = searchParams.get("tab");
 
-  if (!isTab) return <Navigate to='?tab=my-referrals' />;
+  if (!isTab) return <Navigate to='?tab=my-referrals' replace />;
 
   return (
     <ModalProvider>

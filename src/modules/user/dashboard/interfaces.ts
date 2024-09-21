@@ -6,9 +6,9 @@ export interface IDashboardData {
   last_six_month: string[];
   completed_withdraw: number;
   pending_withdraw: number;
-  deposit: any[];
+  deposit: number[];
   monthly_deposit: Monthlydeposit;
-  withdrawal: any[];
+  withdrawal: number[];
   monthly_withdrawal: Monthlydeposit;
   coin: any[];
   monthly_buy_coin: Monthlydeposit;

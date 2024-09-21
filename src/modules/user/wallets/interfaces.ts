@@ -8,8 +8,8 @@ export interface IWithdrawForm {
   address: string;
   amount: number;
   message?: string;
-  wallet_id?: number;
-  code?: string;
+  wallet_id: number;
+  code: string;
 }
 
 export interface ISwapHistoryData {
@@ -29,14 +29,18 @@ export interface ISwapHistoryData {
 
 
 export interface IWalletsData {
-  tab: null;
-  wallets: IWallet[];
-  coWallets: IWallet[];
-  coins: ICoin[];
   title: string;
+  tab: null;
+  coins: Coin[];
+  data: {
+    wallets: IWallet[];
+  };
+  recordsTotal: number;
+  recordsFiltered: number;
+  draw: null;
 }
 
-export interface ICoin {
+interface Coin {
   id: number;
   name: string;
   type: string;
@@ -63,6 +67,38 @@ export interface ICoin {
   updated_at: string;
 }
 
+export interface IWalletDepositData {
+  wallet_id: string;
+  wallet: IWallet;
+  tempWithdraws: any[];
+  histories: IHistory[];
+  withdraws: any[];
+  active: string;
+  ac_tab: string;
+  title: string;
+  address: string;
+}
+
+export interface IHistory {
+  id: number;
+  address: string;
+  fees: string;
+  sender_wallet_id: number;
+  receiver_wallet_id: number;
+  address_type: string;
+  type: string;
+  amount: string;
+  btc: string;
+  doller: string;
+  transaction_id: string;
+  status: string;
+  updated_by: null;
+  from_address: null | string;
+  confirmations: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface IWallet {
   id: number;
   user_id: number;
@@ -77,4 +113,9 @@ export interface IWallet {
   updated_at: string;
   key: null;
   type: number;
+  coin_status: number;
+  is_withdrawal: number;
+  minimum_withdrawal: string;
+  maximum_withdrawal: string;
+  withdrawal_fees: string;
 }

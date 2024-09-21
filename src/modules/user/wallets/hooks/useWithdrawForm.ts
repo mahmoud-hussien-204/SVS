@@ -18,7 +18,7 @@ const schema: Yup.ObjectSchema<IWithdrawForm> = Yup.object().shape({
     .moreThan(0, "Amount must be greater than 0"),
   message: Yup.string().optional(),
   wallet_id: Yup.number().required("Please select wallet"),
-  code: Yup.string().optional(),
+  code: Yup.string().required("Please enter 2FA code"),
 });
 
 const useWithdrawForm = () => {

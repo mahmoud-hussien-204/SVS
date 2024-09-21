@@ -36,8 +36,6 @@ const TransferCoinForm = ({ data }: IModalComponentProps) => {
     })
   }, [wallets])
 
-  console.log(handelOpthions());
-
   return (
     <form noValidate name='transfer-form' id='transfer-form' onSubmit={handleSubmit}>
       <ModalHeader title='Transfer Coin' />
