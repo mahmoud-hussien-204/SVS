@@ -8,7 +8,7 @@ export const apiGetButyCoinHistory = async (page: number, limit: number, search?
   data.append("length", limit.toString() || "10");
   data.append("search", search || "");
 
-  return InterceptorHelper.intercept<IBuyCoinData[]>(`/user/buy-coin-history?${data.toString()}`);
+  return InterceptorHelper.intercept<IResponse<IBuyCoinData[]>>(`/user/buy-coin-history?${data.toString()}`);
 };
 
 export const apiGetBuyCoinReferralHistory = async (
@@ -21,7 +21,7 @@ export const apiGetBuyCoinReferralHistory = async (
   data.append("length", limit.toString() || "10");
   data.append("search", search || "");
 
-  return InterceptorHelper.intercept<IReferralData[]>(
+  return InterceptorHelper.intercept<IResponse<IReferralData[]>>(
     `/user/buy-coin-referral-history?${data.toString()}`
   );
 };

@@ -26,16 +26,16 @@ import useQuery from "@/hooks/useQuery";
 
 import dayjs from "dayjs";
 
-import {apiGetButyCoinHistory} from "../services";
+import { apiGetButyCoinHistory } from "../services";
 
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 export const Component = () => {
   usePageTitle("Buy Coin History");
 
-  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+  const { limitSearchParams, pageSearchParams, searchSearchParams } = useApiUrlFilter();
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => apiGetButyCoinHistory(pageSearchParams, limitSearchParams, searchSearchParams),
     queryKey: ["buy-coin-history", pageSearchParams, limitSearchParams, searchSearchParams],
     retry: false,
@@ -43,6 +43,7 @@ export const Component = () => {
   });
 
   const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
+
   return (
     <TransitionPage>
       <div className='max-w-[450px]'>
@@ -64,28 +65,28 @@ export const Component = () => {
 
             <TableBoxedLayoutTBody>
               {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data?.map((item) => (
-                    <TableBoxedLayoutTR key={item.id}>
-                      <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.coin}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <Status status={item.status} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+                ? Array.from({ length: 10 }).map((_, index) => (
+                  <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+                : data?.data.map((item) => (
+                  <TableBoxedLayoutTR key={item.id}>
+                    <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.coin}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <Status status={String(item.status)} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 

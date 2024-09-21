@@ -22,29 +22,27 @@ import ConfirmationForm from "@/components/ConfirmationForm";
 
 import useQuery from "@/hooks/useQuery";
 
+import { apiGetWalletData } from "../services";
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
-
-import {apiGetWalletData} from "../services";
 
 export const Component = () => {
   usePageTitle("My Wallets");
-  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
-
-  const {data, isLoading} = useQuery({
-    queryFn: () => apiGetWalletData(pageSearchParams, limitSearchParams, searchSearchParams),
-    queryKey: ["my-wallets", pageSearchParams, limitSearchParams, searchSearchParams],
+  const { searchSearchParams } = useApiUrlFilter()
+  const { data, isLoading } = useQuery({
+    queryFn: () => apiGetWalletData(searchSearchParams),
+    queryKey: ["my-wallets", searchSearchParams],
     retry: false,
     refetchOnWindowFocus: false,
   });
 
-  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
+  const wallets = data?.wallets || [];
 
   return (
     <ModalProvider>
       <TransitionPage>
-        <MyWalletHead />
+        <MyWalletHead coinsData={data?.coins || []} />
         <div className='mt-2rem'>
-          <MyWalletList />
+          <MyWalletList Wallets={wallets} isLoading={isLoading} />
         </div>
       </TransitionPage>
 

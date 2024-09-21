@@ -1,4 +1,4 @@
-import {constantWalletType} from "../constants";
+import { constantWalletType } from "../constants";
 
 import Search from "@/components/Search";
 
@@ -8,12 +8,14 @@ import PageFilterSelect from "@/components/PageFilterSelect";
 
 import useModal from "@/hooks/useModal";
 
-import {EnumModals} from "@/enums";
+import { EnumModals } from "@/enums";
 
 import IconPlus from "@/components/icons/IconPlus";
 
-const MyWalletHead = () => {
-  const {show} = useModal();
+import { ICoin } from "../interfaces";
+
+const MyWalletHead = ({ coinsData }: { coinsData: ICoin[] }) => {
+  const { show } = useModal();
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center gap-1.5rem'>
@@ -22,7 +24,7 @@ const MyWalletHead = () => {
         </div>
         <PageFilterSelect options={constantWalletType} />
       </div>
-      <Button type='button' onClick={() => show(EnumModals.add)}>
+      <Button type='button' onClick={() => show(EnumModals.add, coinsData)}>
         <IconPlus />
         Add Wallet
       </Button>

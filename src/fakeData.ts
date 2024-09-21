@@ -267,44 +267,6 @@ export const fakeDataSwapHistory = [
   },
 ];
 
-export const fakeDataPlans = [
-  {
-    id: 1,
-    planName: "Silver",
-    minimumAmount: "500.00 NEWTKN",
-    minimumDuration: "360 days",
-    bonusPercentage: "20.00%",
-    image: "/Silver.png",
-    color: "#dfdfdf",
-  },
-  {
-    id: 2,
-    planName: "Gold",
-    minimumAmount: "1,000.00 NEWTKN",
-    minimumDuration: "30 days",
-    bonusPercentage: "0.00%",
-    image: "/Gold.png",
-    color: "#ffbd25",
-  },
-  {
-    id: 3,
-    planName: "Platinum",
-    minimumAmount: "2,000.00 NEWTKN",
-    minimumDuration: "30 days",
-    bonusPercentage: "0.00%",
-    image: "/Platinum.png",
-    color: "#8d71de",
-  },
-  {
-    id: 4,
-    planName: "Basic plan",
-    minimumAmount: "0.05 NEWTKN",
-    minimumDuration: "15 days",
-    bonusPercentage: "1.00%",
-    image: "/Basic.png",
-    color: "#ffbd25",
-  },
-];
 
 export const fakeDataReferrals = [
   {id: 1, level1: "Beginner", level2: "Intermediate", level3: "Advanced"},

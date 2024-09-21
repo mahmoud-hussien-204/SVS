@@ -4,16 +4,17 @@ import IconSendReceive from "@/components/icons/IconSendReceive";
 
 import Search from "@/components/Search";
 
-import {EnumModals} from "@/enums";
+import { EnumModals } from "@/enums";
 
 import useModal from "@/hooks/useModal";
 
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { IWallet } from "../interfaces";
 
-const Head = () => {
-  const {show} = useModal();
+const Head = ({ wallets }: { wallets: IWallet[] }) => {
+  const { show } = useModal();
 
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <div className='flex items-center justify-between'>
@@ -24,7 +25,7 @@ const Head = () => {
           <Search placeholder='Search in membership bonus history' />
         </div>
       )}
-      <Button type='button' onClick={() => show(EnumModals.transfer)}>
+      <Button type='button' onClick={() => show(EnumModals.transfer, wallets)}>
         <IconSendReceive />
         Transfer Coin
       </Button>

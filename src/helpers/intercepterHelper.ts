@@ -31,10 +31,10 @@ export default class InterceptorHelper {
   static async interceptResponse<T>(
     response: Response,
     method: string | undefined
-  ): Promise<IResponse<T>> {
+  ): Promise<T> {
     const responseJson = await response.json();
 
-    const message = responseJson?.message;
+    const message = responseJson?.message || responseJson?.error;
 
     // handle response error
     if (!response.ok || responseJson.success == false) {
@@ -48,11 +48,11 @@ export default class InterceptorHelper {
       toast.success(message);
     }
 
-    return responseJson as IResponse<T>;
+    return responseJson;
   }
 
   // intercept function
-  static async intercept<T>(url: string, options: RequestInit = {}): Promise<IResponse<T>> {
+  static async intercept<T>(url: string, options: RequestInit = {}): Promise<T> {
     // handle request
     const requestOptions = await InterceptorHelper.interceptRequest(options);
 

@@ -10,8 +10,12 @@ import useModal from "@/hooks/useModal";
 
 import {constantTransferCoinMethods} from "../constants";
 
+import { apiTransferCoin } from "../services";
+
+import useMutation from "@/hooks/useMutation";
+
 const schema: Yup.ObjectSchema<ITransferCoinForm> = Yup.object().shape({
-  wallet: Yup.string().required("Please select wallet"),
+  wallet_id: Yup.string().required("Please select wallet"),
   amount: Yup.number()
     .required("Please enter amount")
     .typeError("Amount must be a number")
@@ -29,12 +33,20 @@ const useTransferCoinForm = () => {
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: ITransferCoinForm) => {
-    console.log(values);
-    hide();
+  const {mutate , isPending} = useMutation({
+    mutationFn: (values: ITransferCoinForm) => apiTransferCoin(values),
+    mutationKey: ["user-transfer-coin"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: ITransferCoinForm) => {
+    mutate(values,{
+      onSuccess: () => {
+        hide();
+      },
+    });
+  });
+
+  return {form, handleSubmit , isPending};
 };
 
 export default useTransferCoinForm;

@@ -10,7 +10,7 @@ import Modal from "@/components/Modal";
 
 import TransferCoinForm from "../components/TransferCoinForm";
 
-import {fakeDataSwapHistory} from "@/fakeData";
+import { fakeDataSwapHistory } from "@/fakeData";
 
 import Box from "@/components/Box";
 
@@ -29,13 +29,27 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetMemberShipHistory, apiGetMemberShipPlans } from "../services";
+
 export const Component = () => {
   usePageTitle("My Membership");
+
+  const { data: walletsData } = useQuery({
+    queryFn: apiGetMemberShipPlans,
+    queryKey: ["membership-plans"],
+  })
+
+  const { data } = useQuery({
+    queryFn: apiGetMemberShipHistory,
+    queryKey: ["membership-plans-history"],
+  })
 
   return (
     <ModalProvider>
       <TransitionPage>
-        <Head />
+        <Head wallets={walletsData?.wallets || []} />
 
         <div className='mt-2rem'>
           <Box>

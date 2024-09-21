@@ -29,25 +29,28 @@ export const Component = () => {
 
   const dashboardData = data as unknown as IDashboardData
 
+  const handelNumber = (value: number) => {
+    return +Number(value).toFixed(2)
+  }
 
   return (
     <TransitionPage>
       <div className='mb-2rem grid grid-cols-3 gap-1.5rem'>
         <StatsBox
           title='Available Coin'
-          value={dashboardData?.balance.available_coin || 0}
+          value={handelNumber(dashboardData?.balance.available_coin) || 0}
           className='from-indigo-400 to-indigo-300 bg-transparent'
           isLoading={isLoading}
         />
         <StatsBox
           title='Total Blocked Coin'
-          value={dashboardData?.blocked_coin || 0}
+          value={handelNumber(dashboardData?.blocked_coin) || 0}
           className='from-violet-500 to-violet-400'
           isLoading={isLoading}
         />
         <StatsBox
           title='Total Buy Coin'
-          value={dashboardData?.total_buy_coin || 0}
+          value={handelNumber(dashboardData?.total_buy_coin) || 0}
           className='from-fuchsia-500 to-fuchsia-400'
           isLoading={isLoading}
         />
