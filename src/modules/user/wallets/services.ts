@@ -19,7 +19,7 @@ export const apiGetSwapHistory = async (page: number, limit: number, search?: st
   data.append("searchableFields", '["from_wallet_id","to_wallet_id","converted_amount"]');
   data.append("search[value]", search || "");
 
-  return InterceptorHelper.intercept<ISwapHistoryData[]>(
+  return InterceptorHelper.intercept<IResponse<ISwapHistoryData[]>>(
     `/user/coin-convert-history?${data.toString()}`
   );
 };

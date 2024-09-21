@@ -46,6 +46,8 @@ export const Component = () => {
     queryKey: ["membership-plans-history"],
   })
 
+  console.log(data);
+
   return (
     <ModalProvider>
       <TransitionPage>

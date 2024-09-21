@@ -16,9 +16,9 @@ import Input from "@/components/Input";
 
 import { constantWalletType } from "../constants";
 
-import { ICoin } from "../interfaces";
-
 import { useCallback } from "react";
+
+import { ICoin } from "../interfaces";
 
 const AddWalletForm = ({ data }: IModalComponentProps) => {
   const { form, handleSubmit, isPending } = useAddWalletForm();

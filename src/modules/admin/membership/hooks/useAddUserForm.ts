@@ -4,7 +4,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import {useForm} from "react-hook-form";
 
-import {IAddUserForm} from "../interfaces";
+import { IAddUserForm } from "../../users/interfaces";
 
 import * as Yup from "yup";
 

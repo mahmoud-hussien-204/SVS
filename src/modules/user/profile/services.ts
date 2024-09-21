@@ -17,7 +17,7 @@ export const apiUpdateUserProfile = async (values: IEditProfile) => {
 };
 
 export const apiUploadProfilePhoto = async (values: FormData) => {
-  return InterceptorHelper.intercept<IUpdatePhotoResponse>("/user/upload-profile-image", {
+  return InterceptorHelper.intercept<IResponse<IUpdatePhotoResponse>>("/user/upload-profile-image", {
     body: values,
     method: "POST",
   });

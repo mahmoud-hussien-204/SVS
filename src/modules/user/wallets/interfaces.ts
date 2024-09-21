@@ -31,7 +31,7 @@ export interface ISwapHistoryData {
 export interface IWalletsData {
   title: string;
   tab: null;
-  coins: Coin[];
+  coins: ICoin[];
   data: {
     wallets: IWallet[];
   };
@@ -40,7 +40,7 @@ export interface IWalletsData {
   draw: null;
 }
 
-interface Coin {
+export interface ICoin {
   id: number;
   name: string;
   type: string;
