@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-type IOptions<TD, TV> = UseMutationOptions<IResponse<TD>, IError, TV>;
+type IOptions<TD, TV> = UseMutationOptions<TD, IError, TV>;
 
 export default function useMutation<TD, TV>({
   mutationFn,
@@ -15,7 +15,7 @@ export default function useMutation<TD, TV>({
   const queryClient = useQueryClient();
 
   // mutation function
-  const mutation = useMutationReactQuery<IResponse<TD>, IError, TV>({
+  const mutation = useMutationReactQuery<TD, IError, TV>({
     mutationKey,
     mutationFn,
     ...options,

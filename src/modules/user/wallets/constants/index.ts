@@ -6,10 +6,10 @@ export const constantWalletType = [
   },
   {
     label: "Personal Wallet",
-    value: "personal-wallet",
+    value: "1",
   },
   {
     label: "Multi Signature Wallet",
-    value: "multi-signature-wallet",
+    value: "2",
   },
 ];

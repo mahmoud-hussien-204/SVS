@@ -1,16 +1,18 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 
 import * as Yup from "yup";
 
-import { ILoginForm } from "../interfaces";
+import {ILoginForm} from "../interfaces";
 
 import useAuth from "./useAuth";
 
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-import { fakeDataUsers } from "@/fakeData";
+import {apiLoginUser} from "../services";
+
+import useMutation from "@/hooks/useMutation";
 
 const schema: Yup.ObjectSchema<ILoginForm> = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -20,25 +22,30 @@ const schema: Yup.ObjectSchema<ILoginForm> = Yup.object().shape({
 const useLoginForm = () => {
   const navigate = useNavigate();
 
-  const { saveUser } = useAuth();
+  const {saveUser} = useAuth();
 
   const form = useForm<ILoginForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: ILoginForm) => {
-    const user = fakeDataUsers.find(
-      (user) => user.email === values.email && user.password === values.password
-    );
-
-    if (user) {
-      saveUser(user);
-      navigate("/");
-    }
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiLoginUser,
+    mutationKey: ["login-user"],
   });
 
-  return { form, handleSubmit };
+  const handleSubmit = form.handleSubmit(async (values: ILoginForm) => {
+    mutate(values, {
+      onSuccess: (data) => {
+        const userRole = Number(data.data.user_info.role) === 1 ? "admin" : "user";
+
+        saveUser({...data.data.user_info, token: data.data.access_token, role: userRole});
+        navigate("/");
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useLoginForm;

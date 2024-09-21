@@ -1,16 +1,13 @@
 import Box from "@/components/Box";
 
-import PageLimit from "@/components/PageLimit";
-
-import Pagination from "@/components/Pagination";
-
 import {
   TableBoxedLayoutActionButtonDeposit,
-  TableBoxedLayoutActionButtonMakePrimary,
-  TableBoxedLayoutActionButtonSwap,
+  // TableBoxedLayoutActionButtonMakePrimary,
+  // TableBoxedLayoutActionButtonSwap,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -18,11 +15,14 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataMyWallets} from "@/fakeData";
-
 import dayjs from "dayjs";
 
-const MyWalletList = () => {
+import { IWallet } from "../interfaces";
+import Pagination from "@/components/Pagination";
+import PageLimit from "@/components/PageLimit";
+
+interface IProps { Wallets: IWallet[], isLoading: boolean, totalPages: number }
+const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -37,30 +37,39 @@ const MyWalletList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataMyWallets.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.updatedAt).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonDeposit />
-                  <TableBoxedLayoutActionButtonWithdraw />
-                  <TableBoxedLayoutActionButtonSwap />
-                  <TableBoxedLayoutActionButtonMakePrimary />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, index) => <TableBoxedLayoutTR key={index}>
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+            </TableBoxedLayoutTR>)
+          ) :
+            Wallets.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{Number(item.balance).toFixed(2)}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    <TableBoxedLayoutActionButtonDeposit data={item} />
+                    <TableBoxedLayoutActionButtonWithdraw data={item} />
+                    {/* <TableBoxedLayoutActionButtonSwap /> */}
+                    {/* <TableBoxedLayoutActionButtonMakePrimary /> */}
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

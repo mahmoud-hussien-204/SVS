@@ -3,10 +3,11 @@ import AppHelper from "@/helpers/appHelper";
 interface IProps {
   className?: string;
   title: string;
-  value: string;
+  value: number;
+  isLoading?: boolean;
 }
 
-const StatsBox = ({className, title, value}: IProps) => {
+const StatsBox = ({ className, title, value, isLoading }: IProps) => {
   return (
     <div
       className={AppHelper.classes(
@@ -16,7 +17,7 @@ const StatsBox = ({className, title, value}: IProps) => {
     >
       <div className='text-md font-semibold'>{title}</div>
       <div className='mt-1.5rem flex items-center'>
-        <div className='text-32 font-bold'> {value} </div>
+        {isLoading ? <span className="loading" /> : <div className='text-32 font-bold'> {value} </div>}
       </div>
     </div>
   );

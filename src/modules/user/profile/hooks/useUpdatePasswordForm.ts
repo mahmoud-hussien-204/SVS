@@ -6,12 +6,16 @@ import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiChnaggePassword} from "../services";
+
 const schema: Yup.ObjectSchema<IUpdatePassword> = Yup.object().shape({
-  currentPassword: Yup.string().required("Current password is required"),
-  newPassword: Yup.string().required("New password is required"),
-  confirmPassword: Yup.string()
+  password: Yup.string().required("Current password is required"),
+  new_password: Yup.string().required("New password is required"),
+  confirm_new_password: Yup.string()
     .required("Confirm password is required")
-    .oneOf([Yup.ref("newPassword")], "Passwords must match"),
+    .oneOf([Yup.ref("new_password")], "Passwords must match"),
 });
 
 const useUpdatePasswordForm = () => {
@@ -20,11 +24,18 @@ const useUpdatePasswordForm = () => {
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: IUpdatePassword) => {
-    console.log(values);
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiChnaggePassword,
+    mutationKey: ["user-change-password"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IUpdatePassword) => {
+    console.log(values);
+    // const {confirmPassword, ...rest} = values;
+    mutate(values);
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useUpdatePasswordForm;

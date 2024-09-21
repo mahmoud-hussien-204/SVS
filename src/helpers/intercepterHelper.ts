@@ -1,10 +1,9 @@
+import {baseURL} from "@/constants";
 import AuthHelper from "@/modules/auth/helpers/AuthHelper";
 
 import {toast} from "react-toastify";
 
 export default class InterceptorHelper {
-  private static baseUrl = process.env.VITE_APP_BASE_URL;
-
   // intercept request
   static async interceptRequest(options: RequestInit = {}): Promise<RequestInit> {
     // get token
@@ -32,13 +31,13 @@ export default class InterceptorHelper {
   static async interceptResponse<T>(
     response: Response,
     method: string | undefined
-  ): Promise<IResponse<T>> {
+  ): Promise<T> {
     const responseJson = await response.json();
 
-    const message = responseJson?.message;
+    const message = responseJson?.message || responseJson?.error;
 
     // handle response error
-    if (!response.ok) {
+    if (!response.ok || responseJson.success == false) {
       toast.error(message);
 
       return Promise.reject(responseJson);
@@ -53,11 +52,11 @@ export default class InterceptorHelper {
   }
 
   // intercept function
-  static async intercept<T>(url: string, options: RequestInit = {}): Promise<IResponse<T>> {
+  static async intercept<T>(url: string, options: RequestInit = {}): Promise<T> {
     // handle request
     const requestOptions = await InterceptorHelper.interceptRequest(options);
 
-    const response = await fetch(InterceptorHelper.baseUrl + "" + url, requestOptions);
+    const response = await fetch(baseURL + "" + url, requestOptions);
 
     // handle response
     const responseOption = await InterceptorHelper.interceptResponse<T>(response, options.method);

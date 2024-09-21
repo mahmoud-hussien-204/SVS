@@ -1,11 +1,11 @@
 export interface IProfileGlobalSettings {
-  language: string;
+  lang: string;
 }
 
 export interface IUpdatePassword {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  new_password: string;
+  confirm_new_password?: string;
 }
 
 export interface IEnableTwoFactorAuthentication {
@@ -13,14 +13,19 @@ export interface IEnableTwoFactorAuthentication {
 }
 
 export interface IEditProfile {
-  fullName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
-  photo: string;
   country: string;
+  gender: number;
 }
 
 export interface IPhoneVerification {
   code: string;
   phone: string;
+}
+
+export interface IUpdatePhotoResponse {
+  image: string;
 }

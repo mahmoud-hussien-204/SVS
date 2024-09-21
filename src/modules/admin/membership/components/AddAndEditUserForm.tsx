@@ -6,19 +6,19 @@ import Label from "@/components/Label";
 
 import ModalBody from "@/components/ModalBody";
 
-import {UseFormReturn} from "react-hook-form";
-
-import {IAddUserForm, IEditUserForm} from "../interfaces";
+import { UseFormReturn } from "react-hook-form";
 
 import Select from "@/components/Select";
 
-import {constantRoles} from "@/constants";
+import { constantRoles } from "@/constants";
+
+import { IAddUserForm, IEditUserForm } from "../../users/interfaces";
 
 interface IProps {
   form: UseFormReturn<IAddUserForm | IEditUserForm>;
 }
 
-const AddAndEditUserForm = ({form}: IProps) => {
+const AddAndEditUserForm = ({ form }: IProps) => {
   return (
     <ModalBody>
       <div className='mb-1.25rem grid grid-cols-2 gap-1.25rem'>

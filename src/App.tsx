@@ -10,17 +10,27 @@ import {AnimatePresence} from "framer-motion";
 
 import ScreenTitleProvider from "./providers/ScreenTitleProvider";
 
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+
+import {ToastContainer} from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
+const client = new QueryClient();
 function App() {
   return (
-    <AuthProvider>
-      <ScreenTitleProvider>
-        <main className='font-poppins'>
-          <AnimatePresence>
-            <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
-          </AnimatePresence>
-        </main>
-      </ScreenTitleProvider>
-    </AuthProvider>
+    <QueryClientProvider client={client}>
+      <AuthProvider>
+        <ScreenTitleProvider>
+          <main className='font-poppins'>
+            <AnimatePresence>
+              <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
+            </AnimatePresence>
+          </main>
+        </ScreenTitleProvider>
+      </AuthProvider>
+      <ToastContainer />
+    </QueryClientProvider>
   );
 }
 

@@ -7,14 +7,18 @@ import * as Yup from "yup";
 import {IWithdrawForm} from "../interfaces";
 
 import useModal from "@/hooks/useModal";
+import { apiWithdrawWallet } from "../services";
+import useMutation from "@/hooks/useMutation";
 
 const schema: Yup.ObjectSchema<IWithdrawForm> = Yup.object().shape({
-  walletAddress: Yup.string().required("Wallet address is required"),
+  address: Yup.string().required("Wallet address is required"),
   amount: Yup.number()
     .required("Please enter wallet name")
     .typeError("Amount must be a number")
     .moreThan(0, "Amount must be greater than 0"),
-  comment: Yup.string().optional(),
+  message: Yup.string().optional(),
+  wallet_id: Yup.number().required("Please select wallet"),
+  code: Yup.string().required("Please enter 2FA code"),
 });
 
 const useWithdrawForm = () => {
@@ -25,12 +29,20 @@ const useWithdrawForm = () => {
     mode: "onTouched",
   });
 
+  const {mutate , isPending} = useMutation({
+    mutationFn: apiWithdrawWallet,
+    mutationKey: ["user-withdraw-wallet"],
+  })
+
   const handleSubmit = form.handleSubmit((values: IWithdrawForm) => {
-    console.log(values);
-    hide();
+    mutate(values ,{
+      onSuccess: () => {
+        hide();
+      },
+    });
   });
 
-  return {form, handleSubmit};
+  return {form, handleSubmit , isPending};
 };
 
 export default useWithdrawForm;

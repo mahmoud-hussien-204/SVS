@@ -1,9 +1,9 @@
 import {useQuery as useReactQuery, UseQueryOptions} from "@tanstack/react-query";
 
-type IOptions<T> = UseQueryOptions<IResponse<T>, IError>;
+type IOptions<T> = UseQueryOptions<T, IError>;
 
 export default function useQuery<T>({queryFn, queryKey, ...options}: IOptions<T>) {
-  return useReactQuery<IResponse<T>, IError>({
+  return useReactQuery<T, IError>({
     queryKey: queryKey,
     queryFn,
     ...options,

@@ -12,31 +12,52 @@ import DailySales from "../components/DailySales";
 
 import TotalOrders from "../components/TotalOrders";
 
+import { apiGetDashboardData } from "../services";
+
+import useQuery from "@/hooks/useQuery";
+import { IDashboardData } from "../interfaces";
+
 export const Component = () => {
   usePageTitle("Dashboard");
+
+  const { data, isLoading } = useQuery({
+    queryFn: apiGetDashboardData,
+    queryKey: ["dashboard-data"],
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+
+  const dashboardData = data as unknown as IDashboardData
+
+  const handelNumber = (value: number) => {
+    return +Number(value).toFixed(2)
+  }
 
   return (
     <TransitionPage>
       <div className='mb-2rem grid grid-cols-3 gap-1.5rem'>
         <StatsBox
           title='Available Coin'
-          value='9,013,326.45'
-          className='from-indigo-400 to-indigo-300'
+          value={handelNumber(dashboardData?.balance.available_coin) || 0}
+          className='from-indigo-400 to-indigo-300 bg-transparent'
+          isLoading={isLoading}
         />
         <StatsBox
           title='Total Blocked Coin'
-          value='114,880.99'
+          value={handelNumber(dashboardData?.blocked_coin) || 0}
           className='from-violet-500 to-violet-400'
+          isLoading={isLoading}
         />
         <StatsBox
           title='Total Buy Coin'
-          value='86,251,105.99'
+          value={handelNumber(dashboardData?.total_buy_coin) || 0}
           className='from-fuchsia-500 to-fuchsia-400'
+          isLoading={isLoading}
         />
       </div>
 
       <div className='grid gap-6 xl:grid-cols-3'>
-        <DepositAndWithdrawal />
+        <DepositAndWithdrawal deposits={dashboardData?.deposit} withdrawals={dashboardData?.withdrawal} />
         <SalesByCategory />
       </div>
 

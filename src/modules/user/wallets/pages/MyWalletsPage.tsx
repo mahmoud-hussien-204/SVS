@@ -12,22 +12,40 @@ import DepositForm from "../components/DepositForm";
 
 import WithdrawForm from "../components/WithdrawForm";
 
-import SwapForm from "../components/SwapForm";
+// import SwapForm from "../components/SwapForm";
 
 import MyWalletHead from "../components/MyWalletHead";
 
 import MyWalletList from "../components/MyWalletList";
 
-import ConfirmationForm from "@/components/ConfirmationForm";
+// import ConfirmationForm from "@/components/ConfirmationForm";
+
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetWalletData } from "../services";
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 export const Component = () => {
   usePageTitle("My Wallets");
+  const { pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams } = useApiUrlFilter()
+
+  const { data, isLoading } = useQuery({
+    queryFn: () => apiGetWalletData(pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams),
+    queryKey: ["my-wallets", pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const wallets = data?.data.wallets || [];
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / 10) : 1
+
   return (
     <ModalProvider>
       <TransitionPage>
-        <MyWalletHead />
+        <MyWalletHead coinsData={data?.coins || []} />
         <div className='mt-2rem'>
-          <MyWalletList />
+          <MyWalletList Wallets={wallets} isLoading={isLoading} totalPages={totalPages} />
         </div>
       </TransitionPage>
 
@@ -35,8 +53,8 @@ export const Component = () => {
         add={AddWalletForm}
         deposit={DepositForm}
         withdraw={WithdrawForm}
-        swap={SwapForm}
-        confirmation={ConfirmationForm}
+      // swap={SwapForm}
+      // confirmation={ConfirmationForm}
       />
     </ModalProvider>
   );

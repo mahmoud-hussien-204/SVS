@@ -2,42 +2,58 @@ import ModalBody from "@/components/ModalBody";
 
 import ModalHeader from "@/components/ModalHeader";
 
-import ImageQrCode from "@/assets/qrcode.svg";
-
-import IconRefresh from "@/components/icons/IconRefresh";
-
 import Label from "@/components/Label";
 
 import useCopy from "@/hooks/useCopy";
 
 import CopyButton from "@/components/CopyButton";
 
-const DepositForm = () => {
-  const {elementRef, copied, copy} = useCopy();
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetWalletDetailsDeposits } from "../services";
+
+import { IWallet } from "../interfaces";
+
+import QRCode from "react-qr-code";
+
+const DepositForm = ({ data }: IModalComponentProps) => {
+  const { elementRef, copied, copy } = useCopy();
+  const walletData = data as IWallet
+
+  const { data: deatilsWallet, isLoading } = useQuery({
+    queryFn: () => apiGetWalletDetailsDeposits(walletData?.id),
+    queryKey: ["wallet-details-deposits"],
+    enabled: Boolean(walletData?.id),
+  })
 
   return (
     <>
       <ModalHeader title='Deposit' />
       <ModalBody>
-        <div className='flex gap-1.5rem'>
-          <img src={ImageQrCode} alt='scan qr code' className='w-full max-w-[12rem]' />
-          <div className='w-full pt-1.5rem'>
-            <Label>Wallet Address</Label>
-            <div className='flex h-3rem items-center justify-between rounded-0.5rem bg-base-300 pe-0.25rem ps-1rem'>
-              <div className='fill-1 text-12' ref={elementRef}>
-                MX5hPdwypVSkx43umowoWcRRV4xnSeuyuM
-              </div>
-              <CopyButton copied={copied} copy={copy} />
+        {isLoading ?
+          <div className="w-full flex items-center justify-center h-8rem">
+            <span className="loading loading-spinner w-3rem"></span>
+          </div>
+          :
+          <div className='flex gap-1.5rem items-center'>
+            <div style={{ background: 'white', padding: '10px' }}>
+              <QRCode
+                value={deatilsWallet?.address || ""}
+                size={150}
+              />
             </div>
 
-            <button
-              type='button'
-              className='mt-1rem flex items-center gap-0.75rem text-14 text-neutral-400'
-            >
-              <IconRefresh /> Generate new address
-            </button>
+            <div className='w-full'>
+              <Label>Wallet Address</Label>
+              <div className='flex h-3rem items-center justify-between rounded-0.5rem bg-base-300 pe-0.25rem ps-1rem'>
+                <div className='fill-1 text-12' ref={elementRef}>
+                  {deatilsWallet?.address}
+                </div>
+                <CopyButton copied={copied} copy={copy} />
+              </div>
+            </div>
           </div>
-        </div>
+        }
       </ModalBody>
     </>
   );

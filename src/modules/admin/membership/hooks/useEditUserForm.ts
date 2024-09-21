@@ -4,9 +4,9 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import {useForm} from "react-hook-form";
 
-import {IEditUserForm, IUserData} from "../interfaces";
-
 import * as Yup from "yup";
+
+import { IEditUserForm, IUserData } from "../../users/interfaces";
 
 const schema: Yup.ObjectSchema<IEditUserForm> = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),

@@ -14,14 +14,27 @@ import ErrorMessage from "@/components/ErrorMessage";
 
 import Select from "@/components/Select";
 
-import {fakeDataWallets} from "@/fakeData";
-
 import RadioBoxInput from "@/components/RadioBoxInput";
 
-import {constantTransferCoinMethods} from "../constants";
+import { constantTransferCoinMethods } from "../constants";
 
-const TransferCoinForm = () => {
-  const {form, handleSubmit} = useTransferCoinForm();
+import { IWallet } from "../interfaces";
+
+import { useCallback } from "react";
+
+const TransferCoinForm = ({ data }: IModalComponentProps) => {
+  const { form, handleSubmit, isPending } = useTransferCoinForm();
+
+  const wallets = data as IWallet[]
+
+  const handelOpthions = useCallback(() => {
+    return wallets?.map((data) => {
+      return {
+        label: data.name,
+        value: data.id
+      }
+    })
+  }, [wallets])
 
   return (
     <form noValidate name='transfer-form' id='transfer-form' onSubmit={handleSubmit}>
@@ -47,13 +60,13 @@ const TransferCoinForm = () => {
         <div className='mb-1.25rem'>
           <Label htmlFor='transfer-form-wallet'>Select Wallet</Label>
           <Select
-            {...form.register("wallet")}
-            options={fakeDataWallets}
+            {...form.register("wallet_id")}
+            options={handelOpthions()}
             id='transfer-form-wallet'
-            isError={!!form.formState.errors.wallet}
+            isError={!!form.formState.errors.wallet_id}
             defaultValue=''
           />
-          <ErrorMessage>{form.formState.errors.wallet?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.wallet_id?.message}</ErrorMessage>
         </div>
 
         <div className='mb-1.25rem'>
@@ -68,7 +81,7 @@ const TransferCoinForm = () => {
           <ErrorMessage>{form.formState.errors.amount?.message}</ErrorMessage>
         </div>
       </ModalBody>
-      <ModalFooter isLoading={false} title='Transfer' />
+      <ModalFooter isLoading={isPending} title='Transfer' />
     </form>
   );
 };

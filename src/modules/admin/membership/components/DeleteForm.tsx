@@ -1,10 +1,11 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-import {IUserData} from "../interfaces";
+import { IUserData } from "../../users/interfaces";
+
 
 type IProps = Pick<IUserData, "id">;
 
-const DeleteForm = ({data: dataProps}: IModalComponentProps) => {
+const DeleteForm = ({ data: dataProps }: IModalComponentProps) => {
   const data = dataProps as IProps;
 
   const handleSubmit = () => {

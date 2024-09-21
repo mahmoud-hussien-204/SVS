@@ -15,7 +15,7 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 
 export const Component = () => {
-  const {form, handleSubmit} = useProfileGlobalSettings();
+  const {form, handleSubmit, isPending} = useProfileGlobalSettings();
 
   return (
     <TransitionPage>
@@ -29,11 +29,16 @@ export const Component = () => {
         >
           <div className='mb-1.25rem'>
             <Label htmlFor='global-settings-form-language'>Select Language</Label>
-            <Select options={constantLanguage} defaultValue='' id='global-settings-form-language' />
-            <ErrorMessage>{form.formState.errors.language?.message}</ErrorMessage>
+            <Select
+              options={constantLanguage}
+              defaultValue=''
+              id='global-settings-form-language'
+              {...form.register("lang")}
+            />
+            <ErrorMessage>{form.formState.errors.lang?.message}</ErrorMessage>
           </div>
           <div className='flex items-center gap-0.5rem'>
-            <Button type='submit' className='min-w-[160px]'>
+            <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
               Save Changes
             </Button>
             <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
