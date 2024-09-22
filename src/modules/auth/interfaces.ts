@@ -4,12 +4,12 @@ export interface ILoginForm {
 }
 
 export interface IRegisterForm {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   password: string;
-  confirmPassword: string;
+  password_confirmation: string;
 }
 
 export interface IResetPasswordForm {
@@ -18,5 +18,5 @@ export interface IResetPasswordForm {
 
 export interface ICreateNewPasswordForm {
   password: string;
-  confirmPassword: string;
+  password_confirmation: string;
 }

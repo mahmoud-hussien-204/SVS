@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const schema: Yup.ObjectSchema<ICreateNewPasswordForm> = Yup.object().shape({
   password: Yup.string().required("Password is required"),
-  confirmPassword: Yup.string()
+  password_confirmation: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Confirm password is required"),
 });

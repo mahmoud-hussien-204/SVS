@@ -17,11 +17,11 @@ import Button from "@/components/Button";
 import useCreateNewPasswordForm from "../hooks/useCreateNewPasswordForm";
 
 const CreateNewPasswordForm = () => {
-  const {form, handleSubmit} = useCreateNewPasswordForm();
+  const { form, handleSubmit } = useCreateNewPasswordForm();
 
-  const {inputType, toggleVisibility} = usePasswordVisibility();
+  const { inputType, toggleVisibility } = usePasswordVisibility();
 
-  const {inputType: confirmPasswordInputType, toggleVisibility: confirmPasswordToggleVisibility} =
+  const { inputType: confirmPasswordInputType, toggleVisibility: confirmPasswordToggleVisibility } =
     usePasswordVisibility();
 
   return (
@@ -66,15 +66,15 @@ const CreateNewPasswordForm = () => {
           }
         >
           <Input
-            {...form.register("confirmPassword")}
+            {...form.register("password_confirmation")}
             type={confirmPasswordInputType}
             id='register-form-confirm-password'
             placeholder='Password'
-            isError={!!form.formState.errors.confirmPassword}
+            isError={!!form.formState.errors.password_confirmation}
             autoComplete='new-password'
           />
         </InputWithIconContainer>
-        <ErrorMessage>{form.formState.errors.confirmPassword?.message}</ErrorMessage>
+        <ErrorMessage>{form.formState.errors.password_confirmation?.message}</ErrorMessage>
       </div>
 
       <Button type='submit' className='w-full'>

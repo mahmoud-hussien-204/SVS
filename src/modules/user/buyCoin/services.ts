@@ -1,6 +1,10 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IBuyCoinData, IReferralData} from "./interfaces";
+import {IBuyCoinData, IBuyCoinPageData, IReferralData} from "./interfaces";
+
+export const apiGetBuyCoin = async () => {
+  return InterceptorHelper.intercept<IBuyCoinPageData>("/user/buy-coin");
+};
 
 export const apiGetButyCoinHistory = async (page: number, limit: number, search?: string) => {
   const data = new URLSearchParams();
@@ -9,7 +13,9 @@ export const apiGetButyCoinHistory = async (page: number, limit: number, search?
   data.append("search[value]", search || "");
   data.append("searchableFields", '["coin","type","coin","status"]');
 
-  return InterceptorHelper.intercept<IResponse<IBuyCoinData[]>>(`/user/buy-coin-history?${data.toString()}`);
+  return InterceptorHelper.intercept<IResponse<IBuyCoinData[]>>(
+    `/user/buy-coin-history?${data.toString()}`
+  );
 };
 
 export const apiGetBuyCoinReferralHistory = async (
