@@ -8,6 +8,7 @@ import Status from "@/components/Status";
 
 import {
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -15,14 +16,14 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataSentCoinHistory} from "@/fakeData";
-
 import dayjs from "dayjs";
 
-const List = () => {
+import { IRqquestCoinHistory } from "../interfaces";
+
+const List = ({ data, isLoading, totalPages }: { data: IRqquestCoinHistory[], isLoading: boolean, totalPages: number }) => {
   return (
     <Box>
-      <TableBoxedLayoutContainer>
+      <TableBoxedLayoutContainer className="mt-2rem">
         <TableBoxedLayoutTHead>
           <TableBoxedLayoutTR>
             <TableBoxedLayoutTH>Sender</TableBoxedLayoutTH>
@@ -35,17 +36,26 @@ const List = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataSentCoinHistory.map((item) => (
+          {isLoading ? (
+            Array.from({ length: 10 }).map((_, index) => <TableBoxedLayoutTR key={index}>
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+              <TableBoxedLayoutSkeleton />
+            </TableBoxedLayoutTR>)
+          ) : data.map((item) => (
             <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.sender}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.receiver}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinName}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.sender_user_id}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.receiver_user_id}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
-                <Status status={item.status} />
+                <Status status={String(item.status)} />
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
+                {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
               </TableBoxedLayoutTD>
             </TableBoxedLayoutTR>
           ))}
@@ -54,7 +64,7 @@ const List = () => {
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

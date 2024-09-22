@@ -11,6 +11,9 @@ export default function useApiUrlFilter() {
 
   const filterSearchParams = searchParams.get("filter") || "";
 
+  const tabSearchParams = searchParams.get("tab") || "";
+
+
   return {
     searchParams,
     setSearchParams,
@@ -18,5 +21,6 @@ export default function useApiUrlFilter() {
     pageSearchParams: Number(pageSearchParams),
     limitSearchParams: Number(limitSearchParams),
     filterSearchParams,
+    tabSearchParams
   };
 }

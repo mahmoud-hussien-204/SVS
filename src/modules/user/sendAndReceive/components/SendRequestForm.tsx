@@ -8,32 +8,60 @@ import Select from "@/components/Select";
 
 import useSendRequestForm from "../hooks/useSendRequestForm";
 
-import {fakeDataWallets} from "@/fakeData";
-
 import Label from "@/components/Label";
 
 import ErrorMessage from "@/components/ErrorMessage";
 
 import Input from "@/components/Input";
 
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetCoinRequests } from "../services";
+
+import { constantRequestCoinType } from "../constants";
+
+import { ENUM_SEND_REQUEST_FORM_TYPE } from "../interfaces";
+
 const SendRequest = () => {
-  const {form, handleSubmit} = useSendRequestForm();
+  const { form, handleSubmit } = useSendRequestForm();
+
+  const { data, isLoading } = useQuery({
+    queryFn: apiGetCoinRequests,
+    queryKey: ["get-user-coin-requests"],
+  })
+
+  const handelTypeOpthions = () => {
+    return data?.wallets.map((data) => ({ label: data.name, value: data.id })) ?? []
+  }
 
   return (
     <form noValidate name='send-request' id='send-request' onSubmit={handleSubmit}>
       <ModalHeader title='Send Request' />
       <ModalBody>
         <div className='mb-1.25rem'>
-          <Label htmlFor='send-request-wallet'>Select Your Wallet</Label>
+          <Label htmlFor='send-request-wallet'>Select Type</Label>
           <Select
-            {...form.register("wallet")}
-            options={fakeDataWallets}
+            {...form.register("type")}
+            options={constantRequestCoinType}
             id='send-request-wallet'
-            isError={!!form.formState.errors.wallet}
+            isError={!!form.formState.errors.type}
             defaultValue=''
           />
-          <ErrorMessage>{form.formState.errors.wallet?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.type?.message}</ErrorMessage>
         </div>
+
+        {form.watch("type") == ENUM_SEND_REQUEST_FORM_TYPE.SEND_COIN && <div className='mb-1.25rem'>
+          <Label htmlFor='send-request-wallet'>Select Your Wallet</Label>
+          <Select
+            {...form.register("wallet_id")}
+            options={[{ label: "Select Type", value: "", disabled: true }, ...handelTypeOpthions()]}
+            id='send-request-wallet'
+            isError={!!form.formState.errors.wallet_id}
+            defaultValue=''
+            disabled={isLoading}
+          />
+          <ErrorMessage>{form.formState.errors.wallet_id?.message}</ErrorMessage>
+        </div>}
 
         <div className='mb-1.25rem'>
           <Label htmlFor='send-request-amount'>Amount</Label>
