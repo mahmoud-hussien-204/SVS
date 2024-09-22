@@ -15,7 +15,7 @@ import IconEmail from "@/components/icons/IconEmail";
 import Button from "@/components/Button";
 
 const ResetPasswordForm = () => {
-  const {form, handleSubmit} = useResetPasswordForm();
+  const { form, handleSubmit, isPending } = useResetPasswordForm();
 
   return (
     <form onSubmit={handleSubmit} noValidate id='reset-password-form'>
@@ -38,7 +38,7 @@ const ResetPasswordForm = () => {
         <ErrorMessage>{form.formState.errors.email?.message}</ErrorMessage>
       </div>
 
-      <Button type='submit' className='w-full'>
+      <Button type='submit' className='w-full' isLoading={isPending}>
         Reset Password
       </Button>
     </form>

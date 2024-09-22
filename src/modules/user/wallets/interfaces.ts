@@ -27,7 +27,6 @@ export interface ISwapHistoryData {
   updated_at: string;
 }
 
-
 export interface IWalletsData {
   title: string;
   tab: null;

@@ -10,7 +10,7 @@ import InviteForm from "../components/InviteForm";
 
 import Head from "../components/Head";
 
-import { Navigate, useSearchParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import Tabs from "@/components/Tabs";
 
@@ -24,14 +24,26 @@ import MyEarningsList from "../components/MyEarningsList";
 
 import Box from "@/components/Box";
 
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetReferralData } from "../services";
+
 export const Component = () => {
   usePageTitle("My Referral");
 
-  const [searchParams] = useSearchParams();
+  const { tabSearchParams: tab } = useApiUrlFilter()
 
-  const isTab = searchParams.get("tab");
+  const { data } = useQuery({
+    queryFn: apiGetReferralData,
+    queryKey: ["get-user-referral"],
+  })
 
-  if (!isTab) return <Navigate to='?tab=my-referrals' replace />;
+  if (!tab) return <Navigate to='?tab=my-referrals' replace />;
+
+
+  console.log(data);
 
   return (
     <ModalProvider>
@@ -42,9 +54,9 @@ export const Component = () => {
         <Head />
         <div className='mt-2rem'>
           <Box>
-            {isTab === "my-referrals" ? (
+            {tab === "my-referrals" ? (
               <MyReferralsList />
-            ) : isTab === "my-references" ? (
+            ) : tab === "my-references" ? (
               <MyReferencesList />
             ) : (
               <MyEarningsList />

@@ -23,11 +23,11 @@ import Button from "@/components/Button";
 import IconPhone from "@/components/icons/IconPhone";
 
 const RegisterForm = () => {
-  const {form, handleSubmit} = useRegisterForm();
+  const { form, handleSubmit, isPending } = useRegisterForm();
 
-  const {inputType, toggleVisibility} = usePasswordVisibility();
+  const { inputType, toggleVisibility } = usePasswordVisibility();
 
-  const {inputType: confirmPasswordInputType, toggleVisibility: confirmPasswordToggleVisibility} =
+  const { inputType: confirmPasswordInputType, toggleVisibility: confirmPasswordToggleVisibility } =
     usePasswordVisibility();
 
   return (
@@ -42,27 +42,27 @@ const RegisterForm = () => {
           <Label htmlFor='register-form-first-name'>First name</Label>
           <InputWithIconContainer icon={<IconUser />}>
             <Input
-              {...form.register("firstName")}
+              {...form.register("first_name")}
               type='text'
               id='register-form-first-name'
               placeholder='First name'
-              isError={!!form.formState.errors.firstName}
+              isError={!!form.formState.errors.first_name}
             />
           </InputWithIconContainer>
-          <ErrorMessage>{form.formState.errors.firstName?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.first_name?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='register-form-last-name'>Last name</Label>
           <InputWithIconContainer icon={<IconUser />}>
             <Input
-              {...form.register("lastName")}
+              {...form.register("last_name")}
               type='text'
               id='register-form-last-name'
               placeholder='Last name'
-              isError={!!form.formState.errors.lastName}
+              isError={!!form.formState.errors.last_name}
             />
           </InputWithIconContainer>
-          <ErrorMessage>{form.formState.errors.lastName?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.last_name?.message}</ErrorMessage>
         </div>
       </div>
 
@@ -130,18 +130,18 @@ const RegisterForm = () => {
           }
         >
           <Input
-            {...form.register("confirmPassword")}
+            {...form.register("password_confirmation")}
             type={confirmPasswordInputType}
             id='register-form-confirm-password'
             placeholder='Password'
-            isError={!!form.formState.errors.confirmPassword}
+            isError={!!form.formState.errors.password_confirmation}
             autoComplete='new-password'
           />
         </InputWithIconContainer>
-        <ErrorMessage>{form.formState.errors.confirmPassword?.message}</ErrorMessage>
+        <ErrorMessage>{form.formState.errors.password_confirmation?.message}</ErrorMessage>
       </div>
 
-      <Button type='submit' className='w-full'>
+      <Button type='submit' className='w-full' isLoading={isPending}>
         Sign up
       </Button>
     </form>
