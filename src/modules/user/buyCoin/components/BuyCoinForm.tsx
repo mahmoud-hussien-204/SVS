@@ -1,9 +1,3 @@
-import ModalBody from "@/components/ModalBody";
-
-import ModalFooter from "@/components/ModalFooter";
-
-import ModalHeader from "@/components/ModalHeader";
-
 import Select from "@/components/Select";
 
 import Label from "@/components/Label";
@@ -14,9 +8,9 @@ import Input from "@/components/Input";
 
 import useBuyCoinForm from "../hooks/useBuyCoinForm";
 
-import { constantBuyCoinPaymentType } from "../constants";
+import {constantBuyCoinPaymentType} from "../constants";
 
-import { ENUM_BUY_COIN_PAYMENT_TYPE } from "../enums";
+import {ENUM_BUY_COIN_PAYMENT_TYPE} from "../enums";
 
 import CoinPaymentForm from "./CoinPaymentForm";
 
@@ -24,28 +18,30 @@ import BankDepositsForm from "./BankDepositsForm";
 
 import CreditCardForm from "./CreditCardForm";
 
-import { ICoin } from "../../wallets/interfaces";
+import {ICoin} from "../../wallets/interfaces";
 
-const BuyCoinForm = ({ data }: IModalComponentProps) => {
-  const { form, handleSubmit } = useBuyCoinForm();
+import Button from "@/components/Button";
 
-  const paymentType = form.watch("payment_type")
+const BuyCoinForm = ({coins}: {coins: ICoin[]}) => {
+  const {form, handleSubmit} = useBuyCoinForm();
+
+  const paymentType = form.watch("payment_type");
 
   const renderPaymentForm = () => {
     switch (paymentType) {
       case ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT:
-        return <CoinPaymentForm coins={data as ICoin[]} />
+        return <CoinPaymentForm coins={coins} />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT:
-        return <BankDepositsForm />
+        return <BankDepositsForm />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD:
-        return <CreditCardForm />
+        return <CreditCardForm />;
     }
-  }
+  };
 
   return (
     <form noValidate name='buy-coin' id='buy-coin' onSubmit={handleSubmit}>
-      <ModalHeader title='Buy Coin' />
-      <ModalBody>
+      <h2 className='mb-1.5rem'>Buy Our Coin From Here</h2>
+      <div>
         <div className='mb-1.25rem'>
           <Label htmlFor='send-request-amount'>Amount</Label>
           <Input
@@ -70,9 +66,12 @@ const BuyCoinForm = ({ data }: IModalComponentProps) => {
           <ErrorMessage>{form.formState.errors.payment_type?.message}</ErrorMessage>
         </div>
 
-        {renderPaymentForm()}
-      </ModalBody>
-      <ModalFooter isLoading={false} title='Send Request' />
+        <div className='mt-2rem border-t border-t-neutral-500 pt-2rem'>{renderPaymentForm()}</div>
+      </div>
+
+      <Button type='submit' className='mt-1.25rem min-w-[150px]'>
+        Buy Now
+      </Button>
     </form>
   );
 };
