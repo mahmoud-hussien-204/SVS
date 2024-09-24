@@ -41,4 +41,7 @@ export interface IUserActions {
   Edit: string;
   Suspend: string;
   Delete: string;
+  Email_verify: string;
+  Phone_verify: string;
+  Active: string;
 }
