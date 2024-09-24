@@ -1,30 +1,30 @@
 import usePageTitle from "@/hooks/usePageTitle";
+
 import useQuery from "@/hooks/useQuery";
-import { apiGetBuyCoin } from "../services";
+
+import {apiGetBuyCoin} from "../services";
+
 import TransitionPage from "@/components/TransitionPage";
-import Head from "../components/Head";
-import Modal from "@/components/Modal";
+
 import BuyCoinForm from "../components/BuyCoinForm";
-import ModalProvider from "@/providers/ModalProvider";
+import TodayCoinRate from "../components/TodayCoinRate";
 
 export const Component = () => {
   usePageTitle("Buy Coin");
-  const { data } = useQuery({
+  const {data} = useQuery({
     queryFn: apiGetBuyCoin,
     queryKey: ["user-buy-coin"],
-  })
+  });
 
   return (
-    <ModalProvider>
-      <TransitionPage>
-        <Head coins={data?.coins || []} />
+    <TransitionPage>
+      <div className='grid grid-cols-2 gap-3rem px-8'>
+        <BuyCoinForm coins={data?.coins || []} />
 
-        <Modal
-          add={BuyCoinForm}
-        />
-      </TransitionPage>
-    </ModalProvider>
-  )
+        <TodayCoinRate />
+      </div>
+    </TransitionPage>
+  );
 };
 
 Component.displayName = "BuyCoinPage";

@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination";
 
 import {
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -17,18 +18,47 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataMyWallets} from "@/fakeData";
-
 import dayjs from "dayjs";
 
 import Search from "@/components/Search";
 
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import useQuery from "@/hooks/useQuery";
+
+import { apigetAdminWallets } from "../services";
+
+import PageFilterSelect from "@/components/PageFilterSelect";
+
+import { constantTypeWallets } from "../constants";
+
+import { ENUM_WALLET_TYPE } from "../enums";
+
+import { Navigate } from "react-router";
+
 export const Component = () => {
   usePageTitle("Wallets");
+  const { filterSearchParams: path, pageSearchParams: page, limitSearchParams: limit, searchSearchParams: search } = useApiUrlFilter()
+
+  const { data, isLoading } = useQuery({
+    queryFn: () => apigetAdminWallets(path as ENUM_WALLET_TYPE, page, limit, search),
+    queryKey: ["admin-wallets", path, page, limit, search],
+    enabled: !!path
+  })
+
+  if (!path) {
+    return <Navigate to={`?filter=${ENUM_WALLET_TYPE.PERSONAL_WALLET}`} />
+  }
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1
+
   return (
     <TransitionPage>
-      <div className='w-[450px] max-w-full'>
-        <Search placeholder='Search in wallets' />
+      <div className='flex items-center gap-1.5rem'>
+        <div className='w-[450px] max-w-full'>
+          <Search placeholder='Search in wallets' />
+        </div>
+        <PageFilterSelect options={constantTypeWallets} />
       </div>
       <div className='mt-2rem'>
         <Box>
@@ -45,24 +75,34 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {fakeDataMyWallets.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.coinType}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.userName}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.userEmail}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item.updatedAt).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+              {isLoading ? (
+                Array.from({ length: 10 }).map((_, index) => <TableBoxedLayoutTR key={index}>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>)
+              ) :
+                data?.data.map((item, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.first_name} {" "} {item.last_name}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 
           <div className='mt-2rem flex items-center justify-between'>
             <PageLimit />
-            <Pagination totalPages={5} />
+            <Pagination totalPages={totalPages} />
           </div>
         </Box>
       </div>

@@ -1,4 +1,4 @@
-import {useCallback} from "react";
+import { useCallback } from "react";
 
 import IconSearch from "./icons/IconSearch";
 
@@ -14,8 +14,8 @@ interface IProps {
 
 let debounce: NodeJS.Timeout;
 
-const Search = ({placeholder}: IProps) => {
-  const {searchSearchParams, searchParams, setSearchParams} = useApiUrlFilter();
+const Search = ({ placeholder }: IProps) => {
+  const { searchSearchParams, searchParams, setSearchParams } = useApiUrlFilter();
 
   const handleSearchInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +23,7 @@ const Search = ({placeholder}: IProps) => {
       debounce = setTimeout(() => {
         const newSearchParams = new URLSearchParams(searchParams);
         newSearchParams.set("search", e.target.value);
+        newSearchParams.set("page", "1");
         setSearchParams(newSearchParams);
       }, 1500);
     },

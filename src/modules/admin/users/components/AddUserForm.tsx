@@ -7,13 +7,13 @@ import ModalFooter from "@/components/ModalFooter";
 import useAddUserForm from "../hooks/useAddUserForm";
 
 const AddUserForm = () => {
-  const {form, handleSubmit} = useAddUserForm();
+  const { form, handleSubmit, isPending } = useAddUserForm();
 
   return (
     <form noValidate name='add-user-form' id='withdraw-form' onSubmit={handleSubmit}>
       <ModalHeader title='Create New User' />
-      <AddAndEditUserForm form={form} />
-      <ModalFooter isLoading={false} title='Add New User' />
+      <AddAndEditUserForm form={form} type="add" />
+      <ModalFooter isLoading={isPending} title='Add New User' />
     </form>
   );
 };

@@ -1,21 +1,44 @@
 export interface IAddUserForm {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  phoneNumber: string;
-  role: string;
+  phone: string;
+  role: number;
 }
-
-export type IEditUserForm = IAddUserForm;
 
 export interface IUserData {
   id: number;
-  userName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  role: string;
-  status: IUserStatus;
-  createdAt: string;
-  phoneNumber: string;
-  firstName: string;
-  lastName: string;
+  reset_code: null;
+  role: number;
+  status: string;
+  country_code: null;
+  phone: null;
+  phone_verified: number;
+  country: null;
+  gender: number;
+  birth_date: null;
+  photo: null;
+  g2f_enabled: string;
+  google2fa_secret: null;
+  is_verified: number;
+  language: string;
+  device_id: null;
+  device_type: number;
+  push_notification_status: number;
+  email_notification_status: number;
+  created_at: string;
+  updated_at: string;
+  verification_codes: null;
+  type: string;
+  action: IUserActions;
+}
+
+export interface IUserActions {
+  View: string;
+  Edit: string;
+  Suspend: string;
+  Delete: string;
 }

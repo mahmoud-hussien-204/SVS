@@ -1,20 +1,21 @@
 export interface IEditCoinForm {
-  coinName: string;
-  withdrawalFees: number;
-  minimumWithdrawal: number;
-  maximumWithdrawal: number;
-  withdrawalStatus: string;
+  name: string;
+  fee: string;
+  minimum_withdrawal: string;
+  maximum_withdrawal: string;
+  status: string;
   activeStatus: string;
   coinIcon: string;
+  type: string;
 }
 
 export interface ICoinData {
   id: number;
-  coinName: string;
-  coinType: string;
-  minWithdrawAmount: number;
-  maxWithdrawAmount: number;
-  feesPercentage: number;
+  name: string;
   status: string;
-  updatedAt: string;
+  type: string;
+  minimum_withdrawal: string;
+  maximum_withdrawal: string;
+  fee: string;
+  updated_at: string;
 }
