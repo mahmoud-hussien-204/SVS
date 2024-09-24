@@ -27,3 +27,5 @@ export const constantUsersStatus = [
     value: ENUM_USERS_STATUS.PHONE_PENDING,
   },
 ];
+
+export const userActions = ["Email_verify", "Phone_verify", "Delete", "Edit", "Suspend", "View"];

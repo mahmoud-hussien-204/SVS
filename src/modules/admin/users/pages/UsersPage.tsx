@@ -23,6 +23,9 @@ import useQuery from "@/hooks/useQuery";
 import { apiGetUsers } from "../services";
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 import { ENUM_USERS_STATUS } from "../enums";
+import PhoneVerifyForm from "../components/PhoneVerifyForm";
+import EmailVerifyForm from "../components/EmailVerifyForm";
+import ActiveUserForm from "../components/ActiveUserForm";
 
 export const Component = () => {
   usePageTitle("Users List");
@@ -52,6 +55,9 @@ export const Component = () => {
         add={AddUserForm}
         suspended={SuspendForm}
         delete={DeleteForm}
+        phoneVerify={PhoneVerifyForm}
+        emailVerify={EmailVerifyForm}
+        active={ActiveUserForm}
       />
     </ModalProvider>
   );
