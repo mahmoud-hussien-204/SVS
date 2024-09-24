@@ -1,5 +1,3 @@
-import {fakeDataUsersList} from "@/fakeData";
-
 import Status from "@/components/Status";
 
 import {
@@ -24,7 +22,9 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-const UsersList = () => {
+import {IUserData} from "../interfaces";
+
+const UsersList = ({users}: {users: IUserData[]}) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -40,16 +40,18 @@ const UsersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataUsersList.map((item) => (
+          {users.map((item) => (
             <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.userName}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>
+                {item.first_name} {item.last_name}
+              </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.role}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>{item.role == 1 ? "Admin" : "User"}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <Status status={item.status} />
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
+                {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
               </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <TableBoxedLayoutActions>
