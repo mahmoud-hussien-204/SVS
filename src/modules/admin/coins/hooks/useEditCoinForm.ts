@@ -9,13 +9,13 @@ import {IEditCoinForm, ICoinData} from "../interfaces";
 import * as Yup from "yup";
 
 const schema: Yup.ObjectSchema<IEditCoinForm> = Yup.object().shape({
-  coinName: Yup.string().required("Coin Name is required"),
-  coinType: Yup.string().required("Coin Type is required"),
-  minimumWithdrawal: Yup.number().required("Minimum Withdrawal is required"),
-  maximumWithdrawal: Yup.number().required("Maximum Withdrawal is required"),
-  withdrawalFees: Yup.number().required("Fees Percentage is required"),
+  name: Yup.string().required("Coin Name is required"),
+  type: Yup.string().required("Coin Type is required"),
+  minimum_withdrawal: Yup.string().required("Minimum Withdrawal is required"),
+  maximum_withdrawal: Yup.string().required("Maximum Withdrawal is required"),
+  fee: Yup.string().required("Fees Percentage is required"),
   activeStatus: Yup.string().required("Status is required"),
-  withdrawalStatus: Yup.string().required("Status is required"),
+  status: Yup.string().required("Status is required"),
   coinIcon: Yup.string().required("Status is required"),
 });
 
@@ -28,19 +28,20 @@ const useEditCoinForm = () => {
     resolver: yupResolver(schema),
     mode: "onTouched",
     defaultValues: {
-      coinName: coinData.coinName,
-      minimumWithdrawal: coinData.minWithdrawAmount,
-      maximumWithdrawal: coinData.maxWithdrawAmount,
-      withdrawalFees: coinData.feesPercentage,
+      name: coinData.name,
+      minimum_withdrawal: coinData.minimum_withdrawal,
+      maximum_withdrawal: coinData.maximum_withdrawal,
+      fee: coinData.fee,
       activeStatus: coinData.status,
-      withdrawalStatus: coinData.status,
+      status: coinData.status,
+      type: coinData.type,
       coinIcon: "",
     },
   });
 
   const handleSubmit = form.handleSubmit((values: IEditCoinForm) => {
     console.log(values);
-    hide();
+    // hide();
   });
 
   return {form, handleSubmit};

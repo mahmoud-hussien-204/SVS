@@ -1,12 +1,10 @@
 export interface IAddUserForm {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  phoneNumber: string;
-  role: string;
+  phone: string;
+  role: number;
 }
-
-export type IEditUserForm = IAddUserForm;
 
 export interface IUserData {
   id: number;

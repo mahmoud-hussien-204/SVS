@@ -20,29 +20,29 @@ import AddUserForm from "../components/AddUserForm";
 
 import SuspendForm from "../components/SuspendForm";
 import useQuery from "@/hooks/useQuery";
-import {apiGetUsers} from "../services";
+import { apiGetUsers } from "../services";
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
-import {ENUM_USERS_STATUS} from "../enums";
+import { ENUM_USERS_STATUS } from "../enums";
 
 export const Component = () => {
   usePageTitle("Users List");
 
-  const {filterSearchParams} = useApiUrlFilter();
+  const { filterSearchParams, pageSearchParams: page, limitSearchParams: limit, searchSearchParams: search } = useApiUrlFilter();
   const type = filterSearchParams as ENUM_USERS_STATUS;
 
-  const {data} = useQuery({
-    queryFn: () => apiGetUsers(type),
-    queryKey: ["admin-users", type],
+  const { data, isLoading } = useQuery({
+    queryFn: () => apiGetUsers(type, page, limit, search),
+    queryKey: ["admin-get-users", type, page, limit, search],
   });
 
-  console.log(data);
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1;
 
   return (
     <ModalProvider>
       <TransitionPage>
         <Head />
         <div className='mt-2rem'>
-          <UsersList users={data?.data || []} />
+          <UsersList users={data?.data || []} totalPages={totalPages} isLoading={isLoading} />
         </div>
       </TransitionPage>
 

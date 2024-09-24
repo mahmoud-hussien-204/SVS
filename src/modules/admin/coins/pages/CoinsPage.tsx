@@ -12,14 +12,29 @@ import Modal from "@/components/Modal";
 
 import EditCoinForm from "../components/EditCoinForm";
 
+import useQuery from "@/hooks/useQuery";
+
+import { apiGetCoinList } from "../../users/services";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
 export const Component = () => {
   usePageTitle("Coins List");
+
+  const { pageSearchParams: page, limitSearchParams: limit, searchSearchParams: search } = useApiUrlFilter()
+  const { data, isLoading } = useQuery({
+    queryFn: () => apiGetCoinList(page, limit, search),
+    queryKey: ["admin-get-coins", page, limit, search],
+  })
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1;
+
   return (
     <ModalProvider>
       <TransitionPage>
         <Head />
         <div className='mt-2rem'>
-          <CoinsList />
+          <CoinsList coins={data?.data || []} isLoading={isLoading} totalPages={totalPages} />
         </div>
       </TransitionPage>
 

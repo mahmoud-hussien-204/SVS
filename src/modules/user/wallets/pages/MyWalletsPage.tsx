@@ -38,7 +38,7 @@ export const Component = () => {
 
   const wallets = data?.data.wallets || [];
 
-  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / 10) : 1
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1
 
   return (
     <ModalProvider>

@@ -7,6 +7,7 @@ import {
   TableBoxedLayoutActionButtonView,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -22,9 +23,9 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-import {IUserData} from "../interfaces";
+import { IUserData } from "../interfaces";
 
-const UsersList = ({users}: {users: IUserData[]}) => {
+const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], totalPages: number, isLoading: boolean }) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -40,35 +41,46 @@ const UsersList = ({users}: {users: IUserData[]}) => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {users.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>
-                {item.first_name} {item.last_name}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.role == 1 ? "Admin" : "User"}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonView data={item} />
-                  <TableBoxedLayoutActionButtonEdit data={item} />
-                  <TableBoxedLayoutActionButtonSuspend data={{id: item.id}} />
-                  <TableBoxedLayoutActionButtonDelete data={{id: item.id}} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({ length: 10 }).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+            : users.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>
+                  {item.first_name} {item.last_name}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.role == 1 ? "Admin" : "User"}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={item.status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    <TableBoxedLayoutActionButtonView data={item} />
+                    <TableBoxedLayoutActionButtonEdit data={item} />
+                    <TableBoxedLayoutActionButtonSuspend data={{ id: item.id }} />
+                    <TableBoxedLayoutActionButtonDelete data={{ id: item.id }} />
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

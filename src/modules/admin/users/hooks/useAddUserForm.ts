@@ -7,13 +7,16 @@ import {useForm} from "react-hook-form";
 import {IAddUserForm} from "../interfaces";
 
 import * as Yup from "yup";
+import useMutation from "@/hooks/useMutation";
+import {apiAddUser} from "../services";
+import {useQueryClient} from "@tanstack/react-query";
 
 const schema: Yup.ObjectSchema<IAddUserForm> = Yup.object().shape({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("First name is required"),
+  first_name: Yup.string().required("First name is required"),
+  last_name: Yup.string().required("First name is required"),
   email: Yup.string().email("Enter a valid email").required("email is required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
-  role: Yup.string().required("Role is required"),
+  phone: Yup.string().required("Phone number is required"),
+  role: Yup.number().required("Role is required"),
 });
 
 const useAddUserForm = () => {
@@ -24,12 +27,23 @@ const useAddUserForm = () => {
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: IAddUserForm) => {
-    console.log(values);
-    hide();
+  const queryClient = useQueryClient();
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiAddUser,
+    mutationKey: ["admin-add-users"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IAddUserForm) => {
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ["admin-get-users"]});
+        hide();
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useAddUserForm;
