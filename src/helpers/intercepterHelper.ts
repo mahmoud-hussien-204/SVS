@@ -1,4 +1,5 @@
 import {baseURL} from "@/constants";
+
 import AuthHelper from "@/modules/auth/helpers/AuthHelper";
 
 import {toast} from "react-toastify";
@@ -31,7 +32,7 @@ export default class InterceptorHelper {
   static async interceptResponse<T>(response: Response, method: string | undefined): Promise<T> {
     const responseJson = await response.json();
 
-    const message = responseJson?.message || responseJson?.error;
+    const message = responseJson?.message || responseJson?.error || responseJson.success;
 
     // handle response error
     if (!response.ok || responseJson.success == false) {

@@ -7,20 +7,16 @@ export default [
     children: [
       {
         path: "",
-        lazy: () => import("./pages/GlobalSettingsPage"),
+        lazy: () => import("./pages/EditProfilePage"),
         index: true,
-      },
-      {
-        path: "global-settings",
-        lazy: () => import("./pages/GlobalSettingsPage"),
-      },
-      {
-        path: "security",
-        lazy: () => import("./pages/SecurityPage"),
       },
       {
         path: "edit-profile",
         lazy: () => import("./pages/EditProfilePage"),
+      },
+      {
+        path: "security",
+        lazy: () => import("./pages/SecurityPage"),
       },
     ],
   },

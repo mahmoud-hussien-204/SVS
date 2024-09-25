@@ -13,7 +13,7 @@ export const Component = () => {
 
   const {pathname} = useLocation();
 
-  if (pathname.endsWith("/profile")) return <Navigate to='global-settings' />;
+  if (pathname.endsWith("/profile")) return <Navigate to='edit-profile' />;
 
   return (
     <TransitionPage>
