@@ -9,7 +9,7 @@ import Input from "@/components/Input";
 import ErrorMessage from "@/components/ErrorMessage";
 
 const GeneralSettingsOtherForm = () => {
-  const {form, handleSubmit} = useGeneralSettingsOtherForm();
+  const {form, handleSubmit, isPending} = useGeneralSettingsOtherForm();
 
   return (
     <form
@@ -24,34 +24,34 @@ const GeneralSettingsOtherForm = () => {
             Admin send default coin minimum
           </Label>
           <Input
-            {...form.register("minimumAmount")}
+            {...form.register("admin_send_default_minimum")}
             type='text'
             id='general-settings-other-minimum-amount'
             placeholder='Admin send default coin minimum'
-            isError={!!form.formState.errors.minimumAmount}
+            isError={!!form.formState.errors.admin_send_default_minimum}
           />
-          <ErrorMessage>{form.formState.errors.minimumAmount?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.admin_send_default_minimum?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-settings-other-maximum-amount'>
             Admin send default coin maximum
           </Label>
           <Input
-            {...form.register("maximumAmount")}
+            {...form.register("admin_send_default_maximum")}
             type='text'
             id='general-settings-other-maximum-amount'
             placeholder='Admin send default coin maximum'
-            isError={!!form.formState.errors.maximumAmount}
+            isError={!!form.formState.errors.admin_send_default_maximum}
           />
-          <ErrorMessage>{form.formState.errors.maximumAmount?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.admin_send_default_maximum?.message}</ErrorMessage>
         </div>
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>

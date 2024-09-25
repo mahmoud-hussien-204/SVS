@@ -6,6 +6,12 @@ import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiPostGeneralSettingsEmail} from "../../services";
+
+import useGeneralSettings from "../useGeneralSettings";
+
 const schema: Yup.ObjectSchema<IGeneralSettingsEmailForm> = Yup.object().shape({
   mail_host: Yup.string().required("This field is required"),
   mail_port: Yup.number()
@@ -18,16 +24,30 @@ const schema: Yup.ObjectSchema<IGeneralSettingsEmailForm> = Yup.object().shape({
 });
 
 const useGeneralSettingsEmailForm = () => {
+  const {settings} = useGeneralSettings();
+
   const form = useForm<IGeneralSettingsEmailForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
+    defaultValues: {
+      mail_host: settings?.settings?.mail_host,
+      mail_port: settings?.settings?.mail_port,
+      mail_username: settings?.settings?.mail_username,
+      mail_password: settings?.settings?.mail_password,
+      mail_encryption: settings?.settings?.mail_encryption,
+      mail_from_address: settings?.settings?.mail_from_address,
+    },
+  });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiPostGeneralSettingsEmail,
   });
 
   const handleSubmit = form.handleSubmit((values: IGeneralSettingsEmailForm) => {
-    console.log(values);
+    mutate(values);
   });
 
-  return {form, handleSubmit};
+  return {form, handleSubmit, isPending};
 };
 
 export default useGeneralSettingsEmailForm;

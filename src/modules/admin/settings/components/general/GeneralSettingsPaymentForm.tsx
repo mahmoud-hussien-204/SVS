@@ -11,7 +11,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Title from "@/components/Title";
 
 const GeneralSettingsPaymentForm = () => {
-  const {form, handleSubmit} = useGeneralSettingsPaymentForm();
+  const {form, handleSubmit, isPending} = useGeneralSettingsPaymentForm();
 
   return (
     <form
@@ -102,10 +102,10 @@ const GeneralSettingsPaymentForm = () => {
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>

@@ -9,7 +9,7 @@ import Input from "@/components/Input";
 import ErrorMessage from "@/components/ErrorMessage";
 
 const GeneralSettingsTwilioForm = () => {
-  const {form, handleSubmit} = useGeneralSettingsTwilioForm();
+  const {form, handleSubmit, isPending} = useGeneralSettingsTwilioForm();
 
   return (
     <form
@@ -55,10 +55,10 @@ const GeneralSettingsTwilioForm = () => {
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>
