@@ -1,6 +1,6 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IBankItem} from "./interfaces";
+import {IBankItem, ICreateBankForm, IEditBankForm} from "./interfaces";
 
 import AppHelper from "@/helpers/appHelper";
 
@@ -13,4 +13,28 @@ export const apiGetBankList = ({limit, page, search}: IQueryParams) => {
   });
 
   return InterceptorHelper.intercept<IResponse<IBankItem[]>>(`/admin/banks?${data}`);
+};
+
+export const apiCreateNewBank = (data: ICreateBankForm) => {
+  return InterceptorHelper.intercept(`/admin/bank-add-process`, {
+    body: JSON.stringify(data),
+    method: "POST",
+  });
+};
+
+export const apiUpdateBank = (data: IEditBankForm) => {
+  return InterceptorHelper.intercept("/admin/bank-add-process", {
+    body: JSON.stringify(data),
+    method: "POST",
+  });
+};
+
+export const apiDeleteBank = (url: string) => {
+  return InterceptorHelper.intercept(
+    url,
+    {
+      method: "Get",
+    },
+    false
+  );
 };

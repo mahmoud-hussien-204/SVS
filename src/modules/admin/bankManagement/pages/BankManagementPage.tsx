@@ -10,24 +10,24 @@ import Modal from "@/components/Modal";
 
 import EditBankForm from "../components/EditBankForm";
 
-import Search from "@/components/Search";
-
 import DeleteBankForm from "../components/DeleteBankForm";
+
+import Head from "../components/Head";
+
+import CreateBankForm from "../components/CreateBankForm";
 
 export const Component = () => {
   usePageTitle("Bank Management");
   return (
     <ModalProvider>
       <TransitionPage>
-        <div className='w-[450px] max-w-full'>
-          <Search placeholder='Search in banks' />
-        </div>
+        <Head />
         <div className='mt-2rem'>
           <BanksList />
         </div>
       </TransitionPage>
 
-      <Modal edit={EditBankForm} delete={DeleteBankForm} />
+      <Modal edit={EditBankForm} delete={DeleteBankForm} add={CreateBankForm} />
     </ModalProvider>
   );
 };

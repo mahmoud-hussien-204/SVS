@@ -82,7 +82,7 @@ const BanksList = () => {
                   <TableBoxedLayoutTD>
                     <CopyText text={item.iban} />
                   </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.country}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.country_name}</TableBoxedLayoutTD>
                   <TableBoxedLayoutTD>
                     <Status status={item.status} />
                   </TableBoxedLayoutTD>

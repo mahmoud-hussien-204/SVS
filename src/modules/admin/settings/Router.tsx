@@ -22,8 +22,16 @@ export default [
             lazy: () => import("./pages/general/GeneralTwilioPage"),
           },
           {
+            path: "default-token",
+            lazy: () => import("./pages/general/GeneralDefaultCoinPage"),
+          },
+          {
             path: "referral",
             lazy: () => import("./pages/general/GeneralReferralPage"),
+          },
+          {
+            path: "payment",
+            lazy: () => import("./pages/general/GeneralPaymentPage"),
           },
           {
             path: "kyc",
@@ -38,6 +46,10 @@ export default [
       {
         path: "payment-methods",
         lazy: () => import("./pages/PaymentMethodsPage"),
+      },
+      {
+        path: "configuration",
+        lazy: () => import("./pages/ConfigurationsPage"),
       },
     ],
   },

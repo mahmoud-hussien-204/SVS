@@ -36,12 +36,11 @@ const ModalFooter = (props: Props) => {
             disabled={props.isLoading}
             type='button'
             className='btn-ghost text-neutral-400 hover:bg-transparent hover:text-white'
-            isLoading={props.isLoading}
             onClick={hide}
           >
             Cancel
           </Button>
-          <Button disabled={props.isLoading} type='submit' className='min-w-[100px]'>
+          <Button type='submit' className='min-w-[100px]' isLoading={props.isLoading}>
             {props.title}
           </Button>
         </>

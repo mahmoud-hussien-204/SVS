@@ -99,4 +99,15 @@ export default class AppHelper {
     }
     return data.toString();
   }
+
+  static convertStatusToBinary(status: string) {
+    switch (status.toLowerCase()) {
+      case "active":
+        return "1";
+      case "deactive":
+        return "0";
+      default:
+        return "0";
+    }
+  }
 }
