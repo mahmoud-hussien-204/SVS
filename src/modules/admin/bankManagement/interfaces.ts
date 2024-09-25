@@ -5,6 +5,7 @@ export interface IBankItem {
   bank_name: string;
   bank_address: string;
   country: string;
+  country_name: string;
   swift_code: string;
   iban: string;
   note: string;
@@ -19,15 +20,16 @@ export interface Action {
   Delete: string;
 }
 
-export interface IEditBankForm {
-  holderName: string;
-  bankName: string;
-  accountNumber: number;
-  iban: string;
+export interface ICreateBankForm {
+  account_holder_name: string;
+  account_holder_address: string;
+  bank_name: string;
+  bank_address: string;
   country: string;
-  swiftCode: string;
-  bankAddress: string;
-  description: string;
-  holderAddress: string;
+  swift_code: string;
+  iban: string;
+  note: string;
   status: string;
 }
+
+export type IEditBankForm = ICreateBankForm & {edit_id: number};
