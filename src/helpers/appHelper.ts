@@ -93,4 +93,14 @@ export default class AppHelper {
 
     return className.trim();
   }
+
+  static urlSearchParams(payload: Record<string, string | number | boolean | undefined>) {
+    const data = new URLSearchParams();
+    for (const key in payload) {
+      if (payload[key]) {
+        data.append(key, payload[key] as string);
+      }
+    }
+    return data.toString();
+  }
 }
