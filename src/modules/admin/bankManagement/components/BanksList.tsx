@@ -1,9 +1,9 @@
-import {fakeDataCoinsList} from "@/fakeData";
-
 import {
+  TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActionButtonEdit,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -23,7 +23,30 @@ import Status from "@/components/Status";
 
 import CopyText from "@/components/CopyText";
 
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import useQuery from "@/hooks/useQuery";
+
+import {apiGetBankList} from "../services";
+
+import {useMemo} from "react";
+
 const BanksList = () => {
+  const {
+    pageSearchParams: page,
+    limitSearchParams: limit,
+    searchSearchParams: search,
+  } = useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryFn: () => apiGetBankList({page, limit, search}),
+    queryKey: ["admin-get-banks-list", page, limit, search],
+  });
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1;
+
+  const banksData = useMemo(() => data?.data || [], [data]);
+
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -40,33 +63,46 @@ const BanksList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataCoinsList.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.coinName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <CopyText text={"dkfjdkfjdkfjkdfjnvn"} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.maxWithdrawAmount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.updatedAt).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonEdit data={item} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({length: 4}).map((_, index) => (
+                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>
+              ))
+            : banksData.map((item) => (
+                <TableBoxedLayoutTR key={item.id}>
+                  <TableBoxedLayoutTD>{item.bank_name}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.account_holder_name}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <CopyText text={item.iban} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.country}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <Status status={item.status} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <TableBoxedLayoutActions>
+                      {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
+                      {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={item} />}
+                    </TableBoxedLayoutActions>
+                  </TableBoxedLayoutTD>
+                </TableBoxedLayoutTR>
+              ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

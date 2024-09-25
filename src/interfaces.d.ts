@@ -69,8 +69,8 @@ interface IError extends Error {
   message: string;
 }
 
-type TypeQueryParams = {
-  page?: string;
-  take?: string;
+type IQueryParams = {
+  page?: string | number;
+  limit?: string | number;
   search?: string;
 };
