@@ -4,17 +4,17 @@ import Title from "@/components/Title";
 
 import TransitionPage from "@/components/TransitionPage";
 
-import GeneralSettingsEmailForm from "../../components/general/GeneralSettingsEmailForm";
+import GeneralSettingsDefaultCoinForm from "../../components/general/GeneralSettingsDefaultCoinForm";
 
 export const Component = () => {
   return (
     <TransitionPage>
       <Card>
-        <Title>Email Setup</Title>
-        <GeneralSettingsEmailForm />
+        <Title>Default Coin Send Settings</Title>
+        <GeneralSettingsDefaultCoinForm />
       </Card>
     </TransitionPage>
   );
 };
 
-Component.displayName = "GeneralEmailPage";
+Component.displayName = "GeneralDefaultCoinPage";
