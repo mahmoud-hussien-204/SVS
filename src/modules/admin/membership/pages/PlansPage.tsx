@@ -12,9 +12,9 @@ import Modal from "@/components/Modal";
 
 import DeleteForm from "../components/DeleteForm";
 
-import EditUserForm from "../components/EditUserForm";
+import EditPlanForm from "../components/EditPlanForm";
 
-import AddUserForm from "../components/AddUserForm";
+import CreatePlanForm from "../components/CreatePlanForm";
 
 import SettingsForm from "../components/SettingsForm";
 
@@ -29,7 +29,7 @@ export const Component = () => {
         </div>
       </TransitionPage>
 
-      <Modal edit={EditUserForm} add={AddUserForm} delete={DeleteForm} settings={SettingsForm} />
+      <Modal edit={EditPlanForm} add={CreatePlanForm} delete={DeleteForm} settings={SettingsForm} />
     </ModalProvider>
   );
 };

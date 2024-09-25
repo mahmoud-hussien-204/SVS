@@ -14,6 +14,10 @@ import transactionsRoutes from "./transactions/Router";
 
 import membershipRoutes from "./membership/Router";
 
+import bankManagementRoutes from "./bankManagement/Router";
+
+import settingsRoutes from "./settings/Router";
+
 export default [
   {
     path: "/admin",
@@ -25,6 +29,8 @@ export default [
       ...walletsRoutes,
       ...transactionsRoutes,
       ...membershipRoutes,
+      ...bankManagementRoutes,
+      ...settingsRoutes,
     ],
   },
 ] as RouteObject[];

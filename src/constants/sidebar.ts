@@ -96,10 +96,38 @@ export const constantSidebar: ISidebarItem = {
       ],
     },
     {
-      title: "Settings",
-      path: "/admin/profile",
-      icon: "cog",
+      title: "Bank Management",
+      icon: "creditCard",
+      path: "/admin/bank-management",
       isSubmenu: false,
+    },
+    {
+      title: "Settings",
+      path: "/admin/settings",
+      icon: "cog",
+      isSubmenu: true,
+      subMenu: [
+        {
+          title: "General",
+          path: "/admin/settings/general",
+        },
+        {
+          title: "Feature",
+          path: "/admin/settings/feature",
+        },
+        {
+          title: "Payment Methods",
+          path: "/admin/settings/payment-methods",
+        },
+        {
+          title: "Bank Management",
+          path: "/admin/settings/bank-management",
+        },
+        {
+          title: "Configurations",
+          path: "/admin/settings/configuration",
+        },
+      ],
     },
   ],
   [EnumUserRole.user]: [

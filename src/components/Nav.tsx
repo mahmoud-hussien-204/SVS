@@ -31,6 +31,7 @@ import IconLedger from "./icons/IconLedger";
 import IconCoin from "./icons/IconCoin";
 
 import IconCart from "./icons/IconCart";
+import IconCreditCard from "./icons/IconCard";
 
 const icons = {
   dashboard: <IconDashboard />,
@@ -45,6 +46,7 @@ const icons = {
   ledgers: <IconLedger />,
   coins: <IconCoin />,
   orders: <IconCart />,
+  creditCard: <IconCreditCard />,
 } as const;
 
 const Nav = () => {

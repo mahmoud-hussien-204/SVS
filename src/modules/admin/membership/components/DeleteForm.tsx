@@ -1,11 +1,10 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-import { IUserData } from "../../users/interfaces";
+import {IPlanData} from "../interfaces";
 
+type IProps = Pick<IPlanData, "id">;
 
-type IProps = Pick<IUserData, "id">;
-
-const DeleteForm = ({ data: dataProps }: IModalComponentProps) => {
+const DeleteForm = ({data: dataProps}: IModalComponentProps) => {
   const data = dataProps as IProps;
 
   const handleSubmit = () => {
@@ -13,8 +12,8 @@ const DeleteForm = ({ data: dataProps }: IModalComponentProps) => {
   };
 
   return (
-    <form noValidate name='delete-user-form' id='delete-user-form' onSubmit={handleSubmit}>
-      <ConfirmationForm isLoading={false} message='Are you sure you want to delete this user?' />
+    <form noValidate name='delete-plan-form' id='delete-plan-form' onSubmit={handleSubmit}>
+      <ConfirmationForm isLoading={false} message='Are you sure you want to delete this plan?' />
     </form>
   );
 };
