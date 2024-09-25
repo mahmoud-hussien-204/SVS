@@ -18,6 +18,8 @@ import bankManagementRoutes from "./bankManagement/Router";
 
 import settingsRoutes from "./settings/Router";
 
+import profileRoutes from "./profile/Router";
+
 export default [
   {
     path: "/admin",
@@ -31,6 +33,7 @@ export default [
       ...membershipRoutes,
       ...bankManagementRoutes,
       ...settingsRoutes,
+      ...profileRoutes,
     ],
   },
 ] as RouteObject[];

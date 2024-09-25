@@ -13,7 +13,7 @@ import Select from "@/components/Select";
 import {constantLanguage} from "@/constants";
 
 const GeneralSettingsForm = () => {
-  const {form, handleSubmit} = useGeneralSettingsForm();
+  const {form, handleSubmit, isPending} = useGeneralSettingsForm();
 
   return (
     <form
@@ -29,63 +29,63 @@ const GeneralSettingsForm = () => {
             options={constantLanguage}
             defaultValue=''
             id='global-settings-form-language'
-            {...form.register("language")}
+            {...form.register("lang")}
           />
-          <ErrorMessage>{form.formState.errors.language?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.lang?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-settings-company-name'>Company Name</Label>
           <Input
-            {...form.register("companyName")}
+            {...form.register("company_name")}
             type='text'
             id='general-settings-company-name'
             placeholder='Company Name'
-            isError={!!form.formState.errors.companyName}
+            isError={!!form.formState.errors.company_name}
           />
-          <ErrorMessage>{form.formState.errors.companyName?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.company_name?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-settings-numberOfConfirmation'>
             Number of confirmation for Notifier deposit
           </Label>
           <Input
-            {...form.register("numberOfConfirmation")}
+            {...form.register("number_of_confirmation")}
             type='text'
             id='general-settings-numberOfConfirmation'
             placeholder='Number of confirmation'
-            isError={!!form.formState.errors.numberOfConfirmation}
+            isError={!!form.formState.errors.number_of_confirmation}
           />
-          <ErrorMessage>{form.formState.errors.numberOfConfirmation?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.number_of_confirmation?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-settings-baseCoinType'>Coin Payment Base Coin Type</Label>
           <Input
-            {...form.register("baseCoinType")}
+            {...form.register("base_coin_type")}
             type='text'
             id='general-settings-baseCoinType'
             placeholder='Coin Payment Base Coin Type'
-            isError={!!form.formState.errors.baseCoinType}
+            isError={!!form.formState.errors.base_coin_type}
           />
-          <ErrorMessage>{form.formState.errors.baseCoinType?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.base_coin_type?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-settings-copyRightText'>Copyright Text</Label>
           <Input
-            {...form.register("copyRightText")}
+            {...form.register("copyright_text")}
             type='text'
             id='general-settings-copyRightText'
             placeholder='Copyright Text'
-            isError={!!form.formState.errors.copyRightText}
+            isError={!!form.formState.errors.copyright_text}
           />
-          <ErrorMessage>{form.formState.errors.copyRightText?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.copyright_text?.message}</ErrorMessage>
         </div>
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' className='btn-neutral min-w-[120px] text-white' disabled={isPending}>
           Reset
         </Button>
       </div>

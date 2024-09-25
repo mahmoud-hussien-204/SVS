@@ -3,6 +3,7 @@ import {RouteObject} from "react-router";
 export default [
   {
     path: "settings",
+    lazy: () => import("./layout/SettingsLayout"),
     children: [
       {
         path: "general",

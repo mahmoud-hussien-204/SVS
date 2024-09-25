@@ -6,6 +6,12 @@ import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiPostGeneralSettingsDefaultCoin} from "../../services";
+
+import useGeneralSettings from "../useGeneralSettings";
+
 const schema: Yup.ObjectSchema<IGeneralSettingsDefaultToken> = Yup.object().shape({
   coin_name: Yup.string().required("Coin Name is required"),
   coin_price: Yup.number()
@@ -29,16 +35,35 @@ const schema: Yup.ObjectSchema<IGeneralSettingsDefaultToken> = Yup.object().shap
 });
 
 const useGeneralSettingsDefaultCoinForm = () => {
+  const {settings} = useGeneralSettings();
+
   const form = useForm<IGeneralSettingsDefaultToken>({
     resolver: yupResolver(schema),
     mode: "onTouched",
+    defaultValues: {
+      coin_name: settings?.settings?.coin_name,
+      coin_price: settings?.settings?.coin_price,
+      contract_coin_name: settings?.settings?.contract_coin_name,
+      chain_link: settings?.settings?.chain_link,
+      chain_id: settings?.settings?.chain_id,
+      contract_address: settings?.settings?.contract_address,
+      wallet_address: settings?.settings?.wallet_address,
+      private_key: settings?.settings?.private_key,
+      contract_decimal: settings?.settings?.contract_decimal,
+      gas_limit: settings?.settings?.gas_limit,
+      max_send_limit: settings?.settings?.max_send_limit,
+    },
+  });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiPostGeneralSettingsDefaultCoin,
   });
 
   const handleSubmit = form.handleSubmit((values: IGeneralSettingsDefaultToken) => {
-    console.log(values);
+    mutate(values);
   });
 
-  return {form, handleSubmit};
+  return {form, handleSubmit, isPending};
 };
 
 export default useGeneralSettingsDefaultCoinForm;
