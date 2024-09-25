@@ -95,6 +95,7 @@ export interface Settings {
   swap_enabled: number;
   co_wallet_feature_active: number;
   google_recapcha: number;
+  payment_method_stripe: number;
 }
 
 export interface TokenApiType {
@@ -179,9 +180,9 @@ export interface IFeatureSettingsForm {
 }
 
 export interface IPaymentMethodsForm {
-  coinPayment: string;
-  bankDeposit: string;
-  creditCard: string;
+  payment_method_coin_payment: number | string;
+  payment_method_bank_deposit: number | string;
+  payment_method_stripe: number | string;
 }
 
 export interface IConfigurationsItem {

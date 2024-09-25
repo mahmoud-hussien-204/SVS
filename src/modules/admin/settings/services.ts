@@ -1,4 +1,5 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
+
 import {
   IGeneralSettingsDefaultToken,
   IGeneralSettingsEmailForm,
@@ -10,6 +11,7 @@ import {
   IGeneralSettingsPaymentForm,
   IGeneralKycSettingsForm,
   IFeatureSettingsForm,
+  IPaymentMethodsForm,
 } from "./interfaces";
 
 export const apiRunConfigurationCommand = (id: string) =>
@@ -59,6 +61,12 @@ export const apiPostGeneralSettingsKyc = (data: IGeneralKycSettingsForm) =>
 
 export const apiPostFeatureSettings = (data: IFeatureSettingsForm) =>
   InterceptorHelper.intercept(`/admin/feature-settings`, {
+    method: "Post",
+    body: JSON.stringify(data),
+  });
+
+export const apiPostPaymentMethodsSettings = (data: IPaymentMethodsForm) =>
+  InterceptorHelper.intercept(`/admin/change-payment-methods`, {
     method: "Post",
     body: JSON.stringify(data),
   });

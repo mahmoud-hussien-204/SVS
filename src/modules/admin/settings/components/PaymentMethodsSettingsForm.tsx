@@ -9,7 +9,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import SwitchInput from "@/components/SwitchInput";
 
 const PaymentMethodsForm = () => {
-  const {form, handleSubmit} = usePaymentMethodsForm();
+  const {form, handleSubmit, isPending} = usePaymentMethodsForm();
 
   return (
     <form
@@ -22,37 +22,37 @@ const PaymentMethodsForm = () => {
         <div className='flex gap-0.75rem'>
           <Label htmlFor='payment-methods-coinPayment'>Coin Payment</Label>
           <SwitchInput
-            {...form.register("coinPayment")}
+            {...form.register("payment_method_coin_payment")}
             id='payment-methods-coinPayment'
-            isError={!!form.formState.errors.coinPayment}
+            isError={!!form.formState.errors.payment_method_coin_payment}
           />
-          <ErrorMessage>{form.formState.errors.coinPayment?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.payment_method_coin_payment?.message}</ErrorMessage>
         </div>
         <div className='flex gap-0.75rem'>
           <Label htmlFor='payment-methods-bankDeposit'>Bank Deposit</Label>
           <SwitchInput
-            {...form.register("bankDeposit")}
+            {...form.register("payment_method_bank_deposit")}
             id='payment-methods-bankDeposit'
-            isError={!!form.formState.errors.bankDeposit}
+            isError={!!form.formState.errors.payment_method_bank_deposit}
           />
-          <ErrorMessage>{form.formState.errors.bankDeposit?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.payment_method_bank_deposit?.message}</ErrorMessage>
         </div>
         <div className='flex gap-0.75rem'>
           <Label htmlFor='payment-methods-creditCard'>Credit card</Label>
           <SwitchInput
-            {...form.register("creditCard")}
+            {...form.register("payment_method_stripe")}
             id='payment-methods-creditCard'
-            isError={!!form.formState.errors.creditCard}
+            isError={!!form.formState.errors.payment_method_stripe}
           />
-          <ErrorMessage>{form.formState.errors.creditCard?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.payment_method_stripe?.message}</ErrorMessage>
         </div>
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>
