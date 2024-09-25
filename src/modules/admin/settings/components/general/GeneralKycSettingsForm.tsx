@@ -11,7 +11,7 @@ import {constantEnableAndDisablesOptions} from "@/constants";
 import ErrorMessage from "@/components/ErrorMessage";
 
 const GeneralKycSettingsForm = () => {
-  const {form, handleSubmit} = useGeneralKycSettingsForm();
+  const {form, handleSubmit, isPending} = useGeneralKycSettingsForm();
 
   return (
     <form
@@ -27,9 +27,9 @@ const GeneralKycSettingsForm = () => {
             options={constantEnableAndDisablesOptions}
             defaultValue=''
             id='global-settings-form-kycMandatory'
-            {...form.register("kycMandatory")}
+            {...form.register("kyc_enable_for_withdrawal")}
           />
-          <ErrorMessage>{form.formState.errors.kycMandatory?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.kyc_enable_for_withdrawal?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-kyc-settings-nidVerificationMandatory'>NID verification</Label>
@@ -37,9 +37,11 @@ const GeneralKycSettingsForm = () => {
             options={constantEnableAndDisablesOptions}
             defaultValue=''
             id='global-settings-form-nidVerificationMandatory'
-            {...form.register("nidVerificationMandatory")}
+            {...form.register("kyc_nid_enable_for_withdrawal")}
           />
-          <ErrorMessage>{form.formState.errors.nidVerificationMandatory?.message}</ErrorMessage>
+          <ErrorMessage>
+            {form.formState.errors.kyc_nid_enable_for_withdrawal?.message}
+          </ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-kyc-settings-drivingLicenseVerificationMandatory'>
@@ -49,10 +51,10 @@ const GeneralKycSettingsForm = () => {
             options={constantEnableAndDisablesOptions}
             defaultValue=''
             id='global-settings-form-drivingLicenseVerificationMandatory'
-            {...form.register("drivingLicenseVerificationMandatory")}
+            {...form.register("kyc_driving_enable_for_withdrawal")}
           />
           <ErrorMessage>
-            {form.formState.errors.drivingLicenseVerificationMandatory?.message}
+            {form.formState.errors.kyc_driving_enable_for_withdrawal?.message}
           </ErrorMessage>
         </div>
         <div>
@@ -63,19 +65,19 @@ const GeneralKycSettingsForm = () => {
             options={constantEnableAndDisablesOptions}
             defaultValue=''
             id='global-settings-form-passportVerificationMandatory'
-            {...form.register("passportVerificationMandatory")}
+            {...form.register("kyc_passport_enable_for_withdrawal")}
           />
           <ErrorMessage>
-            {form.formState.errors.passportVerificationMandatory?.message}
+            {form.formState.errors.kyc_passport_enable_for_withdrawal?.message}
           </ErrorMessage>
         </div>
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>

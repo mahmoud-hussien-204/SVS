@@ -1,11 +1,15 @@
 import Label from "@/components/Label";
+
 import useGeneralReferralSettingsForm from "../../hooks/general/useGeneralReferralSettingsForm";
+
 import Input from "@/components/Input";
+
 import ErrorMessage from "@/components/ErrorMessage";
+
 import Button from "@/components/Button";
 
 const GeneralReferralSettingsForm = () => {
-  const {form, handleSubmit} = useGeneralReferralSettingsForm();
+  const {form, handleSubmit, isPending} = useGeneralReferralSettingsForm();
 
   return (
     <form
@@ -20,57 +24,57 @@ const GeneralReferralSettingsForm = () => {
             Referral reward for signUp
           </Label>
           <Input
-            {...form.register("referralRewardForSignUp")}
+            {...form.register("referral_signup_reward")}
             type='text'
             id='general-referral-settings-referralRewardForSignUp'
             placeholder='Referral reward for signUp'
-            isError={!!form.formState.errors.referralRewardForSignUp}
+            isError={!!form.formState.errors.referral_signup_reward}
           />
-          <ErrorMessage>{form.formState.errors.referralRewardForSignUp?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.referral_signup_reward?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-referral-settings-level1'>Level 1 (%)</Label>
           <Input
-            {...form.register("level1")}
+            {...form.register("fees_level1")}
             type='text'
             id='general-referral-settings-level1'
             placeholder='Level 1 (%)
 '
-            isError={!!form.formState.errors.level1}
+            isError={!!form.formState.errors.fees_level1}
           />
-          <ErrorMessage>{form.formState.errors.level1?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.fees_level1?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-referral-settings-level2'>Level 2 (%)</Label>
           <Input
-            {...form.register("level2")}
+            {...form.register("fees_level2")}
             type='text'
             id='general-referral-settings-level2'
             placeholder='Level 2 (%)
 '
-            isError={!!form.formState.errors.level2}
+            isError={!!form.formState.errors.fees_level2}
           />
-          <ErrorMessage>{form.formState.errors.level2?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.fees_level2?.message}</ErrorMessage>
         </div>
         <div>
           <Label htmlFor='general-referral-settings-level3'>Level 3 (%)</Label>
           <Input
-            {...form.register("level3")}
+            {...form.register("fees_level3")}
             type='text'
             id='general-referral-settings-level3'
             placeholder='Level 3 (%)
 '
-            isError={!!form.formState.errors.level3}
+            isError={!!form.formState.errors.fees_level3}
           />
-          <ErrorMessage>{form.formState.errors.level3?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.fees_level3?.message}</ErrorMessage>
         </div>
       </div>
 
       <div className='flex items-center gap-0.5rem'>
-        <Button type='submit' className='min-w-[160px]' isLoading={false}>
+        <Button type='submit' className='min-w-[160px]' isLoading={isPending}>
           Save Changes
         </Button>
-        <Button type='reset' className='btn-neutral min-w-[120px] text-white'>
+        <Button type='reset' disabled={isPending} className='btn-neutral min-w-[120px] text-white'>
           Reset
         </Button>
       </div>

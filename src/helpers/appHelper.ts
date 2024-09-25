@@ -114,4 +114,22 @@ export default class AppHelper {
         return "0";
     }
   }
+
+  static convertSwitchValueToBinary(value: string | number | undefined) {
+    if (value === undefined) return 0;
+    if (typeof value === "number") return value;
+    if (!isNaN(Number(value))) return +value;
+    switch (value) {
+      case "on":
+        return 1;
+      case "off":
+        return 0;
+      case "true":
+        return 1;
+      case "false":
+        return 0;
+      default:
+        return 0;
+    }
+  }
 }
