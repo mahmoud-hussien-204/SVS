@@ -4,17 +4,17 @@ import Title from "@/components/Title";
 
 import TransitionPage from "@/components/TransitionPage";
 
-import GeneralSettingsEmailForm from "../../components/general/GeneralSettingsEmailForm";
+import GeneralSettingsPaymentForm from "../../components/general/GeneralSettingsPaymentForm";
 
 export const Component = () => {
   return (
     <TransitionPage>
       <Card>
-        <Title>Email Setup</Title>
-        <GeneralSettingsEmailForm />
+        <Title>Coin Payment Details</Title>
+        <GeneralSettingsPaymentForm />
       </Card>
     </TransitionPage>
   );
 };
 
-Component.displayName = "GeneralEmailPage";
+Component.displayName = "GeneralPaymentPage";

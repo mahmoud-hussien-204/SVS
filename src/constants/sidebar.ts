@@ -120,10 +120,6 @@ export const constantSidebar: ISidebarItem = {
           path: "/admin/settings/payment-methods",
         },
         {
-          title: "Bank Management",
-          path: "/admin/settings/bank-management",
-        },
-        {
           title: "Configurations",
           path: "/admin/settings/configuration",
         },
