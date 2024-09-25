@@ -8,6 +8,10 @@ import {ICreateBankForm} from "../interfaces";
 
 import * as Yup from "yup";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiCreateNewBank} from "../services";
+
 export const schema: Yup.ObjectSchema<ICreateBankForm> = Yup.object().shape({
   account_holder_name: Yup.string().required("This field is required"),
   account_holder_address: Yup.string().required("This field is required"),
@@ -28,12 +32,20 @@ const useCreateBankForm = () => {
     mode: "onTouched",
   });
 
-  const handleSubmit = form.handleSubmit((values: ICreateBankForm) => {
-    console.log(values);
-    hide();
+  const {mutate, queryClient, isPending} = useMutation({
+    mutationFn: apiCreateNewBank,
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: ICreateBankForm) => {
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ["admin-get-banks-list"]});
+        hide();
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useCreateBankForm;

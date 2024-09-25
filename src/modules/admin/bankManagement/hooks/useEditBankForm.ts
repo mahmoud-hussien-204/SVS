@@ -8,14 +8,16 @@ import {IEditBankForm, IBankItem} from "../interfaces";
 
 import {schema} from "./useCreateBankForm";
 
+import useMutation from "@/hooks/useMutation";
+
+import {apiUpdateBank} from "../services";
+
+import AppHelper from "@/helpers/appHelper";
+
 const useEditBankForm = () => {
   const {hide, data} = useModal();
 
   const bankData = data as IBankItem;
-
-  console.log({
-    status: bankData.status,
-  });
 
   const form = useForm<IEditBankForm>({
     resolver: yupResolver(schema),
@@ -29,16 +31,25 @@ const useEditBankForm = () => {
       swift_code: bankData.swift_code,
       iban: bankData.iban,
       note: bankData.note,
-      status: bankData.status.toLowerCase(),
+      status: AppHelper.convertStatusToBinary(bankData.status),
+      edit_id: bankData.id,
     },
   });
 
-  const handleSubmit = form.handleSubmit((values: IEditBankForm) => {
-    console.log(values);
-    hide();
+  const {mutate, queryClient, isPending} = useMutation({
+    mutationFn: apiUpdateBank,
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IEditBankForm) => {
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ["admin-get-banks-list"]});
+        hide();
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useEditBankForm;

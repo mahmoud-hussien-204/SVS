@@ -1,19 +1,20 @@
-import {EnumUserStatus, EnumBuyCoinStatus, EnumCoinHistoryStatus} from "@/enums";
+import {EnumAppStatuses} from "@/enums";
 
 export const constantStatusColors = {
-  [EnumUserStatus.pending]: "border-warning/20 text-warning",
-  [EnumUserStatus.active]: "border-success/20 text-success",
-  [EnumUserStatus.inactive]: "border-error/20 text-error",
+  [EnumAppStatuses.pending]: "border-warning/20 text-warning",
+  [EnumAppStatuses.active]: "border-success/20 text-success",
+  [EnumAppStatuses.inactive]: "border-error/20 text-error",
+  [EnumAppStatuses.deactive]: "border-error/20 text-error",
   // [EnumBuyCoinStatus.pending]: "border-warning/20 text-warning",
-  [EnumBuyCoinStatus.completed]: "border-success/20 text-success",
+  [EnumAppStatuses.completed]: "border-success/20 text-success",
   // [EnumBuyCoinStatus.active]: "border-success/20 text-success",
-  [EnumBuyCoinStatus.failed]: "border-error/20 text-error",
-  [EnumBuyCoinStatus.banned]: "border-error/20 text-error",
+  [EnumAppStatuses.failed]: "border-error/20 text-error",
+  [EnumAppStatuses.banned]: "border-error/20 text-error",
   // [EnumBuyCoinStatus.inactive]: "border-error/20 text-error",
 
   // [EnumCoinHistoryStatus.pending]: "border-warning/20 text-warning",
-  [EnumCoinHistoryStatus.accepted]: "border-success/20 text-success",
-  [EnumCoinHistoryStatus.rejected]: "border-error/20 text-error",
+  [EnumAppStatuses.accepted]: "border-success/20 text-success",
+  [EnumAppStatuses.rejected]: "border-error/20 text-error",
   // [EnumCoinHistoryStatus.failed]: "border-error/20 text-error",
 };
 
@@ -107,11 +108,11 @@ export const constantEnableAndDisablesOptions = [
 export const constantStatusOptions = [
   {
     label: "Active",
-    value: "active",
+    value: 1,
   },
   {
     label: "Inactive",
-    value: "inactive",
+    value: 0,
   },
 ];
 

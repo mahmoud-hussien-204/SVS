@@ -7,7 +7,7 @@ import useCreateBankForm from "../hooks/useCreateBankForm";
 import CreateAndEditBankForm from "./CreateAndEditBankForm";
 
 const CreateBankForm = () => {
-  const {form, handleSubmit} = useCreateBankForm();
+  const {form, handleSubmit, isPending} = useCreateBankForm();
 
   return (
     <form
@@ -18,7 +18,7 @@ const CreateBankForm = () => {
     >
       <ModalHeader title='Create new bank' />
       <CreateAndEditBankForm form={form} />
-      <ModalFooter isLoading={false} title='Create Bank' />
+      <ModalFooter isLoading={isPending} title='Create Bank' />
     </form>
   );
 };

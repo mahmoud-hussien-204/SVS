@@ -64,3 +64,15 @@ export enum EnumModals {
   phoneVerify = "phoneVerify",
   active = "active",
 }
+
+export enum EnumAppStatuses {
+  active = "active",
+  inactive = "inactive",
+  deactive = "deactive",
+  pending = "pending",
+  accepted = "accepted",
+  rejected = "rejected",
+  failed = "failed",
+  banned = "banned",
+  completed = "completed",
+}

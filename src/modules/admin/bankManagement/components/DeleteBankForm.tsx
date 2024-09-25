@@ -1,19 +1,21 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-import InterceptorHelper from "@/helpers/intercepterHelper";
-
 import useMutation from "@/hooks/useMutation";
 
+import {IBankItem} from "../interfaces";
+
+import {apiDeleteBank} from "../services";
+
 const DeleteBankForm = ({data: dataProps, hide}: IModalComponentProps) => {
-  const data = dataProps as {path: string};
+  const data = dataProps as IBankItem;
 
   const {mutate, isPending, queryClient} = useMutation({
-    mutationFn: () => InterceptorHelper.intercept(data.path as string, {}, false),
+    mutationFn: apiDeleteBank,
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(null, {
+    mutate(data.action.Delete, {
       onSuccess: () => {
         queryClient.invalidateQueries({queryKey: ["admin-get-banks-list"]});
         hide();

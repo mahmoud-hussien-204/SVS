@@ -5,6 +5,7 @@ export interface IBankItem {
   bank_name: string;
   bank_address: string;
   country: string;
+  country_name: string;
   swift_code: string;
   iban: string;
   note: string;
@@ -31,4 +32,4 @@ export interface ICreateBankForm {
   status: string;
 }
 
-export type IEditBankForm = ICreateBankForm;
+export type IEditBankForm = ICreateBankForm & {edit_id: number};
