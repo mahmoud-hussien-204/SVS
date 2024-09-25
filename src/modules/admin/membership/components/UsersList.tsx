@@ -1,12 +1,10 @@
-import {fakeDataPlansList} from "@/fakeData";
-
 import Status from "@/components/Status";
 
 import {
-  TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActionButtonEdit,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -22,7 +20,15 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-const UsersList = () => {
+import {IPlanData} from "../interfaces";
+
+interface IProps {
+  plans: IPlanData[];
+  isLoading: boolean;
+  totalPages: number;
+}
+
+const UsersList = ({isLoading, plans, totalPages}: IProps) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -41,34 +47,47 @@ const UsersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataPlansList.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.planName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.minimumAmount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.duration}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.bonus}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.bonusType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.bonusCoinType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonEdit data={item} />
-                  <TableBoxedLayoutActionButtonDelete data={{id: item.id}} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({length: 10}).map((_, index) => (
+                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>
+              ))
+            : plans.map((item) => (
+                <TableBoxedLayoutTR key={item.id}>
+                  <TableBoxedLayoutTD>{item.plan_name}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.duration}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.bonus}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.bonus_type}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.bonus_coin_type}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <Status status={item.status} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <TableBoxedLayoutActions>
+                      {item.action.edit_url && <TableBoxedLayoutActionButtonEdit data={item} />}
+                    </TableBoxedLayoutActions>
+                  </TableBoxedLayoutTD>
+                </TableBoxedLayoutTR>
+              ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

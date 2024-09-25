@@ -86,13 +86,21 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: true,
       subMenu: [
         {
+          title: "Member List",
+          path: "/admin/member-list",
+        },
+        {
           title: "Plans",
           path: "/admin/membership-plans",
         },
-        // {
-        //   title: "Bonus History",
-        //   path: "/admin/membership-history",
-        // },
+        {
+          title: "Transaction History",
+          path: "/admin/transaction-history",
+        },
+        {
+          title: "Bonus Distribution",
+          path: "/admin/bonus-distribution",
+        },
       ],
     },
     {

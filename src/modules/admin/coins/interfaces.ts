@@ -6,7 +6,6 @@ export interface IEditCoinForm {
   status: string;
   activeStatus: string;
   coinIcon: string;
-  type: string;
 }
 
 export interface ICoinData {

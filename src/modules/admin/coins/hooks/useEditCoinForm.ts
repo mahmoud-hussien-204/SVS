@@ -10,7 +10,6 @@ import * as Yup from "yup";
 
 const schema: Yup.ObjectSchema<IEditCoinForm> = Yup.object().shape({
   name: Yup.string().required("Coin Name is required"),
-  type: Yup.string().required("Coin Type is required"),
   minimum_withdrawal: Yup.string().required("Minimum Withdrawal is required"),
   maximum_withdrawal: Yup.string().required("Maximum Withdrawal is required"),
   fee: Yup.string().required("Fees Percentage is required"),
@@ -34,7 +33,6 @@ const useEditCoinForm = () => {
       fee: coinData.fee,
       activeStatus: coinData.status,
       status: coinData.status,
-      type: coinData.type,
       coinIcon: "",
     },
   });

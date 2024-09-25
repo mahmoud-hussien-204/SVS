@@ -3,7 +3,7 @@ export interface IAddUserForm {
   last_name: string;
   email: string;
   phone: string;
-  role: number;
+  role?: number;
 }
 
 export interface IUserData {

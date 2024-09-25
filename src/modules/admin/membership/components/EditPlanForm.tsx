@@ -7,13 +7,13 @@ import ModalFooter from "@/components/ModalFooter";
 import useEditPlanForm from "../hooks/useEditPlanForm";
 
 const EditPlanForm = () => {
-  const {form, handleSubmit} = useEditPlanForm();
+  const {form, handleSubmit, isPending} = useEditPlanForm();
 
   return (
     <form noValidate name='edit-plan-form' id='edit-plan-form' onSubmit={handleSubmit}>
       <ModalHeader title='Edit Plan' />
       <CreateAndEditPlanForm form={form} />
-      <ModalFooter isLoading={false} title='Update Plan' />
+      <ModalFooter isLoading={isPending} title='Update Plan' />
     </form>
   );
 };

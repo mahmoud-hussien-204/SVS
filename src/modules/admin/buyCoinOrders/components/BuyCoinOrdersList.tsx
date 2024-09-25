@@ -21,6 +21,7 @@ import Pagination from "@/components/Pagination";
 import Status from "@/components/Status";
 
 import dayjs from "dayjs";
+import CopyText from "@/components/CopyText";
 
 const BuyCoinOrdersList = () => {
   return (
@@ -46,7 +47,9 @@ const BuyCoinOrdersList = () => {
               <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>{item.payableCoin}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>{item.paymentType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
+              <TableBoxedLayoutTD>
+                <CopyText text={item.address} />
+              </TableBoxedLayoutTD>
               <TableBoxedLayoutTD>
                 <Status status={item.status} />
               </TableBoxedLayoutTD>

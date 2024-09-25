@@ -13,9 +13,19 @@ import ModalProvider from "@/providers/ModalProvider";
 import AcceptForm from "../components/AcceptForm";
 
 import RejectForm from "../components/RejectForm";
+import useQuery from "@/hooks/useQuery";
+import {apiGetBuyCoinOrders} from "../services";
 
 export const Component = () => {
   usePageTitle("Buy Coin Orders");
+
+  const {data} = useQuery({
+    queryKey: ["admin-get-buy-coin-orders"],
+    queryFn: () => apiGetBuyCoinOrders(),
+  });
+
+  console.log(data);
+
   return (
     <ModalProvider>
       <TransitionPage>

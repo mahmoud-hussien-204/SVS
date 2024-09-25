@@ -43,3 +43,10 @@ export const apiAdjustCoin = () => {
     `/admin/adjust-coin-list-with-coin-payment?update=coinPayment`
   );
 };
+
+export const apiUpdateUser = (data: IAddUserForm & {id: string}) => {
+  return InterceptorHelper.intercept(`/admin/user-profile-update`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
