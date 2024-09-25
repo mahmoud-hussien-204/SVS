@@ -6,42 +6,30 @@ import {useForm} from "react-hook-form";
 
 import {IEditBankForm, IBankItem} from "../interfaces";
 
-import * as Yup from "yup";
-
-const schema: Yup.ObjectSchema<IEditBankForm> = Yup.object().shape({
-  accountNumber: Yup.number()
-    .typeError("The Field must be a number")
-    .required("This field is required"),
-  bankAddress: Yup.string().required("This field is required"),
-  bankName: Yup.string().required("This field is required"),
-  country: Yup.string().required("This field is required"),
-  description: Yup.string().required("This field is required"),
-  holderAddress: Yup.string().required("This field is required"),
-  holderName: Yup.string().required("This field is required"),
-  iban: Yup.string().required("This field is required"),
-  swiftCode: Yup.string().required("This field is required"),
-  status: Yup.string().required("This field is required"),
-});
+import {schema} from "./useCreateBankForm";
 
 const useEditBankForm = () => {
   const {hide, data} = useModal();
 
   const bankData = data as IBankItem;
 
+  console.log({
+    status: bankData.status,
+  });
+
   const form = useForm<IEditBankForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
     defaultValues: {
-      accountNumber: bankData?.accountNumber,
-      bankAddress: bankData?.bankAddress,
-      bankName: bankData?.bankName,
-      country: bankData?.country,
-      description: bankData?.description,
-      holderAddress: bankData?.holderAddress,
-      holderName: bankData?.holderName,
-      iban: bankData?.iban,
-      swiftCode: bankData?.swiftCode,
-      status: bankData?.status,
+      account_holder_name: bankData.account_holder_name,
+      account_holder_address: bankData.account_holder_address,
+      bank_name: bankData.bank_name,
+      bank_address: bankData.bank_address,
+      country: bankData.country,
+      swift_code: bankData.swift_code,
+      iban: bankData.iban,
+      note: bankData.note,
+      status: bankData.status.toLowerCase(),
     },
   });
 
