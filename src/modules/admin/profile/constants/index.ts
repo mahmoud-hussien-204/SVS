@@ -1,11 +1,7 @@
 export const constantProfileTabs = [
   {
-    label: "Global Settings",
-    value: "/admin/profile/global-settings",
-  },
-  {
     label: "Edit Profile",
-    value: "edit-profile",
+    value: "/admin/profile/edit-profile",
   },
   {
     label: "Security",

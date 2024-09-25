@@ -8,7 +8,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import useMutation from "@/hooks/useMutation";
 
-import {apiChnaggePassword} from "../services";
+import {apiChangePassword} from "../services";
 
 const schema: Yup.ObjectSchema<IUpdatePassword> = Yup.object().shape({
   password: Yup.string().required("Current password is required"),
@@ -25,13 +25,11 @@ const useUpdatePasswordForm = () => {
   });
 
   const {mutate, isPending} = useMutation({
-    mutationFn: apiChnaggePassword,
+    mutationFn: apiChangePassword,
     mutationKey: ["user-change-password"],
   });
 
   const handleSubmit = form.handleSubmit((values: IUpdatePassword) => {
-    console.log(values);
-    // const {confirmPassword, ...rest} = values;
     mutate(values);
   });
 
