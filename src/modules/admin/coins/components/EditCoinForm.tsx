@@ -11,10 +11,11 @@ import Input from "@/components/Input";
 import Label from "@/components/Label";
 
 import ModalBody from "@/components/ModalBody";
-import Select from "@/components/Select";
 
 const EditCoinForm = () => {
-  const { form, handleSubmit } = useEditCoinForm();
+  const {form, handleSubmit} = useEditCoinForm();
+
+  console.log(form.formState.errors);
 
   return (
     <form noValidate name='update-coin-form' id='update-coin-form' onSubmit={handleSubmit}>
@@ -67,20 +68,9 @@ const EditCoinForm = () => {
             />
             <ErrorMessage>{form.formState.errors.maximum_withdrawal?.message}</ErrorMessage>
           </div>
-
-        </div>
-        <div className='mb-1.25rem'>
-          <Label htmlFor='user-form-role'>Select Coin Type</Label>
-          <Select
-            {...form.register("type")}
-            options={[]}
-            id='coin-type'
-            isError={!!form.formState.errors.type}
-          />
-          <ErrorMessage>{form.formState.errors.type?.message}</ErrorMessage>
         </div>
       </ModalBody>
-      <ModalFooter isLoading={false} title='Update User' />
+      <ModalFooter isLoading={false} title='Update Coin' />
     </form>
   );
 };

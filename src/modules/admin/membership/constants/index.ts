@@ -1,3 +1,4 @@
+import {ENUM_PLANS_STATUS} from "../enums";
 import {PlanFeesMethodEnum, PlanStatusEnum} from "../interfaces";
 
 export const constantPlansStatus = [
@@ -8,15 +9,11 @@ export const constantPlansStatus = [
   },
   {
     label: "Active",
-    value: "active",
+    value: ENUM_PLANS_STATUS.ACTIVE,
   },
   {
-    label: "Inactive",
-    value: "inactive",
-  },
-  {
-    label: "Suspended",
-    value: "suspended",
+    label: "Deactive",
+    value: ENUM_PLANS_STATUS.DEACTIVE,
   },
 ];
 

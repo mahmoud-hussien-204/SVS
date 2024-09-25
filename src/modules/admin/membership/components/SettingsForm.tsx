@@ -29,23 +29,23 @@ const SettingsForm = () => {
             <Label htmlFor='membership-settings-form-minimum-amount'>Minimum Amount</Label>
             <Input
               type='text'
-              {...form.register("minimumAmount")}
+              {...form.register("plan_minimum_amount")}
               placeholder='Enter Minimum Amount'
               id='membership-settings-form-minimum-amount'
-              isError={!!form.formState.errors.minimumAmount}
+              isError={!!form.formState.errors.plan_minimum_amount}
             />
-            <ErrorMessage>{form.formState.errors.minimumAmount?.message}</ErrorMessage>
+            <ErrorMessage>{form.formState.errors.plan_minimum_amount?.message}</ErrorMessage>
           </div>
           <div>
             <Label htmlFor='membership-settings-form-maximum-amount'>Maximum Amount</Label>
             <Input
               type='text'
-              {...form.register("maximumAmount")}
+              {...form.register("plan_maximum_amount")}
               placeholder='Enter Maximum Amount'
               id='membership-settings-form-maximum-amount'
-              isError={!!form.formState.errors.maximumAmount}
+              isError={!!form.formState.errors.plan_maximum_amount}
             />
-            <ErrorMessage>{form.formState.errors.maximumAmount?.message}</ErrorMessage>
+            <ErrorMessage>{form.formState.errors.plan_maximum_amount?.message}</ErrorMessage>
           </div>
         </div>
       </ModalBody>

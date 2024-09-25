@@ -7,27 +7,24 @@ import {useForm} from "react-hook-form";
 import * as Yup from "yup";
 
 import {IPlanData, IEditPlanForm, PlanFeesMethodEnum, PlanStatusEnum} from "../interfaces";
+import useMutation from "@/hooks/useMutation";
+import {apiCreateAndUpdatePlan} from "../services";
+import AppHelper from "@/helpers/appHelper";
 
 const schema: Yup.ObjectSchema<IEditPlanForm> = Yup.object().shape({
-  name: Yup.string().required("This field is required"),
+  plan_name: Yup.string().required("This field is required"),
   duration: Yup.number().typeError("Duration must be a number").required("This field is required"),
-  minimumAmount: Yup.number()
+  amount: Yup.string()
     .typeError("Minimum amount must be a number")
     .required("This field is required"),
-  feesMethod: Yup.string()
-    .oneOf([PlanFeesMethodEnum.FIXED, PlanFeesMethodEnum.PERCENTAGE], "Please select a fees method")
-    .required("This field is required"),
-  bonusCoinType: Yup.string().required("This field is required"),
-  bonus: Yup.number().typeError("Bonus must be a number").required("This field is required"),
+  bonus_type: Yup.string().required("This field is required"),
+  bonus_coin_type: Yup.string().required("This field is required"),
+  bonus: Yup.string().typeError("Bonus must be a number").required("This field is required"),
   description: Yup.string().required("This field is required"),
-  activationStatus: Yup.string()
+  status: Yup.string()
     .oneOf([PlanStatusEnum.ACTIVE, PlanStatusEnum.INACTIVE], "Please select a status")
     .required("This field is required"),
-  image: Yup.mixed<File>()
-    .required("This field is required")
-    .test("fileType", "Unsupported file format", (value) => {
-      return value && value instanceof File;
-    }),
+  image: Yup.mixed<File>().optional(),
 });
 
 const useEditPlanForm = () => {
@@ -39,23 +36,37 @@ const useEditPlanForm = () => {
     resolver: yupResolver(schema),
     mode: "onTouched",
     defaultValues: {
-      bonusCoinType: planData.bonusCoinType || "",
-      name: planData.planName || "",
-      minimumAmount: planData.minimumAmount || 0,
-      feesMethod: PlanFeesMethodEnum.FIXED,
-      bonus: planData.bonus || 0,
+      bonus_coin_type: planData.bonus_coin_type || "",
+      plan_name: planData.plan_name || "",
+      amount: planData.amount || "0",
+      bonus_type: PlanFeesMethodEnum.FIXED,
+      bonus: planData.bonus || "0",
       description: planData.description || "",
-      activationStatus: planData.status || PlanStatusEnum.ACTIVE,
+      status:
+        planData.status == "Active"
+          ? PlanStatusEnum.ACTIVE
+          : PlanStatusEnum.INACTIVE || PlanStatusEnum.ACTIVE,
       duration: planData.duration || 0,
     },
   });
 
-  const handleSubmit = form.handleSubmit((values: IEditPlanForm) => {
-    console.log(values);
-    hide();
+  const {mutate, isPending, queryClient} = useMutation({
+    mutationFn: apiCreateAndUpdatePlan,
+    mutationKey: ["edit-plan"],
   });
 
-  return {form, handleSubmit};
+  const handleSubmit = form.handleSubmit((values: IEditPlanForm) => {
+    const formData = AppHelper.toFormData({...values, edit_id: planData.id});
+
+    mutate(formData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["admin-get-plans"] as any);
+        hide();
+      },
+    });
+  });
+
+  return {form, handleSubmit, isPending};
 };
 
 export default useEditPlanForm;

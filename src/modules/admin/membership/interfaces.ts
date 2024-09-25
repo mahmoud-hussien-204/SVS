@@ -1,41 +1,45 @@
 export enum PlanFeesMethodEnum {
-  FIXED = "fixed",
-  PERCENTAGE = "percentage",
+  FIXED = "1",
+  PERCENTAGE = "2",
 }
 
 export enum PlanStatusEnum {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
+  ACTIVE = "1",
+  INACTIVE = "0",
 }
 
 export interface ICreatePlanForm {
-  name: string;
+  plan_name: string;
   duration: number;
-  minimumAmount: number;
-  feesMethod: PlanFeesMethodEnum;
-  bonusCoinType: string;
-  bonus: number;
-  activationStatus: PlanStatusEnum;
+  amount: string;
+  bonus_type: string;
+  bonus_coin_type: string;
+  bonus: string;
+  status: PlanStatusEnum;
   description: string;
-  image: File;
+  image?: File | string;
 }
 
 export type IEditPlanForm = ICreatePlanForm;
 
 export interface IPlanData {
   id: number;
-  planName: string;
-  minimumAmount: number;
+  plan_name: string;
   duration: number;
-  bonusType: string;
-  bonus: number;
-  bonusCoinType: string;
-  status: PlanStatusEnum;
-  createdAt: string;
-  description: string;
+  amount: string;
   image: string;
+  bonus_type: string;
+  bonus: string;
+  bonus_coin_type: string;
+  status: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  action: {
+    edit_url: string;
+  };
 }
 export interface ISettingsForm {
-  minimumAmount: number;
-  maximumAmount: number;
+  plan_minimum_amount: number;
+  plan_maximum_amount: number;
 }

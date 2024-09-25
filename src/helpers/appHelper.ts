@@ -36,11 +36,7 @@ export default class AppHelper {
     return nameArray[0][0] + "." + nameArray[1];
   }
 
-  static toFormData(
-    data: Record<string, string | Record<string, string>>,
-    formData: FormData = new FormData(),
-    parentKey?: string
-  ): FormData {
+  static toFormData(data: any, formData: FormData = new FormData(), parentKey?: string): FormData {
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
         const value = data[key];
