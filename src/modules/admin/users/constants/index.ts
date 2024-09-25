@@ -1,3 +1,5 @@
+import {ENUM_USERS_STATUS} from "../enums";
+
 export const constantUsersStatus = [
   {
     label: "Users Status",
@@ -5,15 +7,25 @@ export const constantUsersStatus = [
     disabled: true,
   },
   {
-    label: "Active",
-    value: "active",
+    label: "Active Users",
+    value: ENUM_USERS_STATUS.ACTIVE_USERS,
   },
   {
-    label: "Inactive",
-    value: "inactive",
+    label: "Suspended Users",
+    value: ENUM_USERS_STATUS.SUSPEND_USER,
   },
   {
-    label: "Suspended",
-    value: "suspended",
+    label: "Deleted Users",
+    value: ENUM_USERS_STATUS.DELETED_USER,
+  },
+  {
+    label: "Email Pending",
+    value: ENUM_USERS_STATUS.EMAIL_PENDING,
+  },
+  {
+    label: "Phone Pending",
+    value: ENUM_USERS_STATUS.PHONE_PENDING,
   },
 ];
+
+export const userActions = ["Email_verify", "Phone_verify", "Delete", "Edit", "Suspend", "View"];

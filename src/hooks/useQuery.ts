@@ -6,6 +6,8 @@ export default function useQuery<T>({queryFn, queryKey, ...options}: IOptions<T>
   return useReactQuery<T, IError>({
     queryKey: queryKey,
     queryFn,
+    refetchOnWindowFocus: false,
+    retry: 0,
     ...options,
   });
 }

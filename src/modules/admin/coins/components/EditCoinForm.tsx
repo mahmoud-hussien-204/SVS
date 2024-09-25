@@ -11,9 +11,10 @@ import Input from "@/components/Input";
 import Label from "@/components/Label";
 
 import ModalBody from "@/components/ModalBody";
+import Select from "@/components/Select";
 
 const EditCoinForm = () => {
-  const {form, handleSubmit} = useEditCoinForm();
+  const { form, handleSubmit } = useEditCoinForm();
 
   return (
     <form noValidate name='update-coin-form' id='update-coin-form' onSubmit={handleSubmit}>
@@ -23,49 +24,60 @@ const EditCoinForm = () => {
           <Label htmlFor='update-coin-form-coin-name'>Coin Full Name</Label>
           <Input
             type='text'
-            {...form.register("coinName")}
+            {...form.register("name")}
             placeholder='Enter Coin Full Name'
             id='update-coin-form-coin-name'
-            isError={!!form.formState.errors.coinName}
+            isError={!!form.formState.errors.name}
           />
-          <ErrorMessage>{form.formState.errors.coinName?.message}</ErrorMessage>
+          <ErrorMessage>{form.formState.errors.name?.message}</ErrorMessage>
         </div>
         <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem'>
           <div>
             <Label htmlFor='update-coin-form-fees'>Withdrawal fees (%)</Label>
             <Input
               type='text'
-              {...form.register("withdrawalFees")}
+              {...form.register("fee")}
               placeholder='Enter Withdrawal fees'
               id='update-coin-form-fees'
-              isError={!!form.formState.errors.withdrawalFees}
+              isError={!!form.formState.errors.fee}
             />
-            <ErrorMessage>{form.formState.errors.withdrawalFees?.message}</ErrorMessage>
+            <ErrorMessage>{form.formState.errors.fee?.message}</ErrorMessage>
           </div>
           <div>
             <Label htmlFor='update-coin-form-minimum-withdrawal'>Minimum Withdrawal</Label>
             <Input
-              type='email'
-              {...form.register("minimumWithdrawal")}
+              type='number'
+              {...form.register("minimum_withdrawal")}
               placeholder='Minimum Withdrawal
 '
               id='update-coin-form-minimum-withdrawal'
-              isError={!!form.formState.errors.minimumWithdrawal}
+              isError={!!form.formState.errors.minimum_withdrawal}
             />
-            <ErrorMessage>{form.formState.errors.minimumWithdrawal?.message}</ErrorMessage>
+            <ErrorMessage>{form.formState.errors.minimum_withdrawal?.message}</ErrorMessage>
           </div>
           <div>
             <Label htmlFor='update-coin-form-maximum-withdrawal'>Maximum Withdrawal</Label>
             <Input
-              type='email'
-              {...form.register("maximumWithdrawal")}
+              type='number'
+              {...form.register("maximum_withdrawal")}
               placeholder='Maximum Withdrawal
 '
               id='update-coin-form-maximum-withdrawal'
-              isError={!!form.formState.errors.maximumWithdrawal}
+              isError={!!form.formState.errors.maximum_withdrawal}
             />
-            <ErrorMessage>{form.formState.errors.maximumWithdrawal?.message}</ErrorMessage>
+            <ErrorMessage>{form.formState.errors.maximum_withdrawal?.message}</ErrorMessage>
           </div>
+
+        </div>
+        <div className='mb-1.25rem'>
+          <Label htmlFor='user-form-role'>Select Coin Type</Label>
+          <Select
+            {...form.register("type")}
+            options={[]}
+            id='coin-type'
+            isError={!!form.formState.errors.type}
+          />
+          <ErrorMessage>{form.formState.errors.type?.message}</ErrorMessage>
         </div>
       </ModalBody>
       <ModalFooter isLoading={false} title='Update User' />

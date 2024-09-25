@@ -4,16 +4,16 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import {useForm} from "react-hook-form";
 
-import {IEditUserForm, IUserData} from "../interfaces";
+import {IAddUserForm, IUserData} from "../interfaces";
 
 import * as Yup from "yup";
 
-const schema: Yup.ObjectSchema<IEditUserForm> = Yup.object().shape({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("First name is required"),
+const schema: Yup.ObjectSchema<IAddUserForm> = Yup.object().shape({
+  first_name: Yup.string().required("First name is required"),
+  last_name: Yup.string().required("First name is required"),
   email: Yup.string().email("Enter a valid email").required("email is required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
-  role: Yup.string().required("Role is required"),
+  phone: Yup.string().required("Phone number is required"),
+  role: Yup.number().required("Role is required"),
 });
 
 const useEditUserForm = () => {
@@ -21,19 +21,19 @@ const useEditUserForm = () => {
 
   const userData = data as IUserData;
 
-  const form = useForm<IEditUserForm>({
+  const form = useForm<IAddUserForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
     defaultValues: {
       email: userData?.email || "",
-      firstName: userData?.firstName || "",
-      lastName: userData?.lastName || "",
-      phoneNumber: userData?.phoneNumber || "",
-      role: userData?.role || "",
+      first_name: userData?.first_name || "",
+      last_name: userData?.last_name || "",
+      phone: userData?.phone || "",
+      role: userData?.role || 1,
     },
   });
 
-  const handleSubmit = form.handleSubmit((values: IEditUserForm) => {
+  const handleSubmit = form.handleSubmit((values: IAddUserForm) => {
     console.log(values);
     hide();
   });

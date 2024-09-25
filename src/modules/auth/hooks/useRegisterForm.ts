@@ -1,22 +1,21 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 
 import * as Yup from "yup";
 
-import { IRegisterForm } from "../interfaces";
+import {IRegisterForm} from "../interfaces";
 
-import { apiRegisterUser } from "../services";
+import {apiRegisterUser} from "../services";
 
 import useMutation from "@/hooks/useMutation";
 
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 
 const schema: Yup.ObjectSchema<IRegisterForm> = Yup.object().shape({
   first_name: Yup.string().required("First name is required"),
   last_name: Yup.string().required("First name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  phone: Yup.string().required("Phone is required"),
   password: Yup.string().required("Password is required"),
   password_confirmation: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
@@ -30,19 +29,20 @@ const useRegisterForm = () => {
     mode: "onTouched",
   });
 
-  const { mutate , isPending } = useMutation({
+  const {mutate, isPending} = useMutation({
     mutationFn: apiRegisterUser,
     mutationKey: ["register-user"],
-  })
+  });
+
   const handleSubmit = form.handleSubmit((values: IRegisterForm) => {
-    mutate(values , {
+    mutate(values, {
       onSuccess: () => {
         navigate("/auth/login");
       },
     });
   });
 
-  return { form, handleSubmit , isPending};
+  return {form, handleSubmit, isPending};
 };
 
 export default useRegisterForm;

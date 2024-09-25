@@ -28,10 +28,7 @@ export default class InterceptorHelper {
   }
 
   // intercept response
-  static async interceptResponse<T>(
-    response: Response,
-    method: string | undefined
-  ): Promise<T> {
+  static async interceptResponse<T>(response: Response, method: string | undefined): Promise<T> {
     const responseJson = await response.json();
 
     const message = responseJson?.message || responseJson?.error;
@@ -52,11 +49,17 @@ export default class InterceptorHelper {
   }
 
   // intercept function
-  static async intercept<T>(url: string, options: RequestInit = {}): Promise<T> {
+  static async intercept<T>(
+    url: string,
+    options: RequestInit = {},
+    useBaseURL: boolean = true
+  ): Promise<T> {
     // handle request
     const requestOptions = await InterceptorHelper.interceptRequest(options);
 
-    const response = await fetch(baseURL + "" + url, requestOptions);
+    const path = useBaseURL ? `${baseURL + "" + url}` : url;
+
+    const response = await fetch(path, requestOptions);
 
     // handle response
     const responseOption = await InterceptorHelper.interceptResponse<T>(response, options.method);

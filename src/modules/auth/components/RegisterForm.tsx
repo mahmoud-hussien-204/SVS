@@ -20,8 +20,6 @@ import IconEye from "@/components/icons/IconEye";
 
 import Button from "@/components/Button";
 
-import IconPhone from "@/components/icons/IconPhone";
-
 const RegisterForm = () => {
   const { form, handleSubmit, isPending } = useRegisterForm();
 
@@ -79,20 +77,6 @@ const RegisterForm = () => {
           />
         </InputWithIconContainer>
         <ErrorMessage>{form.formState.errors.email?.message}</ErrorMessage>
-      </div>
-
-      <div className='mb-1.25rem mt-1.88rem'>
-        <Label htmlFor='register-form-phone'>Phone number</Label>
-        <InputWithIconContainer icon={<IconPhone />}>
-          <Input
-            {...form.register("phone")}
-            type='text'
-            id='register-form-phone'
-            placeholder='(+01)'
-            isError={!!form.formState.errors.phone}
-          />
-        </InputWithIconContainer>
-        <ErrorMessage>{form.formState.errors.phone?.message}</ErrorMessage>
       </div>
 
       <div className='mb-1.25rem'>

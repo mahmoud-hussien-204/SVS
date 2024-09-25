@@ -60,4 +60,7 @@ export enum EnumModals {
   reject = "reject",
   makePrimary = "makePrimary",
   settings = "settings",
+  emailVerify = "emailVerify",
+  phoneVerify = "phoneVerify",
+  active = "active",
 }

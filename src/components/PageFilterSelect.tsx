@@ -2,19 +2,20 @@ import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import Select from "./Select";
 
-import {useCallback} from "react";
+import { useCallback } from "react";
 
 interface IProps {
-  options: {label: string; value: string}[];
+  options: { label: string; value: string }[];
 }
 
-const PageFilterSelect = ({options}: IProps) => {
-  const {filterSearchParams, setSearchParams, searchParams} = useApiUrlFilter();
+const PageFilterSelect = ({ options }: IProps) => {
+  const { filterSearchParams, setSearchParams, searchParams } = useApiUrlFilter();
 
   const onChangeSelect = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("filter", e.target.value);
+      newSearchParams.set("page", "1");
       setSearchParams(newSearchParams);
     },
     [searchParams, setSearchParams]

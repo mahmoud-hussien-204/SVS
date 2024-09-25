@@ -1,14 +1,15 @@
-import {fakeDataUsersList} from "@/fakeData";
-
 import Status from "@/components/Status";
 
 import {
+  TableBoxedLayoutActionButtonActive,
   TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActionButtonEdit,
+  TableBoxedLayoutActionButtonEmailVerify,
   TableBoxedLayoutActionButtonSuspend,
   TableBoxedLayoutActionButtonView,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -24,7 +25,9 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-const UsersList = () => {
+import { IUserData } from "../interfaces";
+
+const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], totalPages: number, isLoading: boolean }) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -40,33 +43,49 @@ const UsersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataUsersList.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.userName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.role}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonView data={item} />
-                  <TableBoxedLayoutActionButtonEdit data={item} />
-                  <TableBoxedLayoutActionButtonSuspend data={{id: item.id}} />
-                  <TableBoxedLayoutActionButtonDelete data={{id: item.id}} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({ length: 10 }).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+            : users.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>
+                  {item.first_name} {item.last_name}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.role == 1 ? "Admin" : "User"}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={item.status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    {item.action.View && <TableBoxedLayoutActionButtonView data={item} />}
+                    {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
+                    {item.action.Suspend && <TableBoxedLayoutActionButtonSuspend data={{ path: item.action.Suspend }} />}
+                    {item.action.Active && <TableBoxedLayoutActionButtonActive data={{ path: item.action.Active }} />}
+                    {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={{ path: item.action.Delete }} />}
+                    {item.action.Phone_verify && <TableBoxedLayoutActionButtonEmailVerify data={{ path: item.action.Phone_verify }} />}
+                    {item.action.Email_verify && <TableBoxedLayoutActionButtonEmailVerify data={{ path: item.action.Email_verify }} />}
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );
