@@ -1,6 +1,12 @@
 import AppHelper from "@/helpers/appHelper";
 import InterceptorHelper from "@/helpers/intercepterHelper";
-import {IPlanData, ISettingsForm} from "./interfaces";
+import {
+  IBonusDistributionData,
+  IMembersListData,
+  IMemberTransactionData,
+  IPlanData,
+  ISettingsForm,
+} from "./interfaces";
 import {ENUM_PLANS_STATUS} from "./enums";
 
 export const apiGetPlans = async (
@@ -34,4 +40,52 @@ export const apiUpdateSettings = async (data: ISettingsForm) => {
     method: "POST",
     body: JSON.stringify(data),
   });
+};
+
+export const apiGetMembersTransactionHistory = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
+  const data = AppHelper.urlSearchParams({
+    page: page,
+    length: limit,
+    searchableFields: '["email"]',
+    "search[value]": search,
+  });
+  return InterceptorHelper.intercept<IResponse<IMemberTransactionData[]>>(
+    `/admin/membership-coin-transaction-history?${data}`
+  );
+};
+
+export const apiGetMembersBonusDistribution = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
+  const data = AppHelper.urlSearchParams({
+    page: page,
+    length: limit,
+    searchableFields: '["email"]',
+    "search[value]": search,
+  });
+  return InterceptorHelper.intercept<IResponse<IBonusDistributionData[]>>(
+    `/admin/club-bonus-distribution?${data}`
+  );
+};
+
+export const apiGetMembersList = async (page: number, limit: number, search: string) => {
+  const data = AppHelper.urlSearchParams({
+    page: page,
+    length: limit,
+    searchableFields: '["email"]',
+    "search[value]": search,
+  });
+  return InterceptorHelper.intercept<IResponse<IMembersListData[]>>(
+    `/admin/membership-list?${data}`
+  );
+};
+
+export const apiDistributeMembershipBonus = async () => {
+  return InterceptorHelper.intercept("/admin/admin-club-bonus-distribution-process");
 };
