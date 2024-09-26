@@ -50,11 +50,21 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Buy Coin Orders",
+      title: "Buy Coin",
       path: "/admin/orders",
       icon: "orders",
       end: true,
-      isSubmenu: false,
+      isSubmenu: true,
+      subMenu: [
+        {
+          title: "Orders List",
+          path: "/admin/orders",
+        },
+        {
+          title: "Give Coin History",
+          path: "/admin/orders-give-coin-history",
+        },
+      ],
     },
 
     {

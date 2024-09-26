@@ -12,6 +12,7 @@ export default class AppHelper {
   }
 
   static handleAddress(str: string) {
+    if (!str) return "";
     const count = 4;
     if (str.length < 8) return str;
     return str.slice(0, count) + " .... " + str.slice(count, count * 2);

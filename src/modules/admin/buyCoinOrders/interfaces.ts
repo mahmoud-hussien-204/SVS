@@ -1,20 +1,27 @@
-export interface IEditCoinForm {
-  coinName: string;
-  withdrawalFees: number;
-  minimumWithdrawal: number;
-  maximumWithdrawal: number;
-  withdrawalStatus: string;
-  activeStatus: string;
-  coinIcon: string;
+export interface IBuyCoinOrder {
+  id: number;
+  payment_type: string;
+  email: string;
+  coin: string;
+  deposit_status: string;
+  btc: string;
+  created_at: string;
+  address: string;
+  actions: {
+    accept: string;
+    reject: string;
+  };
 }
 
-export interface ICoinData {
+export interface IGiveCoinHistory {
   id: number;
-  coinName: string;
-  coinType: string;
-  minWithdrawAmount: number;
-  maxWithdrawAmount: number;
-  feesPercentage: number;
-  status: string;
-  updatedAt: string;
+  email: string;
+  wallet_id: number;
+  amount: number;
+  created_at: string;
+}
+
+export interface IGiveCoinToUser {
+  amount: number;
+  user_id: number[];
 }

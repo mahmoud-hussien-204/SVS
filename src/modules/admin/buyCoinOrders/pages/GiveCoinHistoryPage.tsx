@@ -2,33 +2,31 @@ import TransitionPage from "@/components/TransitionPage";
 
 import usePageTitle from "@/hooks/usePageTitle";
 
-import BuyCoinOrdersList from "../components/BuyCoinOrdersList";
+import GiveCoinHistoryList from "../components/GiveCoinHistoryList";
 
-import Head from "../components/Head";
+import GiveCoinHistoryHead from "../components/GiveCoinHistoryHead";
 
 import Modal from "@/components/Modal";
 
 import ModalProvider from "@/providers/ModalProvider";
 
-import AcceptForm from "../components/AcceptForm";
-
-import RejectForm from "../components/RejectForm";
+import GiveCoinForm from "../components/GiveCoinForm";
 
 export const Component = () => {
-  usePageTitle("Buy Coin Orders");
+  usePageTitle("Give Coin History");
 
   return (
     <ModalProvider>
       <TransitionPage>
-        <Head />
+        <GiveCoinHistoryHead />
         <div className='mt-2rem'>
-          <BuyCoinOrdersList />
+          <GiveCoinHistoryList />
         </div>
       </TransitionPage>
 
-      <Modal accept={AcceptForm} reject={RejectForm} />
+      <Modal add={GiveCoinForm} />
     </ModalProvider>
   );
 };
 
-Component.displayName = "BuyCoinOrdersPage";
+Component.displayName = "GiveCoinHistoryPage";
