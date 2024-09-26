@@ -3,7 +3,7 @@ import AppHelper from "@/helpers/appHelper";
 interface IProps {
   className?: string;
   title: string;
-  value: string;
+  value: number;
 }
 
 const StatsBox = ({className, title, value}: IProps) => {

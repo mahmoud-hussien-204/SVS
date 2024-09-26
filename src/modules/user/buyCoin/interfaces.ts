@@ -31,6 +31,7 @@ export interface IBuyCoinData {
   stripe_token: null;
   created_at: string;
   updated_at: string;
+  deposit_status: string;
 }
 
 export interface IReferralData {
@@ -47,6 +48,7 @@ export interface IReferralData {
   created_at: string;
   updated_at: string;
   wallet: IWallet;
+  deposit_status: string;
 }
 
 interface IWallet {

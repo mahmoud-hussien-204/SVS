@@ -17,7 +17,7 @@ export const getDefaultCoinSendOrReceiveHistory = async (
   const data = AppHelper.urlSearchParams({
     page: page,
     length: limit,
-    searchableFields: '["sender_user_id","receiver_user_id","amount"]',
+    searchableFields: '["sender_user_id","receiver_user_id","amount", "deposit_status"]',
     "search[value]": search,
   });
 

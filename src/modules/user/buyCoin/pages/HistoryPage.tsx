@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import {apiGetButyCoinHistory} from "../services";
 
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
 import CopyText from "@/components/CopyText";
 
 export const Component = () => {
@@ -83,7 +84,7 @@ export const Component = () => {
                       <TableBoxedLayoutTD>{item.coin}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
-                        <Status status={String(item.status)} />
+                        <Status status={String(item.deposit_status)} />
                       </TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
                         {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}

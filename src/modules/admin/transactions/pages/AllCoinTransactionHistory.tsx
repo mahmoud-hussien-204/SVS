@@ -106,7 +106,7 @@ export const Component = () => {
 
                       <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
-                        <CopyText text={item.transaction_id} />
+                        <CopyText text={item.transaction_id || item.transaction_hash} />
                       </TableBoxedLayoutTD>
 
                       <TableBoxedLayoutTD>

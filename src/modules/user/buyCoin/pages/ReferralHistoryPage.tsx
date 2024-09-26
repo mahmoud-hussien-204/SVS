@@ -82,7 +82,7 @@ export const Component = () => {
                       <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>{item.wallet.type}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
-                        <Status status={item.status.toString()} />
+                        <Status status={item.deposit_status} />
                       </TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
                         {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}

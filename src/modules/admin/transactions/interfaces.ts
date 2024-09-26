@@ -35,6 +35,7 @@ export interface IAllTransactions {
   sender: string;
   receiver: string;
   transaction_id: string;
+  transaction_hash: string;
   created_at: string;
 }
 
