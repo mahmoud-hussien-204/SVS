@@ -1,10 +1,9 @@
-import {fakeDataBuyCoinOrders} from "@/fakeData";
-
 import {
   TableBoxedLayoutActionButtonAccept,
   TableBoxedLayoutActionButtonReject,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -21,9 +20,42 @@ import Pagination from "@/components/Pagination";
 import Status from "@/components/Status";
 
 import dayjs from "dayjs";
+
 import CopyText from "@/components/CopyText";
 
+import useQuery from "@/hooks/useQuery";
+
+import {apiGetBuyCoinOrders} from "../services";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import {useMemo} from "react";
+
 const BuyCoinOrdersList = () => {
+  const {filterSearchParams, limitSearchParams, pageSearchParams, searchSearchParams} =
+    useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryKey: [
+      "admin-get-buy-coin-orders",
+      filterSearchParams,
+      limitSearchParams,
+      pageSearchParams,
+      searchSearchParams,
+    ],
+    queryFn: () =>
+      apiGetBuyCoinOrders({
+        filter: filterSearchParams,
+        limit: limitSearchParams,
+        page: pageSearchParams,
+        search: searchSearchParams,
+      }),
+  });
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
+
+  const buyOrdersList = useMemo(() => data?.data || [], [data]);
+
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -41,35 +73,48 @@ const BuyCoinOrdersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataBuyCoinOrders.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.payableCoin}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.paymentType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <CopyText text={item.address} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.date).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonAccept data={item} />
-                  <TableBoxedLayoutActionButtonReject data={item} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({length: 4}).map((_, index) => (
+                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>
+              ))
+            : buyOrdersList.map((order) => (
+                <TableBoxedLayoutTR key={order.id}>
+                  <TableBoxedLayoutTD>{order.email}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{order.coin}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{order.btc}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{order.payment_type}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <CopyText text={order?.address} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <Status status={order.deposit_status} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    {dayjs(order.created_at).format("MMMM D, YYYY h:mm A")}
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <TableBoxedLayoutActions>
+                      {order.actions?.accept && <TableBoxedLayoutActionButtonAccept data={order} />}
+                      {order.actions?.reject && <TableBoxedLayoutActionButtonReject data={order} />}
+                    </TableBoxedLayoutActions>
+                  </TableBoxedLayoutTD>
+                </TableBoxedLayoutTR>
+              ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

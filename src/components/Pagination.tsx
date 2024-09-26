@@ -30,7 +30,7 @@ const Pagination = ({totalPages}: IProps) => {
         <IconArrowLeft />
       </button>
       <div className='flex items-center'>
-        {Array.from({length: totalPages}).map((_, i) => (
+        {Array.from({length: totalPages > 6 ? 6 : totalPages}).map((_, i) => (
           <button
             key={i}
             className={AppHelper.classes(

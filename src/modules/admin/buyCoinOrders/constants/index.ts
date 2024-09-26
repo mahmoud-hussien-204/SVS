@@ -9,8 +9,8 @@ export const constantBuyCoinOrdersStatus = [
     value: "pending",
   },
   {
-    label: "Approved",
-    value: "approved",
+    label: "Accepted",
+    value: "accepted",
   },
   {
     label: "Rejected",
