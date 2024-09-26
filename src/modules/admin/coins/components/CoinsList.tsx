@@ -17,10 +17,18 @@ import PageLimit from "@/components/PageLimit";
 import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
-import { ICoinData } from "../interfaces";
+import {ICoinData} from "../interfaces";
+import Status from "@/components/Status";
 
-const CoinsList = ({ coins, isLoading, totalPages }: { coins: ICoinData[], isLoading: boolean, totalPages: number }) => {
-
+const CoinsList = ({
+  coins,
+  isLoading,
+  totalPages,
+}: {
+  coins: ICoinData[];
+  isLoading: boolean;
+  totalPages: number;
+}) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -39,38 +47,38 @@ const CoinsList = ({ coins, isLoading, totalPages }: { coins: ICoinData[], isLoa
 
         <TableBoxedLayoutTBody>
           {isLoading
-            ? Array.from({ length: 10 }).map((_, index) => (
-              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-                <TableBoxedLayoutSkeleton />
-              </TableBoxedLayoutTR>
-            ))
+            ? Array.from({length: 10}).map((_, index) => (
+                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>
+              ))
             : coins.map((item) => (
-              <TableBoxedLayoutTR key={item.id}>
-                <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{item.minimum_withdrawal}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{item.maximum_withdrawal}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{item.fee}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>
-                  <div>change</div>
-                </TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>
-                  {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
-                </TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>
-                  <TableBoxedLayoutActions>
-                    <TableBoxedLayoutActionButtonEdit data={item} />
-                  </TableBoxedLayoutActions>
-                </TableBoxedLayoutTD>
-              </TableBoxedLayoutTR>
-            ))}
+                <TableBoxedLayoutTR key={item.id}>
+                  <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.minimum_withdrawal}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.maximum_withdrawal}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>{item.fee}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <Status status={item.status} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <TableBoxedLayoutActions>
+                      {item.action?.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
+                    </TableBoxedLayoutActions>
+                  </TableBoxedLayoutTD>
+                </TableBoxedLayoutTR>
+              ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
