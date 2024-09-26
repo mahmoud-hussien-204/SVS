@@ -11,3 +11,87 @@ export interface IWithdrawalRequest {
   updateDate: string;
   status: string;
 }
+
+export interface IDefaultCoinsHistory {
+  id: number;
+  amount: string;
+  sender_user_id: string;
+  receiver_user_id: string;
+  sender_wallet_id: number;
+  receiver_wallet_id: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  deposit_status: string;
+}
+
+export interface IAllTransactions {
+  address: string;
+  amount: string;
+  fees: string;
+  deposit_status: string;
+  address_type: string;
+  type: string;
+  sender: string;
+  receiver: string;
+  transaction_id: string;
+  created_at: string;
+}
+
+export interface IPendingWithdrawal {
+  id: number;
+  address: string;
+  amount: string;
+  user_id: number;
+  fees: string;
+  transaction_hash: string;
+  confirmations: string;
+  addr_type: number;
+  updated_at: string;
+  wallet_id: number;
+  coin_type: string;
+  receiver_wallet_id: string;
+  address_type: string;
+  deposit_status: string;
+  sender: string;
+  receiver: string;
+  action: IPendingWithdrawalAction;
+  user: any;
+}
+
+export interface IPendingWithdrawalAction {
+  Accept: string;
+  Reject: string;
+}
+
+export interface IGasSentData {
+  id: number;
+  unique_code: string;
+  deposit_id: number;
+  wallet_id: number;
+  amount: string;
+  fees: string;
+  coin_type: string;
+  admin_address: string;
+  user_address: string;
+  transaction_hash: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  deposit_status: string;
+}
+
+export interface ITokenReceivedData {
+  id: number;
+  deposit_id: number;
+  unique_code: string;
+  amount: string;
+  fees: string;
+  to_address: string;
+  from_address: string;
+  transaction_hash: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  deposit_status: string;
+}

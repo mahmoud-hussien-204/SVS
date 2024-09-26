@@ -80,12 +80,28 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: true,
       subMenu: [
         {
-          title: "Withdrawals Requests",
+          title: "Default Coin Send or Receive History",
+          path: "/admin/default-coin-send-or-receive-history",
+        },
+        {
+          title: "All Coin Transaction History",
+          path: "/admin/all-coin-transaction-history",
+        },
+        {
+          title: "Pending Withdrawals",
           path: "/admin/transactions-withdrawals",
         },
         {
-          title: "Deposit Requests",
+          title: "Pending Deposit",
           path: "/admin/transactions-deposit",
+        },
+        {
+          title: "Gas Sent History",
+          path: "/admin/gas-sent-history",
+        },
+        {
+          title: "Token Receive History",
+          path: "/admin/token-receive-history",
         },
       ],
     },

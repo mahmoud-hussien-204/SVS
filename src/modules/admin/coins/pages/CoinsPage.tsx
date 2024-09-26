@@ -14,18 +14,22 @@ import EditCoinForm from "../components/EditCoinForm";
 
 import useQuery from "@/hooks/useQuery";
 
-import { apiGetCoinList } from "../../users/services";
-
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import {apiGetCoins} from "../services";
 
 export const Component = () => {
   usePageTitle("Coins List");
 
-  const { pageSearchParams: page, limitSearchParams: limit, searchSearchParams: search } = useApiUrlFilter()
-  const { data, isLoading } = useQuery({
-    queryFn: () => apiGetCoinList(page, limit, search),
+  const {
+    pageSearchParams: page,
+    limitSearchParams: limit,
+    searchSearchParams: search,
+  } = useApiUrlFilter();
+  const {data, isLoading} = useQuery({
+    queryFn: () => apiGetCoins(page, limit, search),
     queryKey: ["admin-get-coins", page, limit, search],
-  })
+  });
 
   const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1;
 

@@ -1,24 +1,28 @@
+import {ENUM_ALL_TRANSACTIONS} from "../enums";
+
 export const constantRequestStatus = [
   {
     label: "Request Status",
     value: "",
     disabled: true,
   },
-
-  {
-    label: "Active",
-    value: "active",
-  },
-  {
-    label: "Pending",
-    value: "pending",
-  },
   {
     label: "Accepted",
-    value: "accepted",
+    value: "Accepted",
   },
   {
     label: "Rejected",
-    value: "rejected",
+    value: "Rejected",
+  },
+];
+
+export const constantAllTransactions = [
+  {
+    label: "Deposits",
+    value: ENUM_ALL_TRANSACTIONS.DEPOSITS,
+  },
+  {
+    label: "Withdrawal",
+    value: ENUM_ALL_TRANSACTIONS.WITHDRAWAL,
   },
 ];
