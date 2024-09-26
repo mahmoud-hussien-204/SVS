@@ -1,15 +1,37 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-interface IProps {
-  message: string;
-  subTitle?: string;
-}
+import {IBuyCoinOrder} from "../interfaces";
 
-const RejectForm = ({data: dataProps}: IModalComponentProps) => {
+import useMutation from "@/hooks/useMutation";
+
+import {apiRejectBuyCoinOrder} from "../services";
+
+type IProps = IBuyCoinOrder;
+
+const RejectForm = ({data: dataProps, hide}: IModalComponentProps) => {
   const data = dataProps as IProps;
+
+  const {mutate, isPending, queryClient} = useMutation({
+    mutationFn: apiRejectBuyCoinOrder,
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate(data.actions.reject, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ["admin-get-buy-coin-orders"]});
+        hide();
+      },
+    });
+  };
+
   return (
-    <form noValidate>
-      <ConfirmationForm isLoading={false} message={data.message} submitButtonTitle='Yes, Reject' />
+    <form noValidate onSubmit={handleSubmit}>
+      <ConfirmationForm
+        isLoading={isPending}
+        message='Are you sure you want to reject this order'
+        submitButtonTitle='Yes, Reject'
+      />
     </form>
   );
 };
