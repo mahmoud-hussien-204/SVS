@@ -6,13 +6,6 @@ function TodayCoinRate() {
         <p>=</p>
         <p>10.000000 USD</p>
       </span>
-      <img
-        src='/buy-coin-vector.svg'
-        alt='buy-coin-vector'
-        className=' '
-        width={430}
-        height={430}
-      />
     </div>
   );
 }

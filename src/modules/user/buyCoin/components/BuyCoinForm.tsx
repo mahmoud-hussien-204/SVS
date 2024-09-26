@@ -18,19 +18,17 @@ import BankDepositsForm from "./BankDepositsForm";
 
 import CreditCardForm from "./CreditCardForm";
 
-import {ICoin} from "../../wallets/interfaces";
-
 import Button from "@/components/Button";
 
-const BuyCoinForm = ({coins}: {coins: ICoin[]}) => {
-  const {form, handleSubmit} = useBuyCoinForm();
+const BuyCoinForm = () => {
+  const {form, handleSubmit, data} = useBuyCoinForm();
 
   const paymentType = form.watch("payment_type");
 
   const renderPaymentForm = () => {
     switch (paymentType) {
       case ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT:
-        return <CoinPaymentForm coins={coins} />;
+        return <CoinPaymentForm coins={data} />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT:
         return <BankDepositsForm />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD:
@@ -40,6 +38,12 @@ const BuyCoinForm = ({coins}: {coins: ICoin[]}) => {
 
   return (
     <form noValidate name='buy-coin' id='buy-coin' onSubmit={handleSubmit}>
+      <h2 className='mb-1.5rem'>Today’s Coin Rate</h2>
+      <div className='mb-1.25rem flex w-full items-center justify-between rounded-lg bg-neutral-800 px-8 py-6'>
+        <p>1 NETWORK</p>
+        <p>=</p>
+        <p>10.000000 USD</p>
+      </div>
       <h2 className='mb-1.5rem'>Buy Our Coin From Here</h2>
       <div>
         <div className='mb-1.25rem'>

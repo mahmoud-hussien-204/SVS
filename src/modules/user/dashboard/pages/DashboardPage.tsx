@@ -12,26 +12,27 @@ import DailySales from "../components/DailySales";
 
 import TotalOrders from "../components/TotalOrders";
 
-import { apiGetDashboardData } from "../services";
+import {apiGetDashboardData} from "../services";
 
 import useQuery from "@/hooks/useQuery";
-import { IDashboardData } from "../interfaces";
+
+import {IDashboardData} from "../interfaces";
 
 export const Component = () => {
   usePageTitle("Dashboard");
 
-  const { data, isLoading } = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: apiGetDashboardData,
     queryKey: ["dashboard-data"],
     refetchOnWindowFocus: false,
     retry: false,
   });
 
-  const dashboardData = data as unknown as IDashboardData
+  const dashboardData = data as unknown as IDashboardData;
 
   const handelNumber = (value: number) => {
-    return +Number(value).toFixed(2)
-  }
+    return +Number(value).toFixed(2);
+  };
 
   return (
     <TransitionPage>
@@ -39,7 +40,7 @@ export const Component = () => {
         <StatsBox
           title='Available Coin'
           value={handelNumber(dashboardData?.balance.available_coin) || 0}
-          className='from-indigo-400 to-indigo-300 bg-transparent'
+          className='bg-transparent from-indigo-400 to-indigo-300'
           isLoading={isLoading}
         />
         <StatsBox
@@ -57,7 +58,10 @@ export const Component = () => {
       </div>
 
       <div className='grid gap-6 xl:grid-cols-3'>
-        <DepositAndWithdrawal deposits={dashboardData?.deposit} withdrawals={dashboardData?.withdrawal} />
+        <DepositAndWithdrawal
+          deposits={dashboardData?.deposit}
+          withdrawals={dashboardData?.withdrawal}
+        />
         <SalesByCategory />
       </div>
 

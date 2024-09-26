@@ -15,12 +15,19 @@ import {
   TableBoxedLayoutTHead,
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
+
 import Status from "@/components/Status";
+
 import dayjs from "dayjs";
+
 import Box from "@/components/Box";
+
 import PageLimit from "@/components/PageLimit";
+
 import Pagination from "@/components/Pagination";
+
 import Search from "@/components/Search";
+
 import {getDefaultCoinSendOrReceiveHistory} from "../services";
 
 export const Component = () => {
@@ -75,7 +82,7 @@ export const Component = () => {
                       <TableBoxedLayoutTD>{item.receiver_user_id}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
-                        <Status status={String(item.status)} />
+                        <Status status={String(item.deposit_status)} />
                       </TableBoxedLayoutTD>
                       <TableBoxedLayoutTD>
                         {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}

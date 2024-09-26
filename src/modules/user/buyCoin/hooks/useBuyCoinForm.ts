@@ -4,9 +4,13 @@ import {useForm} from "react-hook-form";
 
 import * as Yup from "yup";
 
-import { IBuyCoinForm} from "../interfaces";
+import {IBuyCoinForm} from "../interfaces";
 
 import useModal from "@/hooks/useModal";
+
+import useQuery from "@/hooks/useQuery";
+
+import {apiGetBuyCoin} from "../services";
 
 const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
   coin: Yup.number()
@@ -18,7 +22,12 @@ const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
 
 const useSendRequestForm = () => {
   const {hide} = useModal();
-  
+
+  const {data, isLoading} = useQuery({
+    queryFn: apiGetBuyCoin,
+    queryKey: ["user-buy-coin"],
+  });
+
   const form = useForm<IBuyCoinForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
@@ -26,10 +35,10 @@ const useSendRequestForm = () => {
 
   const handleSubmit = form.handleSubmit((values: IBuyCoinForm) => {
     console.log(values);
-    hide()
+    hide();
   });
 
-  return {form, handleSubmit };
+  return {form, handleSubmit, data};
 };
 
 export default useSendRequestForm;
