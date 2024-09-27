@@ -1,6 +1,6 @@
 import {EnumBuyCoinStatus} from "@/enums";
+
 import {ENUM_BUY_COIN_PAYMENT_TYPE} from "./enums";
-import {ICoin} from "../wallets/interfaces";
 
 export interface IBuyCoinForm {
   payment_type: ENUM_BUY_COIN_PAYMENT_TYPE | string;

@@ -26,9 +26,10 @@ const BuyCoinForm = () => {
   const paymentType = form.watch("payment_type");
 
   const renderPaymentForm = () => {
+    if (!data) return null;
     switch (paymentType) {
       case ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT:
-        return <CoinPaymentForm coins={data} />;
+        return <CoinPaymentForm coins={data?.coins} />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT:
         return <BankDepositsForm />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD:

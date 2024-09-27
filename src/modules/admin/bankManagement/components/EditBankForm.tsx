@@ -17,6 +17,7 @@ const EditBankForm = () => {
       onSubmit={handleSubmit}
     >
       <ModalHeader title='Update Bank' />
+      {/* @ts-ignore */}
       <CreateAndEditBankForm form={form} />
       <ModalFooter isLoading={isPending} title='Update Bank' />
     </form>
