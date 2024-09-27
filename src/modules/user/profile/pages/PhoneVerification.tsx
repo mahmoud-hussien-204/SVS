@@ -17,7 +17,7 @@ import ResendCode from "../components/ResendCode";
 import Button from "@/components/Button";
 
 export const Component = () => {
-  const {handleSubmit, form} = usePhoneVerificationForm();
+  const { handleSubmit, form, isPending } = usePhoneVerificationForm();
 
   return (
     <TransitionPage>
@@ -56,7 +56,7 @@ export const Component = () => {
               <ErrorMessage>{form.formState.errors.code?.message}</ErrorMessage>
             </div>
           </div>
-          <Button type='submit' className='min-w-[160px]'>
+          <Button type='submit' isLoading={isPending} className='min-w-[160px]'>
             Verify
           </Button>
         </form>
