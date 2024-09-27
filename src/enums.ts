@@ -63,6 +63,9 @@ export enum EnumModals {
   emailVerify = "emailVerify",
   phoneVerify = "phoneVerify",
   active = "active",
+  idVerification = "idVerification",
+  passport = "passport",
+  driverLicense = "driverLicense",
 }
 
 export enum EnumAppStatuses {
@@ -75,4 +78,5 @@ export enum EnumAppStatuses {
   failed = "failed",
   banned = "banned",
   completed = "completed",
+  approved = "approved",
 }
