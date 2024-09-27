@@ -14,13 +14,19 @@ import {apiUpdateBank} from "../services";
 
 import AppHelper from "@/helpers/appHelper";
 
+import * as Yup from "yup";
+
 const useEditBankForm = () => {
   const {hide, data} = useModal();
 
   const bankData = data as IBankItem;
 
   const form = useForm<IEditBankForm>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      schema.shape({
+        edit_id: Yup.number().required("This field is required"),
+      })
+    ),
     mode: "onTouched",
     defaultValues: {
       account_holder_name: bankData.account_holder_name,
