@@ -20,7 +20,7 @@ const DepositForm = ({ data }: IModalComponentProps) => {
   const { elementRef, copied, copy } = useCopy();
   const walletData = data as IWallet
 
-  const { data: deatilsWallet, isLoading } = useQuery({
+  const { data: deatilsWallet, isFetching: isLoading } = useQuery({
     queryFn: () => apiGetWalletDetailsDeposits(walletData?.id),
     queryKey: ["wallet-details-deposits"],
     enabled: Boolean(walletData?.id),
@@ -46,7 +46,7 @@ const DepositForm = ({ data }: IModalComponentProps) => {
             <div className='w-full'>
               <Label>Wallet Address</Label>
               <div className='flex h-3rem items-center justify-between rounded-0.5rem bg-base-300 pe-0.25rem ps-1rem'>
-                <div className='fill-1 text-12' ref={elementRef}>
+                <div className='text-12 max-w-full truncate' ref={elementRef}>
                   {deatilsWallet?.address}
                 </div>
                 <CopyButton copied={copied} copy={copy} />

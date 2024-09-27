@@ -1,10 +1,11 @@
-interface IProps {
-  children: React.ReactNode;
-}
+import useShowSideBar from "@/hooks/useShowSideBar";
 
-const Content = ({children}: IProps) => {
+import { PropsWithChildren } from "react";
+
+const Content = ({ children }: PropsWithChildren) => {
+  const { showSidebar } = useShowSideBar();
   return (
-    <section className='mt-header-height-with-padding ms-header-start p-container-padding'>
+    <section className={`mt-header-height-with-padding ${showSidebar && "ms-header-start"} duration-150 p-container-padding`}>
       {children}
     </section>
   );

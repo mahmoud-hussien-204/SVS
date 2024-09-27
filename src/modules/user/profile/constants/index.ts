@@ -12,6 +12,10 @@ export const constantProfileTabs = [
     value: "/user/profile/phone-verification",
   },
   {
+    label: "ID Verification",
+    value: "/user/profile/id-verification",
+  },
+  {
     label: "Security",
     value: "/user/profile/security",
   },

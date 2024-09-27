@@ -1,4 +1,4 @@
-import {RouteObject} from "react-router";
+import { RouteObject } from "react-router";
 
 export default [
   {
@@ -25,6 +25,10 @@ export default [
       {
         path: "phone-verification",
         lazy: () => import("./pages/PhoneVerification"),
+      },
+      {
+        path: "id-verification",
+        lazy: () => import("./pages/IDVerification"),
       },
     ],
   },

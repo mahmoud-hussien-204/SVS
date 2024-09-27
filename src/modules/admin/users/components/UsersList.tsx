@@ -5,6 +5,7 @@ import {
   TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActionButtonEdit,
   TableBoxedLayoutActionButtonEmailVerify,
+  TableBoxedLayoutActionButtonPhoneVerify,
   TableBoxedLayoutActionButtonSuspend,
   TableBoxedLayoutActionButtonView,
   TableBoxedLayoutActions,
@@ -74,7 +75,7 @@ const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], total
                     {item.action.Suspend && <TableBoxedLayoutActionButtonSuspend data={{ path: item.action.Suspend }} />}
                     {item.action.Active && <TableBoxedLayoutActionButtonActive data={{ path: item.action.Active }} />}
                     {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={{ path: item.action.Delete }} />}
-                    {item.action.Phone_verify && <TableBoxedLayoutActionButtonEmailVerify data={{ path: item.action.Phone_verify }} />}
+                    {item.action.Phone_verify && <TableBoxedLayoutActionButtonPhoneVerify data={{ path: item.action.Phone_verify }} />}
                     {item.action.Email_verify && <TableBoxedLayoutActionButtonEmailVerify data={{ path: item.action.Email_verify }} />}
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
