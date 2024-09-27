@@ -74,3 +74,30 @@ type IQueryParams = {
   limit?: string | number;
   search?: string;
 };
+
+interface ICoin {
+  id: number;
+  name: string;
+  type: string;
+  status: number;
+  is_withdrawal: number;
+  is_deposit: number;
+  is_buy: number;
+  is_sell: number;
+  withdrawal_fees: string;
+  maximum_withdrawal: string;
+  minimum_withdrawal: string;
+  minimum_sell_amount: string;
+  minimum_buy_amount: string;
+  sign: null;
+  trade_status: number;
+  is_virtual_amount: number;
+  is_transferable: number;
+  is_wallet: number;
+  is_primary: null;
+  is_currency: number;
+  is_base: number;
+  coin_icon: null;
+  created_at: string;
+  updated_at: string;
+}

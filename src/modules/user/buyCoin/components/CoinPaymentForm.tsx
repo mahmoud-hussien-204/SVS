@@ -1,6 +1,7 @@
 import Label from "@/components/Label";
+
 import Select from "@/components/Select";
-import {ICoin} from "../../wallets/interfaces";
+
 import Input from "@/components/Input";
 
 function CoinPaymentForm({coins}: {coins: ICoin[]}) {
