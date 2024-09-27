@@ -1,3 +1,12 @@
+import * as Yup from "yup";
+
+import {IIdVerificationForm} from "../interfaces";
+
+export const schemaIdVerification: Yup.ObjectSchema<IIdVerificationForm> = Yup.object().shape({
+  file_two: Yup.mixed<File>().required("Back Id Image is required"),
+  file_three: Yup.mixed<File>().required("Front Id Image is required"),
+});
+
 export const constantProfileTabs = [
   {
     label: "Global Settings",

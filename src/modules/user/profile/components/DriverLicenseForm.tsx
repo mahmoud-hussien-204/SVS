@@ -11,9 +11,11 @@ import ModalBody from '@/components/ModalBody';
 import ModalFooter from '@/components/ModalFooter';
 
 import useDriverLicenseForm from '../hooks/useDriverLicenseForm';
+import useUserProfile from '../hooks/useUserProfile';
 
 function DriverLicenseForm() {
-  const { handleSubmit, form } = useDriverLicenseForm();
+  const { handleSubmit, form, isPending } = useDriverLicenseForm();
+  const { data } = useUserProfile();
   return (
     <FormProvider {...form}>
       <form
@@ -26,23 +28,21 @@ function DriverLicenseForm() {
         <ModalBody>
           <div className='mb-2rem grid grid-cols-2 gap-1.25rem'>
             <div>
-              {/* <Label htmlFor='phone-verification-form-input'>Phone Number</Label> */}
               <div className='relative'>
-                <ImageUploader name="front_img" title="Front Side" locale />
+                <ImageUploader name="file_two" title="Front Side" locale={!data?.drive_front.id} />
               </div>
-              <ErrorMessage>{form.formState.errors.front_img?.message}</ErrorMessage>
+              <ErrorMessage>{form.formState.errors.file_two?.message}</ErrorMessage>
             </div>
             <div>
-              {/* <Label htmlFor='phone-verification-form-input'>Phone Number</Label> */}
               <div className='relative'>
-                <ImageUploader name="back_img" title="Back Side" locale />
+                <ImageUploader name="file_three" title="Back Side" locale={!data?.drive_back.id} />
               </div>
-              <ErrorMessage>{form.formState.errors.back_img?.message}</ErrorMessage>
+              <ErrorMessage>{form.formState.errors.file_three?.message}</ErrorMessage>
             </div>
           </div>
         </ModalBody>
 
-        <ModalFooter isLoading={false} title='Verify' />
+        {!data?.drive_back.id && <ModalFooter isLoading={isPending} title='Verify' />}
       </form>
     </FormProvider >
   )

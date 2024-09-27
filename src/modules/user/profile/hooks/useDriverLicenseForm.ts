@@ -1,29 +1,45 @@
-import * as Yup from "yup";
-
 import {IIdVerificationForm} from "../interfaces";
 
 import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
+
 import AppHelper from "@/helpers/appHelper";
 
-const schema: Yup.ObjectSchema<IIdVerificationForm> = Yup.object().shape({
-  back_img: Yup.mixed<File>().required("Back Id Image is required"),
-  front_img: Yup.mixed<File>().required("Front Id Image is required"),
-});
+import {schemaIdVerification} from "../constants";
+import useMutation from "@/hooks/useMutation";
+import {apiUploadDeiverLicense} from "../services";
+import useModal from "@/hooks/useModal";
+import useUserProfile from "./useUserProfile";
 
 const useDriverLicenseForm = () => {
+  const {hide} = useModal();
+  const {data} = useUserProfile();
+
   const form = useForm<IIdVerificationForm>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
+    defaultValues: {
+      file_two: data?.drive_front.photo || "",
+      file_three: data?.drive_back.photo || "",
+    },
+  });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiUploadDeiverLicense,
+    mutationKey: ["user-nid-upload"],
   });
 
   const handleSubmit = form.handleSubmit((values: IIdVerificationForm) => {
     const formData = AppHelper.toFormData(values);
-    console.log(...formData);
+    mutate(formData, {
+      onSuccess: () => {
+        hide();
+      },
+    });
   });
 
-  return {form, handleSubmit};
+  return {form, handleSubmit, isPending};
 };
 
 export default useDriverLicenseForm;

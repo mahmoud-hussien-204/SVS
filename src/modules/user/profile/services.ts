@@ -1,6 +1,12 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IEditProfile, IProfileGlobalSettings, IUpdatePassword, IUpdatePhotoResponse} from "./interfaces";
+import {
+  IEditProfile,
+  IProfileGlobalSettings,
+  IUpdatePassword,
+  IUpdatePhotoResponse,
+  IUserProfile,
+} from "./interfaces";
 
 export const apiUpdateProfileGlobalSettings = async (values: IProfileGlobalSettings) => {
   return InterceptorHelper.intercept<IUserResponse>("/user/save-preference", {
@@ -17,10 +23,13 @@ export const apiUpdateUserProfile = async (values: IEditProfile) => {
 };
 
 export const apiUploadProfilePhoto = async (values: FormData) => {
-  return InterceptorHelper.intercept<IResponse<IUpdatePhotoResponse>>("/user/upload-profile-image", {
-    body: values,
-    method: "POST",
-  });
+  return InterceptorHelper.intercept<IResponse<IUpdatePhotoResponse>>(
+    "/user/upload-profile-image",
+    {
+      body: values,
+      method: "POST",
+    }
+  );
 };
 
 export const apiChnaggePassword = async (values: IUpdatePassword) => {
@@ -32,4 +41,29 @@ export const apiChnaggePassword = async (values: IUpdatePassword) => {
 
 export const apiGetQrCode2FA = async () => {
   return InterceptorHelper.intercept("/user/qrcode/generate");
+};
+
+export const apiUploadIdVerification = async (data: FormData) => {
+  return InterceptorHelper.intercept("/user/nid-upload", {
+    method: "POST",
+    body: data,
+  });
+};
+
+export const apiUploadPassportVerification = async (data: FormData) => {
+  return InterceptorHelper.intercept("/user/pass-upload", {
+    method: "POST",
+    body: data,
+  });
+};
+
+export const apiUploadDeiverLicense = async (data: FormData) => {
+  return InterceptorHelper.intercept("/user/driving-licence-upload", {
+    method: "POST",
+    body: data,
+  });
+};
+
+export const apiGetUserProfile = async () => {
+  return InterceptorHelper.intercept<IUserProfile>("/user/profile");
 };

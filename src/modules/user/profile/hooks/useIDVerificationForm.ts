@@ -1,29 +1,44 @@
-import * as Yup from "yup";
-
 import {IIdVerificationForm} from "../interfaces";
 
 import {useForm} from "react-hook-form";
 
 import {yupResolver} from "@hookform/resolvers/yup";
-import AppHelper from "@/helpers/appHelper";
 
-const schema: Yup.ObjectSchema<IIdVerificationForm> = Yup.object().shape({
-  back_img: Yup.mixed<File>().required("Back Id Image is required"),
-  front_img: Yup.mixed<File>().required("Front Id Image is required"),
-});
+import AppHelper from "@/helpers/appHelper";
+import {schemaIdVerification} from "../constants";
+import useMutation from "@/hooks/useMutation";
+import {apiUploadIdVerification} from "../services";
+import useModal from "@/hooks/useModal";
+import useUserProfile from "./useUserProfile";
 
 const useIDVerificationForm = () => {
+  const {hide} = useModal();
+  const {data} = useUserProfile();
+
   const form = useForm<IIdVerificationForm>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
+    defaultValues: {
+      file_two: data?.nid_front.photo || "",
+      file_three: data?.nid_back.photo || "",
+    },
+  });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiUploadIdVerification,
+    mutationKey: ["user-nid-upload"],
   });
 
   const handleSubmit = form.handleSubmit((values: IIdVerificationForm) => {
     const formData = AppHelper.toFormData(values);
-    console.log(...formData);
+    mutate(formData, {
+      onSuccess: () => {
+        hide();
+      },
+    });
   });
 
-  return {form, handleSubmit};
+  return {form, handleSubmit, isPending};
 };
 
 export default useIDVerificationForm;
