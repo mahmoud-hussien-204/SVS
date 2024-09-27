@@ -3,6 +3,7 @@ import {EnumAppStatuses} from "@/enums";
 export const constantStatusColors = {
   [EnumAppStatuses.pending]: "border-warning/20 text-warning",
   [EnumAppStatuses.active]: "border-success/20 text-success",
+  [EnumAppStatuses.approved]: "border-success/20 text-success",
   [EnumAppStatuses.inactive]: "border-error/20 text-error",
   [EnumAppStatuses.deactive]: "border-error/20 text-error",
   // [EnumBuyCoinStatus.pending]: "border-warning/20 text-warning",

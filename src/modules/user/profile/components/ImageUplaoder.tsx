@@ -35,7 +35,7 @@ const ImageUploader = ({ locale = false, name, title }: IProps) => {
 
   return (
     <div className='w-full'>
-      <input type='file' hidden id={`imaga-uploader-${name}`} onChange={handleFileChange} />
+      <input type='file' hidden disabled={!locale} id={`imaga-uploader-${name}`} onChange={handleFileChange} />
       <label htmlFor={`imaga-uploader-${name}`} className='flex flex-col cursor-pointer gap-0.75rem'>
         <h5 className='mb-0.25rem capitalize text-left'>{title}</h5>
         <div className='flex h-52 w-full items-center justify-center rounded-box bg-base-300'>

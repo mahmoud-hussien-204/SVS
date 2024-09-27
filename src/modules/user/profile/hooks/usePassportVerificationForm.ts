@@ -5,13 +5,17 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 import AppHelper from "@/helpers/appHelper";
+
 import {schemaIdVerification} from "../constants";
+
 import useMutation from "@/hooks/useMutation";
-import {apiUploadIdVerification} from "../services";
+
+import {apiUploadPassportVerification} from "../services";
+
 import useModal from "@/hooks/useModal";
 import useUserProfile from "./useUserProfile";
 
-const useIDVerificationForm = () => {
+const usePassportVerificationForm = () => {
   const {hide} = useModal();
   const {data} = useUserProfile();
 
@@ -19,13 +23,13 @@ const useIDVerificationForm = () => {
     resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
     defaultValues: {
-      file_two: data?.nid_front.photo || "",
-      file_three: data?.nid_back.photo || "",
+      file_two: data?.pass_front.photo || "",
+      file_three: data?.pass_back.photo || "",
     },
   });
 
   const {mutate, isPending} = useMutation({
-    mutationFn: apiUploadIdVerification,
+    mutationFn: apiUploadPassportVerification,
     mutationKey: ["user-nid-upload"],
   });
 
@@ -41,4 +45,4 @@ const useIDVerificationForm = () => {
   return {form, handleSubmit, isPending};
 };
 
-export default useIDVerificationForm;
+export default usePassportVerificationForm;

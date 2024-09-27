@@ -4,53 +4,63 @@ import Title from "@/components/Title";
 
 import TransitionPage from "@/components/TransitionPage";
 
-import ErrorMessage from "@/components/ErrorMessage";
+import CardIdVerifiction from "../components/CardIdVerifiction";
 
-import Button from "@/components/Button";
+import ModalProvider from "@/providers/ModalProvider";
 
-import { FormProvider } from "react-hook-form";
+import Modal from "@/components/Modal";
 
-import useIDVerificationForm from "../hooks/useIDVerificationForm";
+import IdVerificationForm from "../components/IdVerificationForm";
 
-import ImageUploader from "../components/ImageUplaoder";
+import { EnumModals } from "@/enums";
+
+import PassportVerificationForm from "../components/PassportVerificationForm";
+
+import DriverLicenseForm from "../components/DriverLicenseForm";
+import useUserProfile from "../hooks/useUserProfile";
 
 export const Component = () => {
-  const { handleSubmit, form } = useIDVerificationForm();
+  const { data } = useUserProfile();
 
   return (
-    <FormProvider {...form}>
+    <ModalProvider>
       <TransitionPage>
         <Card>
-          <Title>ID Verification</Title>
-          <form
-            name='id-verification-form'
-            id='id-verification-form'
-            noValidate
-            onSubmit={handleSubmit}
-          >
-            <div className='mb-2rem grid grid-cols-2 gap-1.25rem'>
-              <div>
-                {/* <Label htmlFor='phone-verification-form-input'>Phone Number</Label> */}
-                <div className='relative'>
-                  <ImageUploader name="front_img" title="Front ID" locale />
-                </div>
-                <ErrorMessage>{form.formState.errors.front_img?.message}</ErrorMessage>
-              </div>
-              <div>
-                {/* <Label htmlFor='phone-verification-form-input'>Phone Number</Label> */}
-                <div className='relative'>
-                  <ImageUploader name="back_img" title="Back ID" locale />
-                </div>
-                <ErrorMessage>{form.formState.errors.back_img?.message}</ErrorMessage>
-              </div>
-            </div>
-            <Button type='submit' className='min-w-[160px]'>
-              Verify
-            </Button>
-          </form>
+          <Title>Select Your ID Type</Title>
+
+          <div className='mt-6 flex w-full flex-wrap items-center justify-evenly gap-8 pb-6'>
+            <CardIdVerifiction
+              imgSrc='/nid.svg'
+              status={(data?.nid_front.status && data?.nid_back.status) === 1 ? "Verified" : "Pending"}
+              title='National ID Verification'
+              modalType={EnumModals.idVerification}
+            />
+
+            <CardIdVerifiction
+              imgSrc='/passport.svg'
+              status={(data?.pass_front.status && data?.pass_back.status) === 1 ? "Verified" : "Pending"}
+
+              title='Passport'
+              modalType={EnumModals.passport}
+            />
+
+            <CardIdVerifiction
+              imgSrc='/driving-license.svg'
+              status={(data?.drive_front.status === 1 && data?.drive_back.status === 1) ? "Verified" : "Pending"}
+
+              title='Driving License'
+              modalType={EnumModals.driverLicense}
+            />
+          </div>
         </Card>
       </TransitionPage>
-    </FormProvider>
+
+      <Modal
+        idVerification={IdVerificationForm}
+        passport={PassportVerificationForm}
+        driverLicense={DriverLicenseForm}
+      />
+    </ModalProvider>
   );
 };
 
