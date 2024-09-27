@@ -39,12 +39,12 @@ export interface IUserProfile {
   title: string;
   user: IUser;
   clubInfos: IClubInfos;
-  nid_front: INidFront;
-  nid_back: INidBack;
-  pass_front: IPassFront;
-  pass_back: IPassBack;
-  drive_front: IDriveFront;
-  drive_back: IDriveBack;
+  nid_front: IImageData;
+  nid_back: IImageData;
+  pass_front: IImageData;
+  pass_back: IImageData;
+  drive_front: IImageData;
+  drive_back: IImageData;
   qr: string;
 }
 
@@ -84,57 +84,7 @@ export interface IClubInfos {
   plan_image: string;
 }
 
-export interface INidFront {
-  id: number;
-  user_id: number;
-  field_name: string;
-  status: number;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface INidBack {
-  id: number;
-  user_id: number;
-  field_name: string;
-  status: number;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IPassFront {
-  id: number;
-  user_id: number;
-  field_name: string;
-  status: number;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IPassBack {
-  id: number;
-  user_id: number;
-  field_name: string;
-  status: number;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IDriveFront {
-  id: number;
-  user_id: number;
-  field_name: string;
-  status: number;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IDriveBack {
+export interface IImageData {
   id: number;
   user_id: number;
   field_name: string;

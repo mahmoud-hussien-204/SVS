@@ -2,6 +2,7 @@ import InterceptorHelper from "@/helpers/intercepterHelper";
 
 import {
   IEditProfile,
+  IPhoneVerification,
   IProfileGlobalSettings,
   IUpdatePassword,
   IUpdatePhotoResponse,
@@ -66,4 +67,11 @@ export const apiUploadDeiverLicense = async (data: FormData) => {
 
 export const apiGetUserProfile = async () => {
   return InterceptorHelper.intercept<IUserProfile>("/user/profile");
+};
+
+export const apiVerifyPhone = async (data: IPhoneVerification) => {
+  return InterceptorHelper.intercept("/user/phone-verify", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 };
