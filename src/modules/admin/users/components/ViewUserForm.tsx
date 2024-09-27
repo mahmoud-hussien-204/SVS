@@ -22,9 +22,9 @@ const ViewUserForm = ({ hide, data }: IModalComponentProps) => {
         <div className='flex gap-1rem'>
           <span className="p-1 rounded-full bg-white">
             <img
-              src='/user-avater.png'
+              src={userData.photo ? userData.photo : '/user-avater.png'}
               alt={userData.first_name + " " + userData.last_name}
-              className='max-h-[9rem] object-fill'
+              className='object-fill w-9rem h-9rem rounded-full'
             />
           </span>
 
