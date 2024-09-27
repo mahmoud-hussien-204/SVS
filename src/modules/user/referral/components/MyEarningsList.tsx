@@ -13,15 +13,24 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataEarnings} from "@/fakeData";
+import { fakeDataEarnings } from "@/fakeData";
 
 import Title from "@/components/Title";
 
 import dayjs from "dayjs";
 
 import Status from "@/components/Status";
+import useQuery from "@/hooks/useQuery";
+import { apiGetEarningsData } from "../services";
 
 const MyEarningsList = () => {
+  const { data } = useQuery({
+    queryKey: ["user-referral-earnings"],
+    queryFn: apiGetEarningsData,
+  })
+
+  console.log(data);
+
   return (
     <TransitionPage>
       <Title>My Earnings</Title>

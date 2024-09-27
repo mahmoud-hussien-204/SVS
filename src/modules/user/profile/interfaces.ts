@@ -26,6 +26,11 @@ export interface IPhoneVerification {
   phone: string;
 }
 
+export interface IIdVerificationForm {
+  front_img: File;
+  back_img: File;
+}
+
 export interface IUpdatePhotoResponse {
   image: string;
 }

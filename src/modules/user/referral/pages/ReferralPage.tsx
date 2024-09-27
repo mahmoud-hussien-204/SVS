@@ -38,10 +38,10 @@ export const Component = () => {
   const { data } = useQuery({
     queryFn: apiGetReferralData,
     queryKey: ["get-user-referral"],
+    enabled: !!tab
   })
 
   if (!tab) return <Navigate to='?tab=my-referrals' replace />;
-
 
   console.log(data);
 
