@@ -1,5 +1,11 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
-import {ICreateNewPasswordForm, ILoginForm, IRegisterForm, IResetPasswordForm} from "./interfaces";
+import {
+  ICreateNewPasswordForm,
+  IEmailVerifyForm,
+  ILoginForm,
+  IRegisterForm,
+  IResetPasswordForm,
+} from "./interfaces";
 
 export const apiLoginUser = async (values: ILoginForm) => {
   return InterceptorHelper.intercept<IResponse<IUserResponse>>("/login", {
@@ -24,6 +30,13 @@ export const apiForgotPassword = async (values: IResetPasswordForm) => {
 
 export const apiResetPassword = async (values: ICreateNewPasswordForm) => {
   return InterceptorHelper.intercept("/reset-password", {
+    body: JSON.stringify(values),
+    method: "POST",
+  });
+};
+
+export const apiEmailVerify = async (values: IEmailVerifyForm) => {
+  return InterceptorHelper.intercept("/email-verify", {
     body: JSON.stringify(values),
     method: "POST",
   });

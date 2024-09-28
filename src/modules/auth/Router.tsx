@@ -32,6 +32,10 @@ export default [
         path: "create-new-password",
         lazy: () => import("./pages/CreateNewPasswordPage"),
       },
+      {
+        path: "email-verify",
+        lazy: () => import("./pages/VerifyEmailPage"),
+      },
     ],
   },
 ] as RouteObject[];
