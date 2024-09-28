@@ -17,7 +17,7 @@ import Button from "@/components/Button";
 import useCreateNewPasswordForm from "../hooks/useCreateNewPasswordForm";
 
 const CreateNewPasswordForm = () => {
-  const { form, handleSubmit } = useCreateNewPasswordForm();
+  const { form, handleSubmit, isPending } = useCreateNewPasswordForm();
 
   const { inputType, toggleVisibility } = usePasswordVisibility();
 
@@ -30,6 +30,17 @@ const CreateNewPasswordForm = () => {
         title='Create new password'
         subtitle='Secure your account with a new password, Set a strong password to protect your account.'
       />
+
+      <div className='my-1.25rem'>
+        <Label htmlFor='register-form-password'>Code</Label>
+        <Input
+          {...form.register("code")}
+          type={"text"}
+          placeholder='OTP Code'
+          isError={!!form.formState.errors.code}
+        />
+        <ErrorMessage>{form.formState.errors.code?.message}</ErrorMessage>
+      </div>
 
       <div className='my-1.25rem'>
         <Label htmlFor='register-form-password'>Password</Label>
@@ -77,7 +88,7 @@ const CreateNewPasswordForm = () => {
         <ErrorMessage>{form.formState.errors.password_confirmation?.message}</ErrorMessage>
       </div>
 
-      <Button type='submit' className='w-full'>
+      <Button type='submit' isLoading={isPending} className='w-full'>
         Reset Password
       </Button>
     </form>

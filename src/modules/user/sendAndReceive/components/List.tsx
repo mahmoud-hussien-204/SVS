@@ -19,6 +19,7 @@ import {
 import dayjs from "dayjs";
 
 import { IRqquestCoinHistory } from "../interfaces";
+import DataNotFound from "@/components/DataNotFound";
 
 const List = ({ data, isLoading, totalPages }: { data: IRqquestCoinHistory[], isLoading: boolean, totalPages: number }) => {
   return (
@@ -45,7 +46,7 @@ const List = ({ data, isLoading, totalPages }: { data: IRqquestCoinHistory[], is
               <TableBoxedLayoutSkeleton />
               <TableBoxedLayoutSkeleton />
             </TableBoxedLayoutTR>)
-          ) : data.map((item) => (
+          ) : data.length > 0 ? data.map((item) => (
             <TableBoxedLayoutTR key={item.id}>
               <TableBoxedLayoutTD>{item.sender_user_id}</TableBoxedLayoutTD>
               <TableBoxedLayoutTD>{item.receiver_user_id}</TableBoxedLayoutTD>
@@ -58,7 +59,7 @@ const List = ({ data, isLoading, totalPages }: { data: IRqquestCoinHistory[], is
                 {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
               </TableBoxedLayoutTD>
             </TableBoxedLayoutTR>
-          ))}
+          )) : <DataNotFound colSpan={6} />}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

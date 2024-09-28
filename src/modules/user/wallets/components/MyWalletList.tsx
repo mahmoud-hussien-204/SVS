@@ -2,8 +2,6 @@ import Box from "@/components/Box";
 
 import {
   TableBoxedLayoutActionButtonDeposit,
-  // TableBoxedLayoutActionButtonMakePrimary,
-  // TableBoxedLayoutActionButtonSwap,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
@@ -18,8 +16,12 @@ import {
 import dayjs from "dayjs";
 
 import { IWallet } from "../interfaces";
+
 import Pagination from "@/components/Pagination";
+
 import PageLimit from "@/components/PageLimit";
+
+import DataNotFound from "@/components/DataNotFound";
 
 interface IProps { Wallets: IWallet[], isLoading: boolean, totalPages: number }
 const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
@@ -46,7 +48,7 @@ const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
               <TableBoxedLayoutSkeleton />
             </TableBoxedLayoutTR>)
           ) :
-            Wallets.map((item) => (
+            Wallets.length > 0 ? Wallets.map((item) => (
               <TableBoxedLayoutTR key={item.id}>
                 <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
@@ -58,12 +60,10 @@ const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
                   <TableBoxedLayoutActions>
                     <TableBoxedLayoutActionButtonDeposit data={item} />
                     <TableBoxedLayoutActionButtonWithdraw data={item} />
-                    {/* <TableBoxedLayoutActionButtonSwap /> */}
-                    {/* <TableBoxedLayoutActionButtonMakePrimary /> */}
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
-            ))}
+            )) : <DataNotFound colSpan={5} />}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

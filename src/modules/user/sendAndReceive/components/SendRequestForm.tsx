@@ -73,6 +73,10 @@ const SendRequest = () => {
             isError={!!form.formState.errors.amount}
           />
           <ErrorMessage>{form.formState.errors.amount?.message}</ErrorMessage>
+          <p className="ml-2 mt-2 text-12 text-neutral-300">
+            Minimum amount : {data?.coin.minimum_withdrawal} <br />
+            Maximum amount : {data?.coin.maximum_withdrawal}
+          </p>
         </div>
 
         <div>
@@ -85,6 +89,7 @@ const SendRequest = () => {
             isError={!!form.formState.errors.email}
           />
           <ErrorMessage>{form.formState.errors.email?.message}</ErrorMessage>
+          <p className="ml-2 mt-2 text-12 text-neutral-300">Note : Input user email where you want to send request for coin. </p>
         </div>
       </ModalBody>
       <ModalFooter isLoading={false} title='Send Request' />

@@ -26,14 +26,15 @@ import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import useQuery from "@/hooks/useQuery";
 
-import {apiGetSwapHistory} from "../services";
+import { apiGetSwapHistory } from "../services";
+import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("Swap History");
 
-  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+  const { limitSearchParams, pageSearchParams, searchSearchParams } = useApiUrlFilter();
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => apiGetSwapHistory(pageSearchParams, limitSearchParams, searchSearchParams),
     queryKey: ["swap-history", pageSearchParams, limitSearchParams, searchSearchParams],
     retry: false,
@@ -62,29 +63,33 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data.map((item) => (
-                    <TableBoxedLayoutTR key={item.id}>
-                      <TableBoxedLayoutTD>{item.from_wallet_id}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.to_wallet_id}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.requested_amount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.converted_amount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+              {isLoading ? (
+                Array.from({ length: 10 }).map((_, index) => (
+                  <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+              ) : data?.data && data.data.length > 0 ? (
+                data?.data.map((item) => (
+                  <TableBoxedLayoutTR key={item.id}>
+                    <TableBoxedLayoutTD>{item.from_wallet_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.to_wallet_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.requested_amount}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.converted_amount}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))
+              ) : (
+                <DataNotFound colSpan={6} />
+              )}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 
