@@ -10,11 +10,11 @@ import InviteForm from "../components/InviteForm";
 
 import Head from "../components/Head";
 
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 import Tabs from "@/components/Tabs";
 
-import { constantTabs } from "../constants";
+import {constantTabs} from "../constants";
 
 import MyReferralsList from "../components/MyReferralsList";
 
@@ -28,30 +28,31 @@ import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import useQuery from "@/hooks/useQuery";
 
-import { apiGetReferralData } from "../services";
+import {apiGetReferralData} from "../services";
+
+import LoadingScreen from "@/components/LoadingScreen";
 
 export const Component = () => {
   usePageTitle("My Referral");
 
-  const { tabSearchParams: tab } = useApiUrlFilter()
+  const {tabSearchParams: tab} = useApiUrlFilter();
 
-  const { data } = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: apiGetReferralData,
     queryKey: ["get-user-referral"],
-    enabled: !!tab
-  })
+    enabled: !!tab,
+  });
 
   if (!tab) return <Navigate to='?tab=my-referrals' replace />;
 
-  console.log(data);
-
+  if (isLoading) return <LoadingScreen />;
   return (
     <ModalProvider>
       <TransitionPage>
         <div className='mb-1.5rem'>
           <Tabs tabs={constantTabs} />
         </div>
-        <Head />
+        <Head url={data?.url || ""} />
         <div className='mt-2rem'>
           <Box>
             {tab === "my-referrals" ? (

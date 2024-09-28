@@ -58,3 +58,9 @@ export const apiGetWalletDetailsDeposits = async (walletId: number) => {
 export const apiGetWalletDetailsWithdraw = async (walletId: number) => {
   return InterceptorHelper.intercept<IWalletDepositData>(`/user/wallet-details-${walletId}`);
 };
+
+export const apiGetWalletLogs = async (walletId: number, tab: "withdraw" | "deposit") => {
+  return InterceptorHelper.intercept<IWalletDepositData>(
+    `/user/wallet-details-${walletId}?ac_tab=${tab}`
+  );
+};

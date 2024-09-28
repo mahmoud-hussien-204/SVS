@@ -9,4 +9,8 @@ export default [
     path: "my-wallets-swap-history",
     lazy: () => import("./pages/SwapHistoryPage"),
   },
+  {
+    path: "wallet-logs",
+    lazy: () => import("./pages/WalletLogsPage"),
+  },
 ] as RouteObject[];

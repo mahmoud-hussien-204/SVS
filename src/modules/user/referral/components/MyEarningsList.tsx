@@ -13,23 +13,21 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import { fakeDataEarnings } from "@/fakeData";
+import {fakeDataEarnings} from "@/fakeData";
 
 import Title from "@/components/Title";
 
 import dayjs from "dayjs";
 
 import Status from "@/components/Status";
-import useQuery from "@/hooks/useQuery";
-import { apiGetEarningsData } from "../services";
+
+import DataNotFound from "@/components/DataNotFound";
 
 const MyEarningsList = () => {
-  const { data } = useQuery({
-    queryKey: ["user-referral-earnings"],
-    queryFn: apiGetEarningsData,
-  })
-
-  console.log(data);
+  // const {data} = useQuery({
+  //   queryKey: ["user-referral-earnings"],
+  //   queryFn: apiGetEarningsData,
+  // });
 
   return (
     <TransitionPage>
@@ -46,25 +44,29 @@ const MyEarningsList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataEarnings.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.fromChild}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {fakeDataEarnings.length > 0 ? (
+            <DataNotFound colSpan={5} />
+          ) : (
+            fakeDataEarnings.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.fromChild}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.coinAmount}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.coinName}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={item.status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
-      <div className='flex items-center justify-between mt-2rem'>
+      <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={1} />
       </div>
     </TransitionPage>
   );

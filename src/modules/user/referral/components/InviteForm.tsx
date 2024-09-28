@@ -12,9 +12,9 @@ import ModalHeader from "@/components/ModalHeader";
 
 import useCopy from "@/hooks/useCopy";
 
-const InviteForm = () => {
+const InviteForm = ({data}: IModalComponentProps) => {
   const {copied, copy, elementRef} = useCopy();
-
+  const url = (data as {url: string}).url;
   return (
     <>
       <ModalHeader title='Invite your friend' />
@@ -23,20 +23,28 @@ const InviteForm = () => {
           <Label>Share Link</Label>
           <div className='flex h-3rem items-center justify-between rounded-0.5rem bg-base-300 pe-0.25rem ps-1rem'>
             <div className='fill-1 text-12' ref={elementRef}>
-              https://cpocket.itech-theme.com/referral-reg?ref_code=260619c8ca6613
+              {url}
             </div>
             <CopyButton copied={copied} copy={copy} />
           </div>
         </div>
         <div className='divider'>OR</div>
         <div className='flex gap-1rem'>
-          <a className='btn flex flex-1 items-center gap-0.25rem bg-[#3B5998] text-base-100 hover:text-white'>
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+            target='_blank'
+            className='btn flex flex-1 items-center gap-0.25rem bg-[#3B5998] text-base-100 hover:text-white'
+          >
             <IconFacebook />
             Facebook
           </a>
-          <a className='btn flex flex-1 items-center gap-0.25rem bg-[#1DA1F2] text-base-100 hover:text-white'>
+          <a
+            href={`http://www.twitter.com/share?url=${url}`}
+            target='_blank'
+            className='btn flex flex-1 items-center gap-0.25rem bg-[#1DA1F2] text-base-100 hover:text-white'
+          >
             <IconTwitter />
-            Facebook
+            Twitter
           </a>
         </div>
       </ModalBody>

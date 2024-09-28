@@ -2,11 +2,11 @@ import AppHelper from "@/helpers/appHelper";
 
 import useModal from "@/hooks/useModal";
 
-import Dropdown, { DropdownMenu } from "./Dropdown";
+import Dropdown, {DropdownMenu} from "./Dropdown";
 
 import Dots from "./Dots";
 
-import { EnumModals } from "@/enums";
+import {EnumModals} from "@/enums";
 
 import IconSell from "./icons/IconSell";
 
@@ -35,23 +35,23 @@ interface IProps {
   className?: string;
 }
 
-export const TableBoxedLayoutContainer = ({ children, className }: IProps) => {
+export const TableBoxedLayoutContainer = ({children, className}: IProps) => {
   return <table className={AppHelper.classes("w-full align-middle", className)}>{children}</table>;
 };
 
-export const TableBoxedLayoutTHead = ({ children, className }: IProps) => {
+export const TableBoxedLayoutTHead = ({children, className}: IProps) => {
   return <thead className={className}>{children}</thead>;
 };
 
-export const TableBoxedLayoutTBody = ({ children, className }: IProps) => {
+export const TableBoxedLayoutTBody = ({children, className}: IProps) => {
   return <tbody className={className}>{children}</tbody>;
 };
 
-export const TableBoxedLayoutTR = ({ children }: IProps) => {
+export const TableBoxedLayoutTR = ({children}: IProps) => {
   return <tr className='only:!bg-transparent odd:bg-base-200'>{children}</tr>;
 };
 
-export const TableBoxedLayoutTH = ({ children, className }: IProps) => {
+export const TableBoxedLayoutTH = ({children, className}: IProps) => {
   return (
     <th
       className={AppHelper.classes(
@@ -70,7 +70,7 @@ type TableBoxedLayoutTDProps = IProps &
     HTMLTableDataCellElement
   >;
 
-export const TableBoxedLayoutTD = ({ children, className, ...props }: TableBoxedLayoutTDProps) => {
+export const TableBoxedLayoutTD = ({children, className, ...props}: TableBoxedLayoutTDProps) => {
   return (
     <td
       className={AppHelper.classes(
@@ -92,11 +92,11 @@ export const TableBoxedLayoutSkeleton = (props: Omit<TableBoxedLayoutTDProps, "c
   );
 };
 
-export const TableBoxedLayoutFlexContent = ({ children }: IProps) => {
+export const TableBoxedLayoutFlexContent = ({children}: IProps) => {
   return <div className='flex items-center gap-0.5rem'>{children}</div>;
 };
 
-export const TableBoxedLayoutActions = ({ children }: IProps) => {
+export const TableBoxedLayoutActions = ({children}: IProps) => {
   return (
     <Dropdown button={<Dots />}>
       <DropdownMenu className='flex min-w-[11rem] flex-col gap-0.5rem'>{children}</DropdownMenu>
@@ -106,7 +106,7 @@ export const TableBoxedLayoutActions = ({ children }: IProps) => {
 
 interface ITableBoxedLayoutActionButtonProps {
   title: string;
-  modal: IModals;
+  modal?: IModals;
   data?: unknown;
   icon: React.ReactNode;
 }
@@ -116,16 +116,16 @@ export const TableBoxedLayoutActionButton = ({
   data,
   icon,
 }: ITableBoxedLayoutActionButtonProps) => {
-  const { show, setClassName } = useModal();
+  const {show, setClassName} = useModal();
 
   return (
     <div
       className='flex cursor-pointer items-center gap-0.75rem rounded-btn py-0.5rem text-12 transition-all hover:bg-base-100 hover:ps-0.75rem'
       onClick={() => {
-        show(modal, data);
+        show(modal ?? "accept", data);
 
         if (typeof data === "object" && Object.prototype.hasOwnProperty.call(data, "className")) {
-          setClassName((data as { className: string }).className);
+          setClassName((data as {className: string}).className);
         }
       }}
     >
@@ -139,7 +139,7 @@ interface IButtonProps {
   data?: unknown;
 }
 
-export const TableBoxedLayoutActionButtonWithdraw = ({ data }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonWithdraw = ({data}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.withdraw}
@@ -156,7 +156,7 @@ export const TableBoxedLayoutActionButtonWithdraw = ({ data }: IButtonProps) => 
   );
 };
 
-export const TableBoxedLayoutActionButtonDeposit = ({ data }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonDeposit = ({data}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.deposit}
@@ -173,7 +173,7 @@ export const TableBoxedLayoutActionButtonDeposit = ({ data }: IButtonProps) => {
   );
 };
 
-export const TableBoxedLayoutActionButtonSwap = ({ data }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonSwap = ({data}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.swap}
@@ -190,7 +190,7 @@ export const TableBoxedLayoutActionButtonSwap = ({ data }: IButtonProps) => {
   );
 };
 
-export const TableBoxedLayoutActionButtonMakePrimary = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonMakePrimary = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.makePrimary}
@@ -210,7 +210,7 @@ export const TableBoxedLayoutActionButtonMakePrimary = ({ data = {} }: IButtonPr
   );
 };
 
-export const TableBoxedLayoutActionButtonEdit = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonEdit = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.edit}
@@ -227,7 +227,7 @@ export const TableBoxedLayoutActionButtonEdit = ({ data = {} }: IButtonProps) =>
   );
 };
 
-export const TableBoxedLayoutActionButtonView = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonView = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.view}
@@ -244,7 +244,7 @@ export const TableBoxedLayoutActionButtonView = ({ data = {} }: IButtonProps) =>
   );
 };
 
-export const TableBoxedLayoutActionButtonDelete = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonDelete = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.delete}
@@ -264,7 +264,7 @@ export const TableBoxedLayoutActionButtonDelete = ({ data = {} }: IButtonProps) 
   );
 };
 
-export const TableBoxedLayoutActionButtonSuspend = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonSuspend = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.suspended}
@@ -284,7 +284,7 @@ export const TableBoxedLayoutActionButtonSuspend = ({ data = {} }: IButtonProps)
   );
 };
 
-export const TableBoxedLayoutActionButtonActive = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonActive = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.active}
@@ -304,7 +304,7 @@ export const TableBoxedLayoutActionButtonActive = ({ data = {} }: IButtonProps) 
   );
 };
 
-export const TableBoxedLayoutActionButtonPhoneVerify = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonPhoneVerify = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.phoneVerify}
@@ -324,7 +324,7 @@ export const TableBoxedLayoutActionButtonPhoneVerify = ({ data = {} }: IButtonPr
   );
 };
 
-export const TableBoxedLayoutActionButtonEmailVerify = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonEmailVerify = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.emailVerify}
@@ -343,7 +343,7 @@ export const TableBoxedLayoutActionButtonEmailVerify = ({ data = {} }: IButtonPr
     />
   );
 };
-export const TableBoxedLayoutActionButtonAccept = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonAccept = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.accept}
@@ -363,7 +363,7 @@ export const TableBoxedLayoutActionButtonAccept = ({ data = {} }: IButtonProps) 
   );
 };
 
-export const TableBoxedLayoutActionButtonReject = ({ data = {} }: IButtonProps) => {
+export const TableBoxedLayoutActionButtonReject = ({data = {}}: IButtonProps) => {
   return (
     <TableBoxedLayoutActionButton
       modal={EnumModals.reject}
