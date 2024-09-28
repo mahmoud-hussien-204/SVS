@@ -6,7 +6,12 @@ interface IProps {
 
 const Dots = ({className}: IProps) => {
   return (
-    <div className={AppHelper.classes("flex cursor-pointer gap-0.125rem", className)}>
+    <div
+      className={AppHelper.classes(
+        "flex h-6 w-8 cursor-pointer items-center justify-center gap-0.125rem",
+        className
+      )}
+    >
       {Array.from({length: 3}).map((_, i) => (
         <span
           key={i}
