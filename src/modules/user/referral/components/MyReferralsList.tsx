@@ -17,6 +17,8 @@ import {fakeDataReferrals} from "@/fakeData";
 
 import Title from "@/components/Title";
 
+import DataNotFound from "@/components/DataNotFound";
+
 const MyReferralsList = () => {
   return (
     <TransitionPage>
@@ -31,19 +33,23 @@ const MyReferralsList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataReferrals.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.level1}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.level2}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.level3}</TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {fakeDataReferrals.length > 0 ? (
+            <DataNotFound colSpan={3} />
+          ) : (
+            fakeDataReferrals.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.level1}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.level2}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.level3}</TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
-      <div className='flex items-center justify-between mt-2rem'>
+      <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={1} />
       </div>
     </TransitionPage>
   );

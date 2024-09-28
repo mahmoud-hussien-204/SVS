@@ -13,3 +13,14 @@ export const constantWalletType = [
     value: "2",
   },
 ];
+
+export const constantWalletLogsFilter = [
+  {
+    label: "Deposit",
+    value: "deposit",
+  },
+  {
+    label: "Withdraw",
+    value: "withdraw",
+  },
+];

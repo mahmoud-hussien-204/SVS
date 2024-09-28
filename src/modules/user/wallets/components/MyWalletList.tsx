@@ -1,6 +1,7 @@
 import Box from "@/components/Box";
 
 import {
+  TableBoxedLayoutActionButton,
   TableBoxedLayoutActionButtonDeposit,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
@@ -15,7 +16,7 @@ import {
 
 import dayjs from "dayjs";
 
-import { IWallet } from "../interfaces";
+import {IWallet} from "../interfaces";
 
 import Pagination from "@/components/Pagination";
 
@@ -23,8 +24,16 @@ import PageLimit from "@/components/PageLimit";
 
 import DataNotFound from "@/components/DataNotFound";
 
-interface IProps { Wallets: IWallet[], isLoading: boolean, totalPages: number }
-const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
+import {Link} from "react-router-dom";
+
+import IconEye from "@/components/icons/IconEye";
+
+interface IProps {
+  Wallets: IWallet[];
+  isLoading: boolean;
+  totalPages: number;
+}
+const MyWalletList = ({Wallets, isLoading, totalPages}: IProps) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -40,15 +49,17 @@ const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
 
         <TableBoxedLayoutTBody>
           {isLoading ? (
-            Array.from({ length: 5 }).map((_, index) => <TableBoxedLayoutTR key={index}>
-              <TableBoxedLayoutSkeleton />
-              <TableBoxedLayoutSkeleton />
-              <TableBoxedLayoutSkeleton />
-              <TableBoxedLayoutSkeleton />
-              <TableBoxedLayoutSkeleton />
-            </TableBoxedLayoutTR>)
-          ) :
-            Wallets.length > 0 ? Wallets.map((item) => (
+            Array.from({length: 5}).map((_, index) => (
+              <TableBoxedLayoutTR key={index}>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+          ) : Wallets.length > 0 ? (
+            Wallets.map((item) => (
               <TableBoxedLayoutTR key={item.id}>
                 <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
@@ -60,10 +71,20 @@ const MyWalletList = ({ Wallets, isLoading, totalPages }: IProps) => {
                   <TableBoxedLayoutActions>
                     <TableBoxedLayoutActionButtonDeposit data={item} />
                     <TableBoxedLayoutActionButtonWithdraw data={item} />
+                    <Link to={`/user/wallet-logs?id=${item.id}`} className=''>
+                      <TableBoxedLayoutActionButton
+                        icon={<IconEye />}
+                        title='View Logs'
+                        modal='accept'
+                      />
+                    </Link>
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
-            )) : <DataNotFound colSpan={5} />}
+            ))
+          ) : (
+            <DataNotFound colSpan={5} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

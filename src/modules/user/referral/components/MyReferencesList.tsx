@@ -19,6 +19,8 @@ import Title from "@/components/Title";
 
 import dayjs from "dayjs";
 
+import DataNotFound from "@/components/DataNotFound";
+
 const MyReferencesList = () => {
   return (
     <TransitionPage>
@@ -35,23 +37,27 @@ const MyReferencesList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataReferences.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.fullName}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.level}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.joiningDate).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {fakeDataReferences.length > 0 ? (
+            <DataNotFound colSpan={5} />
+          ) : (
+            fakeDataReferences.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.fullName}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.level}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.joiningDate).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
-      <div className='flex items-center justify-between mt-2rem'>
+      <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={1} />
       </div>
     </TransitionPage>
   );

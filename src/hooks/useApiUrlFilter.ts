@@ -13,6 +13,7 @@ export default function useApiUrlFilter() {
 
   const tabSearchParams = searchParams.get("tab") || "";
 
+  const idParams = searchParams.get("id") || "";
 
   return {
     searchParams,
@@ -21,6 +22,7 @@ export default function useApiUrlFilter() {
     pageSearchParams: Number(pageSearchParams),
     limitSearchParams: Number(limitSearchParams),
     filterSearchParams,
-    tabSearchParams
+    tabSearchParams,
+    idParams: Number(idParams),
   };
 }
