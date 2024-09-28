@@ -7,9 +7,10 @@ import * as Yup from "yup";
 import {IAddWalletForm} from "../interfaces";
 
 import useModal from "@/hooks/useModal";
+
 import useMutation from "@/hooks/useMutation";
-import { apiCreateWallet } from "../services";
-import { useQueryClient } from "@tanstack/react-query";
+
+import {apiCreateWallet} from "../services";
 
 const schema: Yup.ObjectSchema<IAddWalletForm> = Yup.object().shape({
   type: Yup.string().required("Please select wallet type"),
@@ -25,24 +26,22 @@ const useAddWalletForm = () => {
     mode: "onTouched",
   });
 
-  const { mutate , isPending } = useMutation({
+  const {mutate, isPending, queryClient} = useMutation({
     mutationFn: apiCreateWallet,
     mutationKey: ["user-create-wallet"],
-  })
-
-  const queryClient = useQueryClient();
+  });
 
   const handleSubmit = form.handleSubmit((values: IAddWalletForm) => {
     console.log(values);
-    mutate(values,{
+    mutate(values, {
       onSuccess() {
         hide();
-        queryClient.invalidateQueries({ queryKey: ["user-wallets"] });
+        queryClient.invalidateQueries({queryKey: ["user-my-wallets"]});
       },
-    })
+    });
   });
 
-  return {form, handleSubmit , isPending};
+  return {form, handleSubmit, isPending};
 };
 
 export default useAddWalletForm;

@@ -1,7 +1,18 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
-import {IAddWalletForm, ISwapHistoryData, IWalletDepositData, IWalletsData, IWithdrawForm} from "./interfaces";
+import {
+  IAddWalletForm,
+  ISwapHistoryData,
+  IWalletDepositData,
+  IWalletsData,
+  IWithdrawForm,
+} from "./interfaces";
 
-export const apiGetWalletData = async (page: number, limit: number, search?: string , filter?: string) => {
+export const apiGetWalletData = async (
+  page: number,
+  limit: number,
+  search?: string,
+  filter?: string
+) => {
   const data = new URLSearchParams();
   data.append("page", page.toString() || "1");
   data.append("length", limit.toString() || "10");
@@ -29,15 +40,21 @@ export const apiCreateWallet = async (values: IAddWalletForm) => {
     method: "POST",
     body: JSON.stringify(values),
   });
-}
+};
 
 export const apiWithdrawWallet = async (values: IWithdrawForm) => {
   return InterceptorHelper.intercept(`/user/Withdraw/balance`, {
     method: "POST",
     body: JSON.stringify(values),
   });
-}
+};
 
-export const apiGetWalletDetailsDeposits = async (walletId:number) => {
-  return InterceptorHelper.intercept<IWalletDepositData>(`/user/wallet-details-${walletId}?q=deposit`)
-}
+export const apiGetWalletDetailsDeposits = async (walletId: number) => {
+  return InterceptorHelper.intercept<IWalletDepositData>(
+    `/user/wallet-details-${walletId}?q=deposit`
+  );
+};
+
+export const apiGetWalletDetailsWithdraw = async (walletId: number) => {
+  return InterceptorHelper.intercept<IWalletDepositData>(`/user/wallet-details-${walletId}`);
+};

@@ -31,7 +31,7 @@ export const Component = () => {
 
   const { data, isLoading } = useQuery({
     queryFn: () => apiGetWalletData(pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams),
-    queryKey: ["my-wallets", pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams],
+    queryKey: ["user-my-wallets", pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams],
     retry: false,
     refetchOnWindowFocus: false,
   });

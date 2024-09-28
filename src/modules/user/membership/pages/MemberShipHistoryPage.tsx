@@ -10,89 +10,107 @@ import Modal from "@/components/Modal";
 
 import TransferCoinForm from "../components/TransferCoinForm";
 
-import { fakeDataSwapHistory } from "@/fakeData";
-
-import Box from "@/components/Box";
-
-import {
-  TableBoxedLayoutContainer,
-  TableBoxedLayoutTBody,
-  TableBoxedLayoutTD,
-  TableBoxedLayoutTH,
-  TableBoxedLayoutTHead,
-  TableBoxedLayoutTR,
-} from "@/components/TableBoxedLayout";
-
-import PageLimit from "@/components/PageLimit";
-
-import Pagination from "@/components/Pagination";
-
-import dayjs from "dayjs";
-
 import useQuery from "@/hooks/useQuery";
 
 import { apiGetMemberShipHistory, apiGetMemberShipPlans } from "../services";
-import DataNotFound from "@/components/DataNotFound";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+import HistoryList from "../components/HistoryList";
+
+import UserPlan from "./UserPlan";
+
+import LoadingScreen from "@/components/LoadingScreen";
+import { useMemo } from "react";
 
 export const Component = () => {
   usePageTitle("My Membership");
 
-  const { data: walletsData } = useQuery({
+  const {
+    pageSearchParams: page,
+    limitSearchParams: limit,
+    searchSearchParams: search,
+  } = useApiUrlFilter();
+
+  const { data: walletsData, isLoading: isLoadingPlans } = useQuery({
     queryFn: apiGetMemberShipPlans,
     queryKey: ["membership-plans"],
   });
 
-  const { data } = useQuery({
-    queryFn: apiGetMemberShipHistory,
-    queryKey: ["membership-plans-history"],
+  const { data, isLoading } = useQuery({
+    queryFn: () => apiGetMemberShipHistory(page, limit, search),
+    queryKey: ["membership-plans-history", page, limit, search],
   });
 
-  console.log(data);
+  const historyData = data?.MembershipBonusDistributionHistory;
+  const totalPages = historyData?.recordsTotal ? Math.ceil(historyData?.recordsTotal / limit) : 1;
+
+  const planData = useMemo(() => [
+    {
+      label: "Plan Name",
+      value: data?.data?.plan?.plan_name ?? ""
+    },
+    {
+      label: "Blocked Amount",
+      value: data?.data?.amount ?? ""
+    },
+    {
+      label: "Start Date",
+      value: data?.data?.start_date ?? ""
+    },
+    {
+      label: "End Date",
+      value: data?.data?.end_date ?? ""
+    }
+  ], [data])
+
+  const membershipData = useMemo(() => [
+    {
+      label: "Membership Status",
+      value: data?.data?.plan.plan_name ?? ""
+    },
+    {
+      label: "Blocked Amount",
+      value: data?.data?.amount ?? ""
+    },
+    {
+      label: "Member Since",
+      value: data?.data?.start_date ?? ""
+    },
+    {
+      label: "Earned Bonus",
+      value: data?.data?.plan_bonus ?? ""
+    }
+  ], [data])
+  if (isLoadingPlans) {
+    return <LoadingScreen />;
+  }
+
 
   return (
     <ModalProvider>
       <TransitionPage>
+        <div className='mb-2rem grid w-full grid-cols-2 gap-1.5rem rounded-box bg-neutral-800 p-4'>
+          <UserPlan
+            title="My Membership Details"
+            data={membershipData}
+          />
+
+          <UserPlan
+            title="My Plan Details"
+            data={planData}
+          />
+        </div>
+
         <Head wallets={walletsData?.wallets || []} />
 
-        <div className='mt-2rem'>
-          <Box>
-            <TableBoxedLayoutContainer>
-              <TableBoxedLayoutTHead>
-                <TableBoxedLayoutTR>
-                  <TableBoxedLayoutTH>From Wallet</TableBoxedLayoutTH>
-                  <TableBoxedLayoutTH>To Wallet</TableBoxedLayoutTH>
-                  <TableBoxedLayoutTH>Requested Amount</TableBoxedLayoutTH>
-                  <TableBoxedLayoutTH>Converted Amount</TableBoxedLayoutTH>
-                  <TableBoxedLayoutTH>Rate</TableBoxedLayoutTH>
-                  <TableBoxedLayoutTH>Created at</TableBoxedLayoutTH>
-                </TableBoxedLayoutTR>
-              </TableBoxedLayoutTHead>
-
-              <TableBoxedLayoutTBody>
-                {fakeDataSwapHistory.length > 0 ? (
-                  fakeDataSwapHistory.map((item) => (
-                    <TableBoxedLayoutTR key={item.id}>
-                      <TableBoxedLayoutTD>{item.fromWallet}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.toWallet}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.requestedAmount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.convertedAmount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))
-                ) : (
-                  <DataNotFound colSpan={6} />
-                )}
-              </TableBoxedLayoutTBody>
-            </TableBoxedLayoutContainer>
-
-            <div className='mt-2rem flex items-center justify-between'>
-              <PageLimit />
-              <Pagination totalPages={5} />
-            </div>
-          </Box>
+        <div className='mt-2rem w-full'>
+          <h2>My Membership Bonus History</h2>
+          <HistoryList
+            historyData={historyData?.data || []}
+            isLoading={isLoading}
+            totalPages={totalPages}
+          />
         </div>
       </TransitionPage>
       <Modal transfer={TransferCoinForm} />

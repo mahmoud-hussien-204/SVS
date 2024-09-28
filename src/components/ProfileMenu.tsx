@@ -1,8 +1,8 @@
 import useAuth from "@/modules/auth/hooks/useAuth";
 
-import Dropdown, {DropdownMenu} from "./Dropdown";
+import Dropdown, { DropdownMenu } from "./Dropdown";
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import IconUser from "./icons/IconUser";
 
@@ -13,7 +13,7 @@ import IconLogout from "./icons/IconLogout";
 import AuthHelper from "@/modules/auth/helpers/AuthHelper";
 
 const ProfileMenu = () => {
-  const {userData, basePath} = useAuth();
+  const { userData, basePath } = useAuth();
 
   return (
     <Dropdown
@@ -37,7 +37,7 @@ const ProfileMenu = () => {
         </Link>
         <Link to={`${basePath}/profile`} className='flex items-center gap-0.5rem py-0.5rem text-14'>
           <IconEdit />
-          Edit Profile
+          Settings
         </Link>
         <button
           type='button'

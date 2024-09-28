@@ -9,7 +9,7 @@ export interface IWithdrawForm {
   amount: number;
   message?: string;
   wallet_id: number;
-  code: string;
+  code?: string;
 }
 
 export interface ISwapHistoryData {
@@ -76,6 +76,7 @@ export interface IWalletDepositData {
   ac_tab: string;
   title: string;
   address: string;
+  "2fa_enabled": boolean;
 }
 
 export interface IHistory {
@@ -118,3 +119,15 @@ export interface IWallet {
   maximum_withdrawal: string;
   withdrawal_fees: string;
 }
+
+// export interface IWalletDepositData {
+//   histories: [];
+//   address: string;
+//   wallet_id: string;
+//   wallet: IWallet;
+//   tempWithdraws: [];
+//   active: boolean;
+//   ac_tab: string;
+//   title: string;
+//   "2fa_enabled": boolean;
+// }

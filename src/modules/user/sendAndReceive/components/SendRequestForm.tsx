@@ -28,11 +28,11 @@ const SendRequest = () => {
   const { data, isLoading } = useQuery({
     queryFn: apiGetCoinRequests,
     queryKey: ["get-user-coin-requests"],
-  })
+  });
 
   const handelTypeOpthions = () => {
-    return data?.wallets.map((data) => ({ label: data.name, value: data.id })) ?? []
-  }
+    return data?.wallets.map((data) => ({ label: data.name, value: data.id })) ?? [];
+  };
 
   return (
     <form noValidate name='send-request' id='send-request' onSubmit={handleSubmit}>
@@ -50,18 +50,20 @@ const SendRequest = () => {
           <ErrorMessage>{form.formState.errors.type?.message}</ErrorMessage>
         </div>
 
-        {form.watch("type") == ENUM_SEND_REQUEST_FORM_TYPE.SEND_COIN && <div className='mb-1.25rem'>
-          <Label htmlFor='send-request-wallet'>Select Your Wallet</Label>
-          <Select
-            {...form.register("wallet_id")}
-            options={[{ label: "Select Type", value: "", disabled: true }, ...handelTypeOpthions()]}
-            id='send-request-wallet'
-            isError={!!form.formState.errors.wallet_id}
-            defaultValue=''
-            disabled={isLoading}
-          />
-          <ErrorMessage>{form.formState.errors.wallet_id?.message}</ErrorMessage>
-        </div>}
+        {form.watch("type") == ENUM_SEND_REQUEST_FORM_TYPE.SEND_COIN && (
+          <div className='mb-1.25rem'>
+            <Label htmlFor='send-request-wallet'>Select Your Wallet</Label>
+            <Select
+              {...form.register("wallet_id")}
+              options={[{ label: "Select Type", value: "", disabled: true }, ...handelTypeOpthions()]}
+              id='send-request-wallet'
+              isError={!!form.formState.errors.wallet_id}
+              defaultValue=''
+              disabled={isLoading}
+            />
+            <ErrorMessage>{form.formState.errors.wallet_id?.message}</ErrorMessage>
+          </div>
+        )}
 
         <div className='mb-1.25rem'>
           <Label htmlFor='send-request-amount'>Amount</Label>
@@ -73,7 +75,7 @@ const SendRequest = () => {
             isError={!!form.formState.errors.amount}
           />
           <ErrorMessage>{form.formState.errors.amount?.message}</ErrorMessage>
-          <p className="ml-2 mt-2 text-12 text-neutral-300">
+          <p className='ml-2 mt-2 text-12 text-neutral-300'>
             Minimum amount : {data?.coin.minimum_withdrawal} <br />
             Maximum amount : {data?.coin.maximum_withdrawal}
           </p>
@@ -89,7 +91,16 @@ const SendRequest = () => {
             isError={!!form.formState.errors.email}
           />
           <ErrorMessage>{form.formState.errors.email?.message}</ErrorMessage>
-          <p className="ml-2 mt-2 text-12 text-neutral-300">Note : Input user email where you want to send request for coin. </p>
+          {form.watch("type") == ENUM_SEND_REQUEST_FORM_TYPE.SEND_COIN ? (
+            <p className='ml-2 mt-2 text-12 text-neutral-300'>
+              Note : Input user email where you want to send coin. Coin will send to his/her primary
+              wallet.
+            </p>
+          ) : (
+            <p className='ml-2 mt-2 text-12 text-neutral-300'>
+              Note : Input user email where you want to send request for coin.{" "}
+            </p>
+          )}
         </div>
       </ModalBody>
       <ModalFooter isLoading={false} title='Send Request' />
