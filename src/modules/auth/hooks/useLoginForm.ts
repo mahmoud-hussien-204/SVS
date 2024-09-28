@@ -13,6 +13,7 @@ import {useNavigate} from "react-router-dom";
 import {apiLoginUser} from "../services";
 
 import useMutation from "@/hooks/useMutation";
+import useAuthJourney from "./useAuthJourney";
 
 const schema: Yup.ObjectSchema<ILoginForm> = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -21,7 +22,7 @@ const schema: Yup.ObjectSchema<ILoginForm> = Yup.object().shape({
 
 const useLoginForm = () => {
   const navigate = useNavigate();
-
+  const {saveUserEmail} = useAuthJourney();
   const {saveUser} = useAuth();
 
   const form = useForm<ILoginForm>({
@@ -38,9 +39,16 @@ const useLoginForm = () => {
     mutate(values, {
       onSuccess: (data) => {
         const userRole = Number(data.data.user_info.role) === 1 ? "admin" : "user";
-
         saveUser({...data.data.user_info, token: data.data.access_token, role: userRole});
         navigate("/");
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (data: any) => {
+        if (data.email_verified === 0) {
+          saveUserEmail(values.email);
+          navigate("/auth/email-verify");
+          return;
+        }
       },
     });
   });

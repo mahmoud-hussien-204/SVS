@@ -21,3 +21,8 @@ export interface ICreateNewPasswordForm {
   password: string;
   password_confirmation: string;
 }
+
+export interface IEmailVerifyForm {
+  access_code: string;
+  email: string;
+}
