@@ -32,6 +32,7 @@ import dayjs from "dayjs";
 import useQuery from "@/hooks/useQuery";
 
 import { apiGetMemberShipHistory, apiGetMemberShipPlans } from "../services";
+import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("My Membership");
@@ -39,12 +40,12 @@ export const Component = () => {
   const { data: walletsData } = useQuery({
     queryFn: apiGetMemberShipPlans,
     queryKey: ["membership-plans"],
-  })
+  });
 
   const { data } = useQuery({
     queryFn: apiGetMemberShipHistory,
     queryKey: ["membership-plans-history"],
-  })
+  });
 
   console.log(data);
 
@@ -68,18 +69,22 @@ export const Component = () => {
               </TableBoxedLayoutTHead>
 
               <TableBoxedLayoutTBody>
-                {fakeDataSwapHistory.map((item) => (
-                  <TableBoxedLayoutTR key={item.id}>
-                    <TableBoxedLayoutTD>{item.fromWallet}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>{item.toWallet}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>{item.requestedAmount}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>{item.convertedAmount}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>
-                      {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
-                    </TableBoxedLayoutTD>
-                  </TableBoxedLayoutTR>
-                ))}
+                {fakeDataSwapHistory.length > 0 ? (
+                  fakeDataSwapHistory.map((item) => (
+                    <TableBoxedLayoutTR key={item.id}>
+                      <TableBoxedLayoutTD>{item.fromWallet}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.toWallet}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.requestedAmount}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.convertedAmount}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>{item.rate}</TableBoxedLayoutTD>
+                      <TableBoxedLayoutTD>
+                        {dayjs(item.createdAt).format("MMMM D, YYYY h:mm A")}
+                      </TableBoxedLayoutTD>
+                    </TableBoxedLayoutTR>
+                  ))
+                ) : (
+                  <DataNotFound colSpan={6} />
+                )}
               </TableBoxedLayoutTBody>
             </TableBoxedLayoutContainer>
 

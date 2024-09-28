@@ -16,6 +16,8 @@ export interface IResetPasswordForm {
 }
 
 export interface ICreateNewPasswordForm {
+  email: string;
+  code: string;
   password: string;
   password_confirmation: string;
 }

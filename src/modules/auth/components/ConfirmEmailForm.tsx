@@ -36,15 +36,13 @@ const ConfirmEmailForm = () => {
         </div>
       </div>
 
-      <a
-        href='https://mail.google.com/'
-        target='_blank'
-        rel='noreferrer'
+      <Link
+        to='/auth/create-new-password'
         className='text-1rem btn btn-primary min-h-3.25rem w-full font-semibold text-black'
       >
         <IconLink />
-        Open Email App and Confirm
-      </a>
+        Create New Password
+      </Link>
 
       <Link to='/auth/login' className='flex items-center gap-0.75rem text-14 mt-4'>
         <IconChevronLeft

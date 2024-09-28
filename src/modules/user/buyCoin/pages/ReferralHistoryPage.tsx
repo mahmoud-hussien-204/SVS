@@ -28,14 +28,15 @@ import useQuery from "@/hooks/useQuery";
 
 import dayjs from "dayjs";
 
-import {apiGetBuyCoinReferralHistory} from "../services";
+import { apiGetBuyCoinReferralHistory } from "../services";
+import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("Buy Coin Referral History");
 
-  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+  const { limitSearchParams, pageSearchParams, searchSearchParams } = useApiUrlFilter();
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
       apiGetBuyCoinReferralHistory(pageSearchParams, limitSearchParams, searchSearchParams),
     queryKey: [
@@ -69,26 +70,26 @@ export const Component = () => {
 
             <TableBoxedLayoutTBody>
               {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data.map((item) => (
-                    <TableBoxedLayoutTR key={item.id}>
-                      <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.wallet.type}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <Status status={item.deposit_status} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+                ? Array.from({ length: 10 }).map((_, index) => (
+                  <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+                : (data?.data && data?.data.length > 0) ? data?.data.map((item) => (
+                  <TableBoxedLayoutTR key={item.id}>
+                    <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.wallet.type}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <Status status={item.deposit_status} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                )) : <DataNotFound colSpan={4} />}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 
