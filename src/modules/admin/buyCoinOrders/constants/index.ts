@@ -1,8 +1,7 @@
 export const constantBuyCoinOrdersStatus = [
   {
-    label: "Request Status",
+    label: "All",
     value: "",
-    disabled: true,
   },
   {
     label: "Pending",

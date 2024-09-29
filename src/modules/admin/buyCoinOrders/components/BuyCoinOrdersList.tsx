@@ -104,10 +104,17 @@ const BuyCoinOrdersList = () => {
                   {dayjs(order.created_at).format("MMMM D, YYYY h:mm A")}
                 </TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
-                  <TableBoxedLayoutActions>
-                    {order.actions?.accept && <TableBoxedLayoutActionButtonAccept data={order} />}
-                    {order.actions?.reject && <TableBoxedLayoutActionButtonReject data={order} />}
-                  </TableBoxedLayoutActions>
+                  {order.actions?.accept ||
+                    (order.actions?.reject && (
+                      <TableBoxedLayoutActions>
+                        {order.actions?.accept && (
+                          <TableBoxedLayoutActionButtonAccept data={order} />
+                        )}
+                        {order.actions?.reject && (
+                          <TableBoxedLayoutActionButtonReject data={order} />
+                        )}
+                      </TableBoxedLayoutActions>
+                    ))}
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
             ))
