@@ -101,3 +101,18 @@ interface ICoin {
   created_at: string;
   updated_at: string;
 }
+
+interface IBank {
+  id: number;
+  account_holder_name: string;
+  account_holder_address: string;
+  bank_name: string;
+  bank_address: string;
+  country: string;
+  swift_code: string;
+  iban: string;
+  note: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}

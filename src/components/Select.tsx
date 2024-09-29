@@ -2,7 +2,7 @@ import AppHelper from "@/helpers/appHelper";
 
 import {forwardRef} from "react";
 
-type TOptionItem = React.DetailedHTMLProps<
+export type TOptionItem = React.DetailedHTMLProps<
   React.OptionHTMLAttributes<HTMLOptionElement>,
   HTMLOptionElement
 > & {

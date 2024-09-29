@@ -23,7 +23,7 @@ const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
 const useSendRequestForm = () => {
   const {hide} = useModal();
 
-  const {data} = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: apiGetBuyCoin,
     queryKey: ["user-buy-coin"],
   });
@@ -38,7 +38,7 @@ const useSendRequestForm = () => {
     hide();
   });
 
-  return {form, handleSubmit, data};
+  return {form, handleSubmit, data, isLoading};
 };
 
 export default useSendRequestForm;

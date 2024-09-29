@@ -70,7 +70,7 @@ interface IWallet {
 export interface IBuyCoinPageData {
   title: string;
   settings: IBuyCoinSettings;
-  banks: any[];
+  banks: IBank[];
   coins: ICoin[];
   coin_price: string;
   btc_dlr: string;
