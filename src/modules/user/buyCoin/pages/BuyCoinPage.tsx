@@ -9,9 +9,9 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='grid grid-cols-2 gap-3rem px-8'>
+      <div className='grid grid-cols-2 px-8 gap-3rem'>
         <BuyCoinForm />
-        <div className='flex justify-center'>
+        {/* <div className='flex justify-center'>
           <img
             src='/buy-coin-vector.svg'
             alt='buy-coin-vector'
@@ -19,7 +19,7 @@ export const Component = () => {
             width={430}
             height={430}
           />
-        </div>
+        </div> */}
       </div>
     </TransitionPage>
   );
