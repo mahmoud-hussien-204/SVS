@@ -15,6 +15,7 @@ export default class InterceptorHelper {
       "Accept-Language": "en",
       "Content-Language": "en",
       "Content-Type": "application/json",
+      Accept: "application/json",
       ...options.headers,
     };
 
@@ -30,6 +31,9 @@ export default class InterceptorHelper {
 
   // intercept response
   static async interceptResponse<T>(response: Response, method: string | undefined): Promise<T> {
+    if (response.status === 401) {
+      AuthHelper.userLogout();
+    }
     const responseJson = await response.json();
 
     const message = responseJson?.message || responseJson?.error || responseJson.success;
@@ -42,7 +46,7 @@ export default class InterceptorHelper {
     }
 
     // handle response success
-    console.log(method);
+    // console.log(method);
     // if (method && method.toLowerCase() !== "get") {
     toast.success(message);
     // }
