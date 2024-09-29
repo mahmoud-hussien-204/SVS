@@ -2,6 +2,7 @@ import InterceptorHelper from "@/helpers/intercepterHelper";
 
 import {
   IEditProfile,
+  IEnableTwoFactorAuthentication,
   IPhoneVerification,
   IProfileGlobalSettings,
   IUpdatePassword,
@@ -71,6 +72,13 @@ export const apiGetUserProfile = async () => {
 
 export const apiVerifyPhone = async (data: IPhoneVerification) => {
   return InterceptorHelper.intercept("/user/phone-verify", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
+
+export const apiSaveG2fSecret = async (data: IEnableTwoFactorAuthentication) => {
+  return InterceptorHelper.intercept("/user/g2f-secret-save", {
     method: "POST",
     body: JSON.stringify(data),
   });

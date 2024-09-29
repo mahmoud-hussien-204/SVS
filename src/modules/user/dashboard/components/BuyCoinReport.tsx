@@ -2,17 +2,7 @@ import Card from "@/components/Card";
 
 import ReactApexChart from "react-apexcharts";
 
-const dailySales: {series: ApexAxisChartSeries; options: ApexCharts.ApexOptions} = {
-  series: [
-    {
-      name: "Sales",
-      data: [44, 55, 41, 67, 22, 43, 21],
-    },
-    {
-      name: "Last Week",
-      data: [13, 23, 20, 8, 13, 27, 33],
-    },
-  ],
+const dailySales: {options: ApexCharts.ApexOptions} = {
   options: {
     chart: {
       height: 160,
@@ -86,17 +76,22 @@ const dailySales: {series: ApexAxisChartSeries; options: ApexCharts.ApexOptions}
   },
 };
 
-const DailySales = () => {
+const BuyCoinReport = ({data}: {data: any}) => {
   return (
     <div className='h-full'>
       <Card>
         <div className='mb-1rem flex items-center justify-between text-white'>
-          <h5 className='text-18 font-semibold'>Daily Sales</h5>
+          <h5 className='text-18 font-semibold'>Buy Coin Report</h5>
         </div>
         <div>
           <div className='overflow-hidden rounded-lg'>
             <ReactApexChart
-              series={dailySales.series}
+              series={[
+                {
+                  name: "Monthly Buy Coin",
+                  data,
+                },
+              ]}
               options={dailySales.options}
               type='bar'
               height={360}
@@ -108,4 +103,4 @@ const DailySales = () => {
   );
 };
 
-export default DailySales;
+export default BuyCoinReport;

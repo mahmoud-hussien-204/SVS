@@ -9,6 +9,7 @@ export interface IUpdatePassword {
 }
 
 export interface IEnableTwoFactorAuthentication {
+  google2fa_secret: string;
   code: string;
 }
 
@@ -46,6 +47,8 @@ export interface IUserProfile {
   drive_front: IImageData;
   drive_back: IImageData;
   qr: string;
+  google2fa_secret: string;
+  google2fa_url: string;
 }
 
 export interface IUser {

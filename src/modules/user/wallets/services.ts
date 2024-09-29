@@ -1,11 +1,15 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 import {
   IAddWalletForm,
+  IGetRateData,
+  ISwapCoinDetails,
+  ISwapCoinForm,
   ISwapHistoryData,
   IWalletDepositData,
   IWalletsData,
   IWithdrawForm,
 } from "./interfaces";
+import AppHelper from "@/helpers/appHelper";
 
 export const apiGetWalletData = async (
   page: number,
@@ -63,4 +67,25 @@ export const apiGetWalletLogs = async (walletId: number, tab: "withdraw" | "depo
   return InterceptorHelper.intercept<IWalletDepositData>(
     `/user/wallet-details-${walletId}?ac_tab=${tab}`
   );
+};
+
+export const apiGetSwapCoinDetails = async (walletId: number) => {
+  return InterceptorHelper.intercept<ISwapCoinDetails[]>(`/user/swap-coin-details?id=${walletId}`);
+};
+
+export const apiGetRate = async (data: ISwapCoinForm) => {
+  const values = AppHelper.urlSearchParams({
+    from_coin_id: data.from_coin_id,
+    to_coin_id: data.to_coin_id,
+    amount: data.amount,
+  });
+
+  return InterceptorHelper.intercept<IGetRateData>(`/user/get-rate?${values}`);
+};
+
+export const apiSwapCoin = async (data: ISwapCoinForm) => {
+  return InterceptorHelper.intercept(`/user/swap-coin`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 };
