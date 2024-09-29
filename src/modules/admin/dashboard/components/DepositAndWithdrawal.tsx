@@ -3,18 +3,7 @@ import Card from "@/components/Card";
 import ReactApexChart from "react-apexcharts";
 
 //Revenue Chart
-const revenueChart: {series: ApexAxisChartSeries; options: ApexCharts.ApexOptions} = {
-  series: [
-    {
-      name: "Deposit",
-      data: [16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, 17000],
-    },
-    {
-      name: "Withdrawal",
-      data: [16500, 17500, 16200, 17300, 16000, 19500, 16000, 17000, 16000, 19000, 18000, 19000],
-    },
-  ],
-
+const revenueChart: {options: ApexCharts.ApexOptions} = {
   options: {
     chart: {
       type: "area",
@@ -149,7 +138,12 @@ const revenueChart: {series: ApexAxisChartSeries; options: ApexCharts.ApexOption
   },
 } as const;
 
-const DepositAndWithdrawal = () => {
+interface IProps {
+  deposits: number[];
+  withdrawals: number[];
+}
+
+const DepositAndWithdrawal = ({deposits, withdrawals}: IProps) => {
   return (
     <div className='h-full xl:col-span-2'>
       <Card>
@@ -159,7 +153,16 @@ const DepositAndWithdrawal = () => {
         <div className='relative'>
           <div className='overflow-hidden rounded-lg'>
             <ReactApexChart
-              series={revenueChart.series}
+              series={[
+                {
+                  name: "Deposit",
+                  data: deposits,
+                },
+                {
+                  name: "Withdrawal",
+                  data: withdrawals,
+                },
+              ]}
               options={revenueChart.options}
               type='area'
               height={360}

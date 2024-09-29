@@ -2,22 +2,20 @@ import Card from "@/components/Card";
 
 import ReactApexChart from "react-apexcharts";
 
-const salesByCategory: {series: ApexNonAxisChartSeries; options: ApexCharts.ApexOptions} = {
-  series: [985, 737, 270],
+const salesByCategory: {options: ApexCharts.ApexOptions} = {
   options: {
     chart: {
       type: "donut",
-      fontFamily: "Nunito, sans-serif",
     },
     dataLabels: {
       enabled: false,
     },
     stroke: {
       show: true,
-      width: 15,
+      width: 8,
       colors: ["#202020"],
     },
-    colors: ["#5c1ac3", "#e2a03f", "#e7515a", "#e2a03f"],
+    colors: ["#5c1ac3", "#e2a03f"],
     legend: {
       position: "bottom",
       horizontalAlign: "center",
@@ -36,7 +34,7 @@ const salesByCategory: {series: ApexNonAxisChartSeries; options: ApexCharts.Apex
     plotOptions: {
       pie: {
         donut: {
-          size: "65%",
+          size: "80%",
           background: "transparent",
           labels: {
             show: true,
@@ -69,7 +67,7 @@ const salesByCategory: {series: ApexNonAxisChartSeries; options: ApexCharts.Apex
         },
       },
     },
-    labels: ["Apparel", "Sports", "Others"],
+    labels: ["Active Users", "Inactive Users"],
     states: {
       hover: {
         filter: {
@@ -87,17 +85,22 @@ const salesByCategory: {series: ApexNonAxisChartSeries; options: ApexCharts.Apex
   },
 };
 
-const SalesByCategory = () => {
+interface IProps {
+  active: number;
+  inactive: number;
+}
+
+const Users = ({active, inactive}: IProps) => {
   return (
     <div className='h-full'>
       <Card>
         <div className='mb-1rem flex items-center justify-between text-white'>
-          <h5 className='text-18 font-semibold'>Sales By Category</h5>
+          <h5 className='text-18 font-semibold'>Users</h5>
         </div>
         <div className='relative'>
           <div className='overflow-hidden rounded-lg'>
             <ReactApexChart
-              series={salesByCategory.series}
+              series={[active, inactive]}
               options={salesByCategory.options}
               type='donut'
               height={430}
@@ -109,4 +112,4 @@ const SalesByCategory = () => {
   );
 };
 
-export default SalesByCategory;
+export default Users;
