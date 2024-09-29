@@ -1,14 +1,17 @@
 import IconCheck from "@/components/icons/IconCheck";
-import { IPlan } from "../interfaces";
-import { plansColor } from "../planColors";
+import {IPlan} from "../interfaces";
+import {plansColor} from "../planColors";
 
 const getRandomColor = () => plansColor[Math.floor(Math.random() * plansColor.length)];
 
 const PlanItem = (data: IPlan) => {
-  const color = getRandomColor()
+  const color = getRandomColor();
 
   return (
     <div className='rounded-box border border-base-300 bg-base-300 p-1rem'>
+      <div className='mb-3 grid w-full place-items-center'>
+        <img src={data.image} alt={data.plan_name} className='' />
+      </div>
       <h6
         className='text-18 font-semibold'
         style={{

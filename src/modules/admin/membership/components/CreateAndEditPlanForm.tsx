@@ -17,35 +17,31 @@ import FileUploader from "@/components/FileUploader";
 import {ICreatePlanForm, IEditPlanForm, IPlanData} from "../interfaces";
 
 import {constantPlanActivationStatus} from "../constants";
+
 import useQuery from "@/hooks/useQuery";
-import InterceptorHelper from "@/helpers/intercepterHelper";
-import {ICoin} from "@/modules/user/wallets/interfaces";
+
 import useModal from "@/hooks/useModal";
+
 import {useMemo} from "react";
+
+import {apiGetPlansFormData} from "../services";
 
 interface IProps {
   form: UseFormReturn<ICreatePlanForm | IEditPlanForm>;
-}
-
-interface IFeesOpthions {
-  1: string;
-  2: string;
 }
 
 const CreateAndEditPlanForm = ({form}: IProps) => {
   const data = useModal().data as IPlanData;
 
   const {data: coins} = useQuery({
-    queryFn: () =>
-      InterceptorHelper.intercept<{coins: ICoin[]} & {fees_types: IFeesOpthions}>(
-        data.action.edit_url,
-        {},
-        false
-      ),
+    queryFn: () => apiGetPlansFormData(data?.action?.edit_url),
     queryKey: ["admin-get-one-plan"],
+    enabled: !!data?.action?.edit_url,
   });
 
   const getCoinsOpthions = useMemo(() => {
+    if (!coins) return [{value: "", label: "Select Coin", disabled: true}];
+
     const data = coins?.coins?.map((coin) => {
       return {
         value: coin.type,
@@ -60,12 +56,14 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
     const data: {value: string; label: string; disabled?: boolean}[] = [
       {value: "", label: "Select Fees Type", disabled: true},
     ];
+
     for (let i in coins?.fees_types) {
       data.push({
         value: i,
         label: coins?.fees_types[i as keyof unknown],
       });
     }
+
     return data;
   }, [coins]);
 
