@@ -5,6 +5,7 @@ import {
   IMembersListData,
   IMemberTransactionData,
   IPlanData,
+  IPlansFormData,
   ISettingsForm,
 } from "./interfaces";
 import {ENUM_PLANS_STATUS} from "./enums";
@@ -88,4 +89,8 @@ export const apiGetMembersList = async (page: number, limit: number, search: str
 
 export const apiDistributeMembershipBonus = async () => {
   return InterceptorHelper.intercept("/admin/admin-club-bonus-distribution-process");
+};
+
+export const apiGetPlansFormData = (url: string) => {
+  return InterceptorHelper.intercept<IPlansFormData>(url, {}, false);
 };

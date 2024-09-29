@@ -35,7 +35,7 @@ export interface IPlan {
   plan_name: string;
   duration: number;
   amount: string;
-  image: null;
+  image: string;
   bonus_type: number;
   bonus: string;
   bonus_coin_type: string;

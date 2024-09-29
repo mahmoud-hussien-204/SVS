@@ -121,3 +121,13 @@ export interface Plan {
   created_at: string;
   updated_at: string;
 }
+
+interface IFeesOpthions {
+  1: string;
+  2: string;
+}
+
+export interface IPlansFormData {
+  coins: ICoin[];
+  fees_types: IFeesOpthions;
+}
