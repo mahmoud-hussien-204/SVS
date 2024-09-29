@@ -25,6 +25,7 @@ import useModal from "@/hooks/useModal";
 import {useMemo} from "react";
 
 import {apiGetPlansFormData} from "../services";
+import {baseURL} from "@/constants";
 
 interface IProps {
   form: UseFormReturn<ICreatePlanForm | IEditPlanForm>;
@@ -33,10 +34,11 @@ interface IProps {
 const CreateAndEditPlanForm = ({form}: IProps) => {
   const data = useModal().data as IPlanData;
 
+  const url = data?.action?.edit_url || `${baseURL}/admin/plan-add`;
+
   const {data: coins} = useQuery({
-    queryFn: () => apiGetPlansFormData(data?.action?.edit_url),
-    queryKey: ["admin-get-one-plan"],
-    enabled: !!data?.action?.edit_url,
+    queryFn: () => apiGetPlansFormData(url),
+    queryKey: ["admin-get-one-plan", url],
   });
 
   const getCoinsOpthions = useMemo(() => {
