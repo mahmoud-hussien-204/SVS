@@ -1,6 +1,6 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IBuyCoinData, IBuyCoinPageData, IReferralData} from "./interfaces";
+import {IBuyCoinData, IBuyCoinPageData, IReferralData, IBuyCoinRateResponse} from "./interfaces";
 
 export const apiGetBuyCoin = async () => {
   return InterceptorHelper.intercept<IBuyCoinPageData>("/user/buy-coin");
@@ -33,3 +33,15 @@ export const apiGetBuyCoinReferralHistory = async (
     `/user/buy-coin-referral-history?${data.toString()}`
   );
 };
+
+export const apiPostBuyCoinRate = (data: FormData) =>
+  InterceptorHelper.intercept<IBuyCoinRateResponse>(`/user/buy-coin-rate`, {
+    method: "POST",
+    body: data,
+  });
+
+export const apiPostBuyCoin = (data: FormData) =>
+  InterceptorHelper.intercept<IBuyCoinRateResponse>(`/user/buy-coin`, {
+    method: "POST",
+    body: data,
+  });

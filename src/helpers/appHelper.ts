@@ -131,6 +131,8 @@ export default class AppHelper {
   }
 
   static handleSelectBoxOptions<T>(options: T[], label: keyof T, value: keyof T) {
-    return options.map((data) => ({label: data[label], value: data[value]}));
+    const optionsList = options.map((data) => ({label: data[label], value: data[value]}));
+
+    return optionsList;
   }
 }
