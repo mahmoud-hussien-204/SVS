@@ -53,7 +53,9 @@ const usePaymentMethodsForm = () => {
       ),
       payment_method_stripe: AppHelper.convertSwitchValueToBinary(values.payment_method_stripe),
     };
-    mutate(payload);
+    mutate({
+      active_id: payload,
+    });
   });
 
   return {form, handleSubmit, isPending};

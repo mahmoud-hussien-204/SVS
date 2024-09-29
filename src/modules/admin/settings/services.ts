@@ -65,7 +65,7 @@ export const apiPostFeatureSettings = (data: IFeatureSettingsForm) =>
     body: JSON.stringify(data),
   });
 
-export const apiPostPaymentMethodsSettings = (data: IPaymentMethodsForm) =>
+export const apiPostPaymentMethodsSettings = (data: {active_id: IPaymentMethodsForm}) =>
   InterceptorHelper.intercept(`/admin/change-payment-methods`, {
     method: "Post",
     body: JSON.stringify(data),
