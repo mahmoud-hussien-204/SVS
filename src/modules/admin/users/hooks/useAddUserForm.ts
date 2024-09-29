@@ -7,11 +7,14 @@ import {useForm} from "react-hook-form";
 import {IAddUserForm} from "../interfaces";
 
 import * as Yup from "yup";
+
 import useMutation from "@/hooks/useMutation";
+
 import {apiAddUser} from "../services";
+
 import {useQueryClient} from "@tanstack/react-query";
 
-const schema: Yup.ObjectSchema<IAddUserForm> = Yup.object().shape({
+export const schema: Yup.ObjectSchema<IAddUserForm> = Yup.object().shape({
   first_name: Yup.string().required("First name is required"),
   last_name: Yup.string().required("First name is required"),
   email: Yup.string().email("Enter a valid email").required("email is required"),

@@ -6,13 +6,12 @@ import PageLimit from "@/components/PageLimit";
 
 import Pagination from "@/components/Pagination";
 
-import Status from "@/components/Status";
-
 import {
   TableBoxedLayoutActionButtonAccept,
   TableBoxedLayoutActionButtonReject,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
+  TableBoxedLayoutSkeleton,
   TableBoxedLayoutTBody,
   TableBoxedLayoutTD,
   TableBoxedLayoutTH,
@@ -20,65 +19,86 @@ import {
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
 
-import {fakeDataWithdrawalsRequests} from "@/fakeData";
+import useQuery from "@/hooks/useQuery";
 
 import dayjs from "dayjs";
 
+import {apiGetDepositRequests} from "../services";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
 const DepositsRequestsList = () => {
+  const {
+    pageSearchParams: page,
+    limitSearchParams: limit,
+    searchSearchParams: search,
+    filterSearchParams: filter,
+  } = useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryFn: () => apiGetDepositRequests(page, limit, search, filter),
+    queryKey: ["admin-get-deposits-request", page, limit, search, filter],
+  });
+
+  console.log(data);
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limit) : 1;
+
   return (
     <Box>
       <TableBoxedLayoutContainer>
         <TableBoxedLayoutTHead>
           <TableBoxedLayoutTR>
-            <TableBoxedLayoutTH>Sender</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Coin Type</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Type</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Amount</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Address</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Status</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Receiver</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Fees</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Transaction ID</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>From Address</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>To Address</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>TX Hash</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Updated at</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Actions</TableBoxedLayoutTH>
           </TableBoxedLayoutTR>
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {fakeDataWithdrawalsRequests.map((item) => (
-            <TableBoxedLayoutTR key={item.id}>
-              <TableBoxedLayoutTD>{item.sender}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.coinType}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <CopyText text={item.address} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <Status status={item.status} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.receiver}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <CopyText text={item.transactionId} />
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                {dayjs(item.updateDate).format("MMMM D, YYYY h:mm A")}
-              </TableBoxedLayoutTD>
-              <TableBoxedLayoutTD>
-                <TableBoxedLayoutActions>
-                  <TableBoxedLayoutActionButtonAccept data={item} />
-                  <TableBoxedLayoutActionButtonReject data={item} />
-                </TableBoxedLayoutActions>
-              </TableBoxedLayoutTD>
-            </TableBoxedLayoutTR>
-          ))}
+          {isLoading
+            ? Array.from({length: 10}).map((_, index) => (
+                <TableBoxedLayoutTR key={index}>
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                  <TableBoxedLayoutSkeleton />
+                </TableBoxedLayoutTR>
+              ))
+            : data?.data.map((item) => (
+                <TableBoxedLayoutTR key={item.id}>
+                  <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <CopyText text={item.from_address} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <CopyText text={item.address} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <CopyText text={item.transaction_id} />
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
+                  </TableBoxedLayoutTD>
+                  <TableBoxedLayoutTD>
+                    <TableBoxedLayoutActions>
+                      {item.action.Accept && <TableBoxedLayoutActionButtonAccept data={item} />}
+                      {item.action.Reject && <TableBoxedLayoutActionButtonReject data={item} />}
+                    </TableBoxedLayoutActions>
+                  </TableBoxedLayoutTD>
+                </TableBoxedLayoutTR>
+              ))}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 
       <div className='mt-2rem flex items-center justify-between'>
         <PageLimit />
-        <Pagination totalPages={5} />
+        <Pagination totalPages={totalPages} />
       </div>
     </Box>
   );

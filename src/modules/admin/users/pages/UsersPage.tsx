@@ -19,21 +19,33 @@ import EditUserForm from "../components/EditUserForm";
 import AddUserForm from "../components/AddUserForm";
 
 import SuspendForm from "../components/SuspendForm";
+
 import useQuery from "@/hooks/useQuery";
-import { apiGetUsers } from "../services";
+
+import {apiGetUsers} from "../services";
+
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
-import { ENUM_USERS_STATUS } from "../enums";
+
+import {ENUM_USERS_STATUS} from "../enums";
+
 import PhoneVerifyForm from "../components/PhoneVerifyForm";
+
 import EmailVerifyForm from "../components/EmailVerifyForm";
+
 import ActiveUserForm from "../components/ActiveUserForm";
 
 export const Component = () => {
   usePageTitle("Users List");
 
-  const { filterSearchParams, pageSearchParams: page, limitSearchParams: limit, searchSearchParams: search } = useApiUrlFilter();
+  const {
+    filterSearchParams,
+    pageSearchParams: page,
+    limitSearchParams: limit,
+    searchSearchParams: search,
+  } = useApiUrlFilter();
   const type = filterSearchParams as ENUM_USERS_STATUS;
 
-  const { data, isLoading } = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: () => apiGetUsers(type, page, limit, search),
     queryKey: ["admin-get-users", type, page, limit, search],
   });

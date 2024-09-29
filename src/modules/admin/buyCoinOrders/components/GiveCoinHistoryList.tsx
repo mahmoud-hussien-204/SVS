@@ -24,6 +24,8 @@ import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import {useMemo} from "react";
 
+import DataNotFound from "@/components/DataNotFound";
+
 const GiveCoinHistoryList = () => {
   const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
 
@@ -59,25 +61,29 @@ const GiveCoinHistoryList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {isLoading
-            ? Array.from({length: 4}).map((_, index) => (
-                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                </TableBoxedLayoutTR>
-              ))
-            : giveCoinHistoryList.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.wallet_id}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item?.amount}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item?.created_at).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+          {isLoading ? (
+            Array.from({length: 4}).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+          ) : giveCoinHistoryList.length > 0 ? (
+            giveCoinHistoryList.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.wallet_id}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item?.amount}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item?.created_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          ) : (
+            <DataNotFound colSpan={4} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

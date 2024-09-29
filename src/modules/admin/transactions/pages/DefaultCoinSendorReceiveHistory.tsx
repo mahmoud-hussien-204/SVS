@@ -30,6 +30,8 @@ import Search from "@/components/Search";
 
 import {getDefaultCoinSendOrReceiveHistory} from "../services";
 
+import DataNotFound from "@/components/DataNotFound";
+
 export const Component = () => {
   usePageTitle("Default Coin Send or Receive History");
 
@@ -64,31 +66,35 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data.map((item, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutTD>{item.sender_user_id}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.receiver_user_id}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <Status status={String(item.deposit_status)} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+              {isLoading ? (
+                Array.from({length: 10}).map((_, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+              ) : Array.isArray(data?.data) && data?.data.length > 0 ? (
+                data?.data.map((item, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutTD>{item.sender_user_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.receiver_user_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <Status status={String(item.deposit_status)} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))
+              ) : (
+                <DataNotFound colSpan={5} />
+              )}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 

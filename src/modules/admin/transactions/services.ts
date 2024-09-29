@@ -6,6 +6,7 @@ import {
   IGasSentData,
   IPendingWithdrawal,
   ITokenReceivedData,
+  IDepositRequest,
 } from "./interfaces";
 import {ENUM_ALL_TRANSACTIONS} from "./enums";
 
@@ -57,6 +58,24 @@ export const apiGetPendingWithdrawal = async (
   });
   return InterceptorHelper.intercept<IResponse<IPendingWithdrawal[]>>(
     `/admin/pending-withdrawal?${data}`
+  );
+};
+
+export const apiGetDepositRequests = async (
+  page: number,
+  limit: number,
+  search?: string,
+  filter?: string
+) => {
+  const data = AppHelper.urlSearchParams({
+    page: page,
+    length: limit,
+    searchableFields: "['address' , 'transaction_id', 'from_address']",
+    "search[value]": search,
+    "filters[deposit_status]": filter,
+  });
+  return InterceptorHelper.intercept<IResponse<IDepositRequest[]>>(
+    `/admin/pending-token-deposit-history?${data}`
   );
 };
 
