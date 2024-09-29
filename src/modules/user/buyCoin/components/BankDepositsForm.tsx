@@ -8,9 +8,12 @@ import Label from "@/components/Label";
 
 import ImageUploader from "../../profile/components/ImageUplaoder";
 
+import {useFormContext} from "react-hook-form";
+
 type IProps = Pick<IBuyCoinPageData, "banks">;
 
 function BankDepositsForm({banks}: IProps) {
+  const form = useFormContext();
   return (
     <div>
       <div className='mb-1.25rem w-full'>
@@ -21,10 +24,11 @@ function BankDepositsForm({banks}: IProps) {
           }
           id='buy-coin'
           defaultValue=''
+          {...form.register("bank_id")}
         />
       </div>
 
-      <ImageUploader locale={true} name='bank_image' title='Bank Logo' />
+      <ImageUploader locale={true} name='sleep' title='Bank Logo' />
     </div>
   );
 }

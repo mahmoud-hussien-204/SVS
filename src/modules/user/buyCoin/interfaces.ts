@@ -4,7 +4,10 @@ import {ENUM_BUY_COIN_PAYMENT_TYPE} from "./enums";
 
 export interface IBuyCoinForm {
   payment_type: ENUM_BUY_COIN_PAYMENT_TYPE | string;
+  payment_coin_type?: string;
   coin: number;
+  bank_id?: string;
+  sleep?: string;
 }
 
 export interface IBuyCoinData {
@@ -152,4 +155,14 @@ export interface IBuyCoinSettings {
   kyc_driving_enable_for_withdrawal: string;
   plan_minimum_amount: string;
   plan_maximum_amount: string;
+}
+
+export interface IBuyCoinRateResponse {
+  amount: number;
+  coin_type: string;
+  phase_fees: number;
+  bonus: number;
+  no_phase: boolean;
+  coin_price: string;
+  btc_dlr: string;
 }

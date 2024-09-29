@@ -1,3 +1,5 @@
+import {ENUM_BUY_COIN_PAYMENT_TYPE} from "../enums";
+
 export const constantBuyCoinPaymentType = [
   {
     label: "Select Payment Type",
@@ -6,14 +8,14 @@ export const constantBuyCoinPaymentType = [
   },
   {
     label: "Coin Payment",
-    value: "coin_payment",
+    value: ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT,
   },
   {
     label: "Bank Deposit",
-    value: "bank_deposit",
+    value: ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT,
   },
   {
     label: "Credit Card",
-    value: "credit_card",
+    value: ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD,
   },
 ];

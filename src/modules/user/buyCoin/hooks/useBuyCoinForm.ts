@@ -6,23 +6,28 @@ import * as Yup from "yup";
 
 import {IBuyCoinForm} from "../interfaces";
 
-import useModal from "@/hooks/useModal";
-
 import useQuery from "@/hooks/useQuery";
 
-import {apiGetBuyCoin} from "../services";
+import {apiGetBuyCoin, apiPostBuyCoin} from "../services";
+
+import useMutation from "@/hooks/useMutation";
+
+import AppHelper from "@/helpers/appHelper";
+
+import {ENUM_BUY_COIN_PAYMENT_TYPE} from "../enums";
 
 const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
   coin: Yup.number()
     .typeError("Amount must be a number")
     .required("Amount is required")
     .moreThan(0, "Amount must be greater than 0"),
+  payment_coin_type: Yup.string(),
   payment_type: Yup.string().required("Type is required"),
+  bank_id: Yup.string(),
+  sleep: Yup.mixed(),
 });
 
 const useSendRequestForm = () => {
-  const {hide} = useModal();
-
   const {data, isLoading} = useQuery({
     queryFn: apiGetBuyCoin,
     queryKey: ["user-buy-coin"],
@@ -31,14 +36,30 @@ const useSendRequestForm = () => {
   const form = useForm<IBuyCoinForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
+    defaultValues: {
+      coin: 0,
+      payment_coin_type: data?.coins[0].type,
+    },
+  });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: apiPostBuyCoin,
   });
 
   const handleSubmit = form.handleSubmit((values: IBuyCoinForm) => {
     console.log(values);
-    hide();
+
+    if (values.payment_type == ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT) {
+      delete values.sleep;
+      delete values.bank_id;
+    } else if (values.payment_type == ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT) {
+      delete values.payment_coin_type;
+    }
+    const data = AppHelper.toFormData(values);
+    mutate(data);
   });
 
-  return {form, handleSubmit, data, isLoading};
+  return {form, handleSubmit, data, isLoading, isPending};
 };
 
 export default useSendRequestForm;

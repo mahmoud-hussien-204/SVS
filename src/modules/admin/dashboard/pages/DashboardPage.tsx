@@ -6,11 +6,11 @@ import StatsBox from "../components/StatsBox";
 
 import DepositAndWithdrawal from "../components/DepositAndWithdrawal";
 
-import SalesByCategory from "../components/SalesByCategory";
+import Users from "../components/Users";
 
-import DailySales from "../components/DailySales";
+// import DailySales from "../components/DailySales";
 
-import TotalOrders from "../components/TotalOrders";
+// import TotalOrders from "../components/TotalOrders";
 
 import useQuery from "@/hooks/useQuery";
 
@@ -76,14 +76,20 @@ export const Component = () => {
           </div>
 
           <div className='grid gap-6 xl:grid-cols-3'>
-            <DepositAndWithdrawal />
-            <SalesByCategory />
+            <DepositAndWithdrawal
+              withdrawals={Object.values(dashboardData?.monthly_withdrawal)}
+              deposits={Object.values(dashboardData?.monthly_deposit)}
+            />
+            <Users
+              active={dashboardData.active_percentage}
+              inactive={dashboardData.inactive_percentage}
+            />
           </div>
 
-          <div className='mt-2rem grid gap-6 xl:grid-cols-2'>
+          {/* <div className='grid gap-6 mt-2rem xl:grid-cols-2'>
             <DailySales />
             <TotalOrders />
-          </div>
+          </div> */}
         </>
       ) : null}
     </TransitionPage>
