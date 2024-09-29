@@ -31,6 +31,8 @@ export default class InterceptorHelper {
 
   // intercept response
   static async interceptResponse<T>(response: Response, method: string | undefined): Promise<T> {
+    console.log(method);
+
     if (response.status === 401) {
       AuthHelper.userLogout();
     }
