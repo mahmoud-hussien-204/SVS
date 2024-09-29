@@ -19,6 +19,7 @@ import Pagination from "@/components/Pagination";
 import dayjs from "dayjs";
 import {ICoinData} from "../interfaces";
 import Status from "@/components/Status";
+import DataNotFound from "@/components/DataNotFound";
 
 const CoinsList = ({
   coins,
@@ -46,39 +47,43 @@ const CoinsList = ({
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {isLoading
-            ? Array.from({length: 10}).map((_, index) => (
-                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                </TableBoxedLayoutTR>
-              ))
-            : coins.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.minimum_withdrawal}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.maximum_withdrawal}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.fee}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <Status status={item.status} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <TableBoxedLayoutActions>
-                      {item.action?.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
-                    </TableBoxedLayoutActions>
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+          {isLoading ? (
+            Array.from({length: 10}).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+          ) : coins.length > 0 ? (
+            coins.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.minimum_withdrawal}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.maximum_withdrawal}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.fee}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={item.status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    {item.action?.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          ) : (
+            <DataNotFound colSpan={8} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

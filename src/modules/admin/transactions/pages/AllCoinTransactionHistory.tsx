@@ -15,18 +15,32 @@ import {
   TableBoxedLayoutTHead,
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
+
 import Status from "@/components/Status";
+
 import dayjs from "dayjs";
+
 import Box from "@/components/Box";
+
 import PageLimit from "@/components/PageLimit";
+
 import Pagination from "@/components/Pagination";
+
 import Search from "@/components/Search";
+
 import {getAllCoinTransactionHistory} from "../services";
+
 import PageFilterSelect from "@/components/PageFilterSelect";
+
 import {constantAllTransactions} from "../constants";
+
 import {Navigate} from "react-router";
+
 import {ENUM_ALL_TRANSACTIONS} from "../enums";
+
 import CopyText from "@/components/CopyText";
+
+import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("All Coin Transaction History");
@@ -78,45 +92,49 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data.map((item, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutTD>{item.address_type}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.sender}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <CopyText text={item.address} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.receiver}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+              {isLoading ? (
+                Array.from({length: 10}).map((_, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+              ) : data?.data.length ? (
+                data?.data.map((item, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutTD>{item.address_type}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.sender}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.type}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <CopyText text={item.address} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.receiver}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
 
-                      <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <CopyText text={item.transaction_id || item.transaction_hash} />
-                      </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <CopyText text={item.transaction_id || item.transaction_hash} />
+                    </TableBoxedLayoutTD>
 
-                      <TableBoxedLayoutTD>
-                        <Status status={String(item.deposit_status)} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+                    <TableBoxedLayoutTD>
+                      <Status status={String(item.deposit_status)} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))
+              ) : (
+                <DataNotFound colSpan={11} />
+              )}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 

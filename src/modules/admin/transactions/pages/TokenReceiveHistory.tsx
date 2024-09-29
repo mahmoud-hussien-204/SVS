@@ -15,14 +15,24 @@ import {
   TableBoxedLayoutTHead,
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
+
 import Status from "@/components/Status";
+
 import dayjs from "dayjs";
+
 import Box from "@/components/Box";
+
 import PageLimit from "@/components/PageLimit";
+
 import Pagination from "@/components/Pagination";
+
 import Search from "@/components/Search";
+
 import {apiGetTokenReceiveHistory} from "../services";
+
 import CopyText from "@/components/CopyText";
+
+import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("Token Receive History");
@@ -61,42 +71,46 @@ export const Component = () => {
             </TableBoxedLayoutTHead>
 
             <TableBoxedLayoutTBody>
-              {isLoading
-                ? Array.from({length: 10}).map((_, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                      <TableBoxedLayoutSkeleton />
-                    </TableBoxedLayoutTR>
-                  ))
-                : data?.data.map((item, index) => (
-                    <TableBoxedLayoutTR key={index}>
-                      <TableBoxedLayoutTD>{item.deposit_id}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <CopyText text={item.from_address} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <CopyText text={item.to_address} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <CopyText text={item.transaction_hash} />
-                      </TableBoxedLayoutTD>
-                      <TableBoxedLayoutTD>
-                        <Status status={String(item.deposit_status)} />
-                      </TableBoxedLayoutTD>
+              {isLoading ? (
+                Array.from({length: 10}).map((_, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                    <TableBoxedLayoutSkeleton />
+                  </TableBoxedLayoutTR>
+                ))
+              ) : data?.data.length ? (
+                data?.data.map((item, index) => (
+                  <TableBoxedLayoutTR key={index}>
+                    <TableBoxedLayoutTD>{item.deposit_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>{item.fees}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <CopyText text={item.from_address} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <CopyText text={item.to_address} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <CopyText text={item.transaction_hash} />
+                    </TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD>
+                      <Status status={String(item.deposit_status)} />
+                    </TableBoxedLayoutTD>
 
-                      <TableBoxedLayoutTD>
-                        {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                      </TableBoxedLayoutTD>
-                    </TableBoxedLayoutTR>
-                  ))}
+                    <TableBoxedLayoutTD>
+                      {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                    </TableBoxedLayoutTD>
+                  </TableBoxedLayoutTR>
+                ))
+              ) : (
+                <DataNotFound colSpan={8} />
+              )}
             </TableBoxedLayoutTBody>
           </TableBoxedLayoutContainer>
 

@@ -1,3 +1,31 @@
+export interface IDepositRequest {
+  id: number;
+  address: string;
+  fees: string;
+  sender_wallet_id: number;
+  receiver_wallet_id: number;
+  address_type: string;
+  type: string;
+  amount: string;
+  btc: string;
+  doller: string;
+  transaction_id: string;
+  status: string;
+  received_amount: string;
+  is_admin_receive: number;
+  updated_by: string;
+  from_address: string;
+  confirmations: number;
+  created_at: string;
+  updated_at: string;
+  coin_type: string;
+  deposit_status: string;
+  action: {
+    Accept: string;
+    Reject: string;
+  };
+}
+
 export interface IWithdrawalRequest {
   id: number;
   type: string;

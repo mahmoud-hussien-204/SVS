@@ -1,7 +1,9 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
 import {IPendingWithdrawal} from "../interfaces";
+
 import useMutation from "@/hooks/useMutation";
+
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
 type IProps = IPendingWithdrawal;
@@ -19,7 +21,9 @@ const RejectForm = ({data: dataProps, hide}: IModalComponentProps) => {
 
     mutate(null, {
       onSuccess: () => {
-        queryClient.invalidateQueries({queryKey: ["admin-get-withdrawal-requests"]});
+        queryClient.invalidateQueries({
+          queryKey: ["admin-get-withdrawal-requests", "admin-get-deposits-request"],
+        });
         hide();
       },
     });
