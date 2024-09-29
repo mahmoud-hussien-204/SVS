@@ -1,8 +1,8 @@
 import IconImage from "@/components/icons/IconImage";
 
-import { useMemo } from "react";
+import {useMemo} from "react";
 
-import { useFormContext } from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 
 interface IProps {
   locale?: boolean;
@@ -10,8 +10,8 @@ interface IProps {
   title: string;
 }
 
-const ImageUploader = ({ locale = false, name, title }: IProps) => {
-  const { setValue, watch } = useFormContext();
+const ImageUploader = ({locale = false, name, title}: IProps) => {
+  const {setValue, watch} = useFormContext();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,9 +35,18 @@ const ImageUploader = ({ locale = false, name, title }: IProps) => {
 
   return (
     <div className='w-full'>
-      <input type='file' hidden disabled={!locale} id={`imaga-uploader-${name}`} onChange={handleFileChange} />
-      <label htmlFor={`imaga-uploader-${name}`} className='flex flex-col cursor-pointer gap-0.75rem'>
-        <h5 className='mb-0.25rem capitalize text-left'>{title}</h5>
+      <input
+        type='file'
+        hidden
+        disabled={!locale}
+        id={`imaga-uploader-${name}`}
+        onChange={handleFileChange}
+      />
+      <label
+        htmlFor={`imaga-uploader-${name}`}
+        className='flex cursor-pointer flex-col gap-0.75rem'
+      >
+        <h5 className='mb-0.25rem text-left capitalize'>{title}</h5>
         <div className='flex h-52 w-full items-center justify-center rounded-box bg-base-300'>
           {!imageFieldValue ? (
             <IconImage />
