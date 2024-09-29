@@ -22,23 +22,32 @@ import MyWalletList from "../components/MyWalletList";
 
 import useQuery from "@/hooks/useQuery";
 
-import { apiGetWalletData } from "../services";
+import {apiGetWalletData} from "../services";
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+import SwapForm from "../components/SwapForm";
 
 export const Component = () => {
   usePageTitle("My Wallets");
-  const { pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams } = useApiUrlFilter()
+  const {pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams} =
+    useApiUrlFilter();
 
-  const { data, isLoading } = useQuery({
-    queryFn: () => apiGetWalletData(pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams),
-    queryKey: ["user-my-wallets", pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams],
+  const {data, isLoading} = useQuery({
+    queryFn: () =>
+      apiGetWalletData(pageSearchParams, limitSearchParams, searchSearchParams, filterSearchParams),
+    queryKey: [
+      "user-my-wallets",
+      pageSearchParams,
+      limitSearchParams,
+      searchSearchParams,
+      filterSearchParams,
+    ],
     retry: false,
     refetchOnWindowFocus: false,
   });
 
   const wallets = data?.data.wallets || [];
 
-  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
 
   return (
     <ModalProvider>
@@ -53,8 +62,8 @@ export const Component = () => {
         add={AddWalletForm}
         deposit={DepositForm}
         withdraw={WithdrawForm}
-      // swap={SwapForm}
-      // confirmation={ConfirmationForm}
+        swap={SwapForm}
+        // confirmation={ConfirmationForm}
       />
     </ModalProvider>
   );

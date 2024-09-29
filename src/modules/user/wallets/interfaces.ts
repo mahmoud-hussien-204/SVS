@@ -120,14 +120,24 @@ export interface IWallet {
   withdrawal_fees: string;
 }
 
-// export interface IWalletDepositData {
-//   histories: [];
-//   address: string;
-//   wallet_id: string;
-//   wallet: IWallet;
-//   tempWithdraws: [];
-//   active: boolean;
-//   ac_tab: string;
-//   title: string;
-//   "2fa_enabled": boolean;
-// }
+export interface ISwapCoinDetails {
+  "data-to_wallet_id": number;
+  "data-from_coin_type": string;
+  wallet_name: string;
+}
+
+export interface ISwapCoinForm {
+  from_coin_id: number;
+  to_coin_id: number;
+  amount: number;
+}
+
+export interface IGetRateData {
+  success: boolean;
+  wallet_rate: string;
+  convert_rate: string;
+  rate: string;
+  amount: string;
+  from_wallet: IWallet;
+  to_wallet: IWallet;
+}

@@ -6,17 +6,16 @@ import StatsBox from "../components/StatsBox";
 
 import DepositAndWithdrawal from "../components/DepositAndWithdrawal";
 
-import SalesByCategory from "../components/SalesByCategory";
-
-import DailySales from "../components/DailySales";
-
-import TotalOrders from "../components/TotalOrders";
+import DailySales from "../components/BuyCoinReport";
 
 import {apiGetDashboardData} from "../services";
 
 import useQuery from "@/hooks/useQuery";
 
 import {IDashboardData} from "../interfaces";
+
+import LoadingScreen from "@/components/LoadingScreen";
+import {useMemo} from "react";
 
 export const Component = () => {
   usePageTitle("Dashboard");
@@ -33,6 +32,21 @@ export const Component = () => {
   const handelNumber = (value: number) => {
     return +Number(value).toFixed(2);
   };
+
+  const reportData = useMemo(() => {
+    if (!dashboardData) return;
+    return Object.values(dashboardData?.monthly_buy_coin);
+  }, [dashboardData]);
+
+  const hasReportData = useMemo(() => {
+    if (!Array.isArray(reportData)) return false;
+    let hasData = reportData.find((item) => item > 0);
+    return reportData.length > 0 && hasData;
+  }, [reportData]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <TransitionPage>
@@ -59,16 +73,16 @@ export const Component = () => {
 
       <div className='grid gap-6 xl:grid-cols-3'>
         <DepositAndWithdrawal
-          deposits={dashboardData?.deposit}
-          withdrawals={dashboardData?.withdrawal}
+          withdrawals={Object.values(dashboardData?.monthly_withdrawal)}
+          deposits={Object.values(dashboardData?.monthly_deposit)}
         />
-        <SalesByCategory />
       </div>
 
-      <div className='mt-2rem grid gap-6 xl:grid-cols-2'>
-        <DailySales />
-        <TotalOrders />
-      </div>
+      {hasReportData && (
+        <div className='mt-2rem grid gap-6 xl:grid-cols-2'>
+          <DailySales data={reportData} />
+        </div>
+      )}
     </TransitionPage>
   );
 };

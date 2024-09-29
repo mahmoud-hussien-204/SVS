@@ -3,6 +3,7 @@ import Box from "@/components/Box";
 import {
   TableBoxedLayoutActionButton,
   TableBoxedLayoutActionButtonDeposit,
+  TableBoxedLayoutActionButtonSwap,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
@@ -78,6 +79,7 @@ const MyWalletList = ({Wallets, isLoading, totalPages}: IProps) => {
                         modal='accept'
                       />
                     </Link>
+                    <TableBoxedLayoutActionButtonSwap data={item} />
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>

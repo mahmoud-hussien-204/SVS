@@ -4,27 +4,22 @@ import ModalFooter from "@/components/ModalFooter";
 
 import ModalHeader from "@/components/ModalHeader";
 
-import ImageQrCode from "@/assets/qr-code.png";
-
 import Label from "@/components/Label";
 
 import Input from "@/components/Input";
 
 import useEnableTwoFactorAuthentication from "../hooks/useEnableTwoFactorAuthentication";
 
-import useQuery from "@/hooks/useQuery";
+import useUserProfile from "../hooks/useUserProfile";
 
-import { apiGetQrCode2FA } from "../services";
+import QRCode from "react-qr-code";
+
+import {getG2fUrl} from "@/helpers";
 
 const EnableTwoFactorAuthenticationForm = () => {
-  const { form, handleSubmit } = useEnableTwoFactorAuthentication();
-  const { data, isLoading } = useQuery({
-    queryKey: ["get-two-factor-authentication-qrCode"],
-    queryFn: apiGetQrCode2FA,
-    retry: 2,
-  });
+  const {form, handleSubmit, isPending} = useEnableTwoFactorAuthentication();
 
-  console.log(data, isLoading);
+  const {data} = useUserProfile();
 
   return (
     <form
@@ -36,7 +31,12 @@ const EnableTwoFactorAuthenticationForm = () => {
       <ModalHeader title='Enable Two Factor Authentication' />
       <ModalBody>
         <div className='flex items-center gap-1rem'>
-          <img src={ImageQrCode} alt='qr code' className='max-h-[200px]' />
+          <div style={{background: "white", padding: "10px"}}>
+            <QRCode
+              value={getG2fUrl(data?.user.email ?? "", data?.google2fa_secret ?? "")}
+              size={150}
+            />
+          </div>
           <div>
             <h6 className='mb-0.5rem text-neutral-400'>Authenticator Apps</h6>
             <p className='mb-1.5rem text-14 leading-1.5rem text-neutral-400'>
@@ -55,7 +55,7 @@ const EnableTwoFactorAuthenticationForm = () => {
           </div>
         </div>
       </ModalBody>
-      <ModalFooter title='Submit' isLoading={false} />
+      <ModalFooter title='Submit' isLoading={isPending} />
     </form>
   );
 };
