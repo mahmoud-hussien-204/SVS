@@ -26,9 +26,18 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-import { IUserData } from "../interfaces";
+import {IUserData} from "../interfaces";
+import DataNotFound from "@/components/DataNotFound";
 
-const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], totalPages: number, isLoading: boolean }) => {
+const UsersList = ({
+  users,
+  totalPages,
+  isLoading,
+}: {
+  users: IUserData[];
+  totalPages: number;
+  isLoading: boolean;
+}) => {
   return (
     <Box>
       <TableBoxedLayoutContainer>
@@ -44,8 +53,8 @@ const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], total
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {isLoading
-            ? Array.from({ length: 10 }).map((_, index) => (
+          {isLoading ? (
+            Array.from({length: 10}).map((_, index) => (
               <TableBoxedLayoutTR key={index} className='!bg-red-300'>
                 <TableBoxedLayoutSkeleton />
                 <TableBoxedLayoutSkeleton />
@@ -55,7 +64,8 @@ const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], total
                 <TableBoxedLayoutSkeleton />
               </TableBoxedLayoutTR>
             ))
-            : users.map((item) => (
+          ) : users.length > 0 ? (
+            users.map((item) => (
               <TableBoxedLayoutTR key={item.id}>
                 <TableBoxedLayoutTD>
                   {item.first_name} {item.last_name}
@@ -72,15 +82,32 @@ const UsersList = ({ users, totalPages, isLoading }: { users: IUserData[], total
                   <TableBoxedLayoutActions>
                     {item.action.View && <TableBoxedLayoutActionButtonView data={item} />}
                     {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
-                    {item.action.Suspend && <TableBoxedLayoutActionButtonSuspend data={{ path: item.action.Suspend }} />}
-                    {item.action.Active && <TableBoxedLayoutActionButtonActive data={{ path: item.action.Active }} />}
-                    {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={{ path: item.action.Delete }} />}
-                    {item.action.Phone_verify && <TableBoxedLayoutActionButtonPhoneVerify data={{ path: item.action.Phone_verify }} />}
-                    {item.action.Email_verify && <TableBoxedLayoutActionButtonEmailVerify data={{ path: item.action.Email_verify }} />}
+                    {item.action.Suspend && (
+                      <TableBoxedLayoutActionButtonSuspend data={{path: item.action.Suspend}} />
+                    )}
+                    {item.action.Active && (
+                      <TableBoxedLayoutActionButtonActive data={{path: item.action.Active}} />
+                    )}
+                    {item.action.Delete && (
+                      <TableBoxedLayoutActionButtonDelete data={{path: item.action.Delete}} />
+                    )}
+                    {item.action.Phone_verify && (
+                      <TableBoxedLayoutActionButtonPhoneVerify
+                        data={{path: item.action.Phone_verify}}
+                      />
+                    )}
+                    {item.action.Email_verify && (
+                      <TableBoxedLayoutActionButtonEmailVerify
+                        data={{path: item.action.Email_verify}}
+                      />
+                    )}
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
-            ))}
+            ))
+          ) : (
+            <DataNotFound colSpan={6} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

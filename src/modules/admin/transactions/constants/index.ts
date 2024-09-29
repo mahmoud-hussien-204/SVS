@@ -2,9 +2,13 @@ import {ENUM_ALL_TRANSACTIONS} from "../enums";
 
 export const constantRequestStatus = [
   {
-    label: "Request Status",
+    label: "All",
     value: "",
-    disabled: true,
+    // disabled: true,
+  },
+  {
+    label: "Pending",
+    value: "Pending",
   },
   {
     label: "Accepted",

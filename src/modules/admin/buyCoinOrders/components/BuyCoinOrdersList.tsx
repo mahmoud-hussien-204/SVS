@@ -30,6 +30,7 @@ import {apiGetBuyCoinOrders} from "../services";
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import {useMemo} from "react";
+import DataNotFound from "@/components/DataNotFound";
 
 const BuyCoinOrdersList = () => {
   const {filterSearchParams, limitSearchParams, pageSearchParams, searchSearchParams} =
@@ -73,42 +74,46 @@ const BuyCoinOrdersList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {isLoading
-            ? Array.from({length: 4}).map((_, index) => (
-                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                </TableBoxedLayoutTR>
-              ))
-            : buyOrdersList.map((order) => (
-                <TableBoxedLayoutTR key={order.id}>
-                  <TableBoxedLayoutTD>{order.email}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{order.coin}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{order.btc}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{order.payment_type}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <CopyText text={order?.address} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <Status status={order.deposit_status} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(order.created_at).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <TableBoxedLayoutActions>
-                      {order.actions?.accept && <TableBoxedLayoutActionButtonAccept data={order} />}
-                      {order.actions?.reject && <TableBoxedLayoutActionButtonReject data={order} />}
-                    </TableBoxedLayoutActions>
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+          {isLoading ? (
+            Array.from({length: 4}).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+          ) : buyOrdersList.length > 0 ? (
+            buyOrdersList.map((order) => (
+              <TableBoxedLayoutTR key={order.id}>
+                <TableBoxedLayoutTD>{order.email}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{order.coin}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{order.btc}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{order.payment_type}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <CopyText text={order?.address} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={order.deposit_status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(order.created_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    {order.actions?.accept && <TableBoxedLayoutActionButtonAccept data={order} />}
+                    {order.actions?.reject && <TableBoxedLayoutActionButtonReject data={order} />}
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          ) : (
+            <DataNotFound colSpan={8} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

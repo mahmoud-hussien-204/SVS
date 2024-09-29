@@ -31,6 +31,8 @@ import {apiGetBankList} from "../services";
 
 import {useMemo} from "react";
 
+import DataNotFound from "@/components/DataNotFound";
+
 const BanksList = () => {
   const {
     pageSearchParams: page,
@@ -63,40 +65,44 @@ const BanksList = () => {
         </TableBoxedLayoutTHead>
 
         <TableBoxedLayoutTBody>
-          {isLoading
-            ? Array.from({length: 4}).map((_, index) => (
-                <TableBoxedLayoutTR key={index} className='!bg-red-300'>
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                  <TableBoxedLayoutSkeleton />
-                </TableBoxedLayoutTR>
-              ))
-            : banksData.map((item) => (
-                <TableBoxedLayoutTR key={item.id}>
-                  <TableBoxedLayoutTD>{item.bank_name}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.account_holder_name}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <CopyText text={item.iban} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>{item.country_name}</TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <Status status={item.status} />
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
-                  </TableBoxedLayoutTD>
-                  <TableBoxedLayoutTD>
-                    <TableBoxedLayoutActions>
-                      {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
-                      {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={item} />}
-                    </TableBoxedLayoutActions>
-                  </TableBoxedLayoutTD>
-                </TableBoxedLayoutTR>
-              ))}
+          {isLoading ? (
+            Array.from({length: 4}).map((_, index) => (
+              <TableBoxedLayoutTR key={index} className='!bg-red-300'>
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+                <TableBoxedLayoutSkeleton />
+              </TableBoxedLayoutTR>
+            ))
+          ) : banksData.length > 0 ? (
+            banksData.map((item) => (
+              <TableBoxedLayoutTR key={item.id}>
+                <TableBoxedLayoutTD>{item.bank_name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.account_holder_name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <CopyText text={item.iban} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.country_name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <Status status={item.status} />
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
+                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>
+                  <TableBoxedLayoutActions>
+                    {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
+                    {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={item} />}
+                  </TableBoxedLayoutActions>
+                </TableBoxedLayoutTD>
+              </TableBoxedLayoutTR>
+            ))
+          ) : (
+            <DataNotFound colSpan={7} />
+          )}
         </TableBoxedLayoutTBody>
       </TableBoxedLayoutContainer>
 

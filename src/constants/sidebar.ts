@@ -88,7 +88,7 @@ export const constantSidebar: ISidebarItem = {
           path: "/admin/all-coin-transaction-history",
         },
         {
-          title: "Pending Withdrawals",
+          title: "Withdrawals",
           path: "/admin/transactions-withdrawals",
         },
         {
