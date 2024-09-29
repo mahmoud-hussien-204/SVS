@@ -6,6 +6,10 @@ export interface IAddUserForm {
   role?: number;
 }
 
+export interface IEditUserForm extends IAddUserForm {
+  id: number;
+}
+
 export interface IUserData {
   id: number;
   first_name: string;

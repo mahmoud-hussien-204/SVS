@@ -4,21 +4,19 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 import {useForm} from "react-hook-form";
 
-import {IAddUserForm, IUserData} from "../interfaces";
+import {IEditUserForm, IUserData} from "../interfaces";
 
 import * as Yup from "yup";
+
 import {getIdFromUrl} from "@/helpers";
+
 import useMutation from "@/hooks/useMutation";
+
 import {apiUpdateUser} from "../services";
+
 import {useQueryClient} from "@tanstack/react-query";
 
-const schema: Yup.ObjectSchema<IAddUserForm> = Yup.object().shape({
-  first_name: Yup.string().required("First name is required"),
-  last_name: Yup.string().required("First name is required"),
-  email: Yup.string().email("Enter a valid email").required("email is required"),
-  phone: Yup.string().required("Phone number is required"),
-  role: Yup.number().optional(),
-});
+import {schema} from "./useAddUserForm";
 
 const useEditUserForm = () => {
   const {hide, data} = useModal();
@@ -28,24 +26,30 @@ const useEditUserForm = () => {
   const queryClient = useQueryClient();
 
   const {mutate, isPending} = useMutation({
-    mutationFn: (data: any) => apiUpdateUser(data),
+    mutationFn: apiUpdateUser,
     mutationKey: ["admin-update-user"],
   });
 
-  const form = useForm<IAddUserForm>({
-    resolver: yupResolver(schema),
+  const form = useForm<IEditUserForm>({
+    resolver: yupResolver(
+      schema.shape({
+        id: Yup.number().required("This field is required"),
+        role: Yup.number().optional(),
+      })
+    ),
     mode: "onTouched",
     defaultValues: {
       email: userData?.email || "",
       first_name: userData?.first_name || "",
       last_name: userData?.last_name || "",
       phone: userData?.phone || "",
+      id: userData.id,
     },
   });
 
-  const handleSubmit = form.handleSubmit((values: IAddUserForm) => {
+  const handleSubmit = form.handleSubmit((values: IEditUserForm) => {
     mutate(
-      {...values, id: getIdFromUrl(userData.action.Edit)},
+      {...values, id: getIdFromUrl(userData.action.Edit) as string},
       {
         onSuccess: () => {
           queryClient.invalidateQueries({queryKey: ["admin-get-users"]});

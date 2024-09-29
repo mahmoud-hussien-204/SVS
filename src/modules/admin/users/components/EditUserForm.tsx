@@ -12,6 +12,7 @@ const EditUserForm = () => {
   return (
     <form noValidate name='add-user-form' id='withdraw-form' onSubmit={handleSubmit}>
       <ModalHeader title='Edit User' />
+      {/* @ts-ignore */}
       <AddAndEditUserForm form={form} type='edit' />
       <ModalFooter isLoading={isPending} title='Update User' />
     </form>
