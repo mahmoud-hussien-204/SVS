@@ -6,7 +6,7 @@ import ModalHeader from "@/components/ModalHeader";
 
 import Select from "@/components/Select";
 
-import {IWallet} from "../interfaces";
+import {ISwapCoinForm, IWallet} from "../interfaces";
 
 import useQuery from "@/hooks/useQuery";
 
@@ -26,6 +26,7 @@ import Input from "@/components/Input";
 
 const SwapForm = ({data: propsData}: IModalComponentProps) => {
   const id = (propsData as IWallet).id;
+
   const {form, handleSubmit, isPending} = useSwapForm();
 
   const {data} = useQuery({
@@ -34,7 +35,7 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
     enabled: Boolean(id),
   });
 
-  const handelCoinsOpthions = useMemo(() => {
+  const handelCoinsOptions = useMemo(() => {
     const coins = data?.map((data) => {
       return {
         value: data["data-to_wallet_id"] ?? "",
@@ -56,19 +57,21 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
   });
 
   const toCoinId = form.watch("to_coin_id");
+
   const amount = form.watch("amount");
 
   const getRateValues = useMemo(() => {
-    const data: any = {from_coin_id: id};
-    toCoinId ? (data.to_coin_id = toCoinId) : null;
-    amount ? (data.amount = amount) : (data.amount = 1);
-    return data;
+    return {
+      from_coin_id: id,
+      ...(toCoinId ? {to_coin_id: toCoinId} : {}),
+      ...(amount ? {amount: amount} : {amount: 1}),
+    };
   }, [amount, toCoinId, id]);
 
   useEffect(() => {
-    if (!getRateValues.to_coin_id) return;
-    mutate(getRateValues);
-  }, [getRateValues]);
+    if (!getRateValues.to_coin_id || amount < 1) return;
+    mutate(getRateValues as ISwapCoinForm);
+  }, [getRateValues, mutate, amount]);
 
   return (
     <>
@@ -79,7 +82,7 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
             <Label htmlFor='swap-with'>Swap with</Label>
             <Select
               {...form.register("to_coin_id")}
-              options={handelCoinsOpthions}
+              options={handelCoinsOptions}
               id='swap-with'
               isError={!!form.formState.errors.to_coin_id}
               defaultValue=''
@@ -110,6 +113,7 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
                         id='swap-amount'
                         isError={!!form.formState.errors.amount}
                         className='!border-0 !bg-transparent'
+                        min={1}
                       />
                     </div>
                     <span className='text-neutral-400'>
