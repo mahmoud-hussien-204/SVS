@@ -57,6 +57,7 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
   });
 
   const toCoinId = form.watch("to_coin_id");
+
   const amount = form.watch("amount");
 
   const getRateValues = useMemo(() => {
@@ -68,9 +69,9 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
   }, [amount, toCoinId, id]);
 
   useEffect(() => {
-    if (!getRateValues.to_coin_id) return;
+    if (!getRateValues.to_coin_id || amount < 1) return;
     mutate(getRateValues as ISwapCoinForm);
-  }, [getRateValues, mutate]);
+  }, [getRateValues, mutate, amount]);
 
   return (
     <>
@@ -112,6 +113,7 @@ const SwapForm = ({data: propsData}: IModalComponentProps) => {
                         id='swap-amount'
                         isError={!!form.formState.errors.amount}
                         className='!border-0 !bg-transparent'
+                        min={1}
                       />
                     </div>
                     <span className='text-neutral-400'>
