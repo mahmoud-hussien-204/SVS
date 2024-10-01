@@ -20,8 +20,8 @@ const useDriverLicenseForm = () => {
     resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
     defaultValues: {
-      file_two: data?.drive_front.photo || "",
-      file_three: data?.drive_back.photo || "",
+      file_two: data?.drive_front?.photo || "",
+      file_three: data?.drive_back?.photo || "",
     },
   });
 

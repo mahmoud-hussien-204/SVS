@@ -23,8 +23,8 @@ const usePassportVerificationForm = () => {
     resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
     defaultValues: {
-      file_two: data?.pass_front.photo || "",
-      file_three: data?.pass_back.photo || "",
+      file_two: data?.pass_front?.photo || "",
+      file_three: data?.pass_back?.photo || "",
     },
   });
 

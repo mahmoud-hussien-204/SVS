@@ -23,7 +23,9 @@ const schema: Yup.ObjectSchema<ISwapCoinForm> = Yup.object().shape({
 
 const useSwapForm = () => {
   const {hide, data} = useModal();
+
   const id = (data as IWallet).id;
+
   const form = useForm<ISwapCoinForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
@@ -33,20 +35,22 @@ const useSwapForm = () => {
     },
   });
 
-  const {mutate, queryClient} = useMutation({
+  const {mutate, queryClient, isPending} = useMutation({
     mutationFn: apiSwapCoin,
   });
 
   const handleSubmit = form.handleSubmit((values: ISwapCoinForm) => {
     mutate(values, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["user-my-wallets"] as any);
+        queryClient.invalidateQueries({
+          queryKey: ["user-my-wallets"],
+        });
         hide();
       },
     });
   });
 
-  return {form, handleSubmit, isPending: false};
+  return {form, handleSubmit, isPending};
 };
 
 export default useSwapForm;
