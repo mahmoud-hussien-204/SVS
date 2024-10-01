@@ -19,8 +19,8 @@ const useIDVerificationForm = () => {
     resolver: yupResolver(schemaIdVerification),
     mode: "onTouched",
     defaultValues: {
-      file_two: data?.nid_front.photo || "",
-      file_three: data?.nid_back.photo || "",
+      file_two: data?.nid_front?.photo || "",
+      file_three: data?.nid_back?.photo || "",
     },
   });
 
