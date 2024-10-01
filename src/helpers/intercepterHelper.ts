@@ -48,7 +48,6 @@ export default class InterceptorHelper {
     }
 
     // handle response success
-    // console.log(method);
     // if (method && method.toLowerCase() !== "get") {
     toast.success(message);
     // }
