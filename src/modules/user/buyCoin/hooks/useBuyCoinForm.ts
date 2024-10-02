@@ -16,6 +16,10 @@ import AppHelper from "@/helpers/appHelper";
 
 import {ENUM_BUY_COIN_PAYMENT_TYPE} from "../enums";
 
+import {EnumModals} from "@/enums";
+
+import useModal from "@/hooks/useModal";
+
 const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
   coin: Yup.number()
     .typeError("Amount must be a number")
@@ -28,6 +32,8 @@ const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
 });
 
 const useSendRequestForm = () => {
+  const {show} = useModal();
+
   const {data, isLoading} = useQuery({
     queryFn: apiGetBuyCoin,
     queryKey: ["user-buy-coin"],
@@ -47,8 +53,6 @@ const useSendRequestForm = () => {
   });
 
   const handleSubmit = form.handleSubmit((values: IBuyCoinForm) => {
-    console.log(values);
-
     if (values.payment_type == ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT) {
       delete values.sleep;
       delete values.bank_id;
@@ -56,7 +60,17 @@ const useSendRequestForm = () => {
       delete values.payment_coin_type;
     }
     const data = AppHelper.toFormData(values);
-    mutate(data);
+    mutate(data, {
+      onSuccess(data) {
+        if (values.payment_type == ENUM_BUY_COIN_PAYMENT_TYPE.COIN_PAYMENT) {
+          show(EnumModals.success, {
+            ...data,
+            ...values,
+            payable: (document.getElementById("payable-coin") as HTMLInputElement).value,
+          });
+        }
+      },
+    });
   });
 
   return {form, handleSubmit, data, isLoading, isPending};
