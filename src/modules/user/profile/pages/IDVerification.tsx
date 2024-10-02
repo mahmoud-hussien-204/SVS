@@ -18,9 +18,17 @@ import PassportVerificationForm from "../components/PassportVerificationForm";
 
 import DriverLicenseForm from "../components/DriverLicenseForm";
 import useUserProfile from "../hooks/useUserProfile";
+import {useCallback} from "react";
 
 export const Component = () => {
   const {data} = useUserProfile();
+
+  const getStatusName = useCallback((statusFront?: string, statusBack?: string): string => {
+    if (typeof statusFront == "undefined" && typeof statusBack == "undefined")
+      return "Not Submited";
+
+    return statusFront as string;
+  }, []);
 
   return (
     <ModalProvider>
@@ -31,29 +39,30 @@ export const Component = () => {
           <div className='mt-6 flex w-full flex-wrap items-center justify-evenly gap-8 pb-6'>
             <CardIdVerifiction
               imgSrc='/nid.svg'
-              status={
-                (data?.nid_front?.status && data?.nid_back?.status) === 1 ? "Verified" : "Pending"
-              }
+              status={getStatusName(
+                data?.nid_front?.deposit_status,
+                data?.nid_back?.deposit_status
+              )}
               title='National ID Verification'
               modalType={EnumModals.idVerification}
             />
 
             <CardIdVerifiction
               imgSrc='/passport.svg'
-              status={
-                (data?.pass_front?.status && data?.pass_back?.status) === 1 ? "Verified" : "Pending"
-              }
+              status={getStatusName(
+                data?.pass_front?.deposit_status,
+                data?.pass_back?.deposit_status
+              )}
               title='Passport'
               modalType={EnumModals.passport}
             />
 
             <CardIdVerifiction
               imgSrc='/driving-license.svg'
-              status={
-                data?.drive_front?.status === 1 && data?.drive_back?.status === 1
-                  ? "Verified"
-                  : "Pending"
-              }
+              status={getStatusName(
+                data?.drive_front?.deposit_status,
+                data?.drive_back?.deposit_status
+              )}
               title='Driving License'
               modalType={EnumModals.driverLicense}
             />

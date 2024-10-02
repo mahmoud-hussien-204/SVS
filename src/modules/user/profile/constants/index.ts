@@ -1,10 +1,20 @@
 import * as Yup from "yup";
 
 import {IIdVerificationForm} from "../interfaces";
+import {FILE_SIZE_LIMIT} from "@/constants";
 
 export const schemaIdVerification: Yup.ObjectSchema<IIdVerificationForm> = Yup.object().shape({
-  file_two: Yup.mixed<File>().required("Back Id Image is required"),
-  file_three: Yup.mixed<File>().required("Front Id Image is required"),
+  file_two: Yup.mixed<File>()
+    .required("Back Id Image is required")
+    .test("fileSize", "File is too large, should be less than 8MB", (value) => {
+      // Ensure value is defined and has a size property
+      return value && value.size <= FILE_SIZE_LIMIT;
+    }),
+  file_three: Yup.mixed<File>()
+    .required("Front Id Image is required")
+    .test("fileSize", "File is too large, should be less than 8MB", (value) => {
+      return value && value.size <= FILE_SIZE_LIMIT;
+    }),
 });
 
 export const constantProfileTabs = [

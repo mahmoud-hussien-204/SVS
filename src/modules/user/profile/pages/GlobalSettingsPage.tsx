@@ -6,16 +6,30 @@ import useProfileGlobalSettings from "../hooks/useProfleGlobalSettings";
 
 import Select from "@/components/Select";
 
-import {constantLanguage} from "@/constants";
-
 import Label from "@/components/Label";
 
 import Button from "@/components/Button";
 
 import Card from "@/components/Card";
 
+import useUserProfile from "../hooks/useUserProfile";
+
+import {useCallback} from "react";
+
 export const Component = () => {
   const {form, handleSubmit, isPending} = useProfileGlobalSettings();
+  const countries = useUserProfile().data?.countries;
+
+  const getCountries = useCallback(() => {
+    const arr = [{value: "", label: "Select Country", disabled: true}];
+    if (countries) {
+      for (const key in countries) {
+        arr.push({value: key, label: countries[key], disabled: false});
+      }
+    }
+
+    return arr;
+  }, [countries]);
 
   return (
     <TransitionPage>
@@ -30,7 +44,7 @@ export const Component = () => {
           <div className='mb-1.25rem'>
             <Label htmlFor='global-settings-form-language'>Select Language</Label>
             <Select
-              options={constantLanguage}
+              options={getCountries()}
               defaultValue=''
               id='global-settings-form-language'
               {...form.register("lang")}
