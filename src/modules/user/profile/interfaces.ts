@@ -49,6 +49,7 @@ export interface IUserProfile {
   qr: string;
   google2fa_secret: string;
   google2fa_url: string;
+  countries: {[key: string]: string};
 }
 
 export interface IUser {
@@ -91,7 +92,7 @@ export interface IImageData {
   id: number;
   user_id: number;
   field_name: string;
-  status: number;
+  deposit_status: string;
   photo: string;
   created_at: string;
   updated_at: string;

@@ -52,6 +52,7 @@ export interface IReferralData {
   updated_at: string;
   wallet: IWallet;
   deposit_status: string;
+  coin_type: string;
 }
 
 interface IWallet {

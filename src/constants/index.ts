@@ -345,3 +345,6 @@ export const constantCountriesList = [
   {label: "Zambia", value: "zm"},
   {label: "Zimbabwe", value: "zw"},
 ];
+
+// 8MB in bytes
+export const FILE_SIZE_LIMIT = 8 * 1024 * 1024;
