@@ -36,11 +36,21 @@ export const constantSidebar: ISidebarItem = {
       isSubmenu: false,
     },
     {
-      title: "Users",
+      title: "Users Management",
       path: "/admin/users",
       icon: "users",
       end: true,
-      isSubmenu: false,
+      isSubmenu: true,
+      subMenu: [
+        {
+          title: "Users List",
+          path: "/admin/users",
+        },
+        {
+          title: "KYC Verifications",
+          path: "/admin/users-kyc-verification",
+        },
+      ],
     },
     {
       title: "Coins List",

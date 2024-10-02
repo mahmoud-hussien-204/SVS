@@ -43,6 +43,7 @@ export const Component = () => {
     limitSearchParams: limit,
     searchSearchParams: search,
   } = useApiUrlFilter();
+
   const type = filterSearchParams as ENUM_USERS_STATUS;
 
   const {data, isLoading} = useQuery({

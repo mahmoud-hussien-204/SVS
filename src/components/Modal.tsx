@@ -23,10 +23,16 @@ export default function Modal({...props}: IProps) {
     : null;
 }
 
-function ModalWrapper({children, className}: {children: React.ReactNode; className?: string}) {
+export const ModalWrapper = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
     <div className='modal modal-open z-50'>
       <div className={`modal-box max-w-[40rem] ${className}`}>{children}</div>
     </div>
   );
-}
+};
