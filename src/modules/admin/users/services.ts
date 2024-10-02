@@ -1,9 +1,18 @@
 import InterceptorHelper from "@/helpers/intercepterHelper";
 
-import {IAddUserForm, IUserData} from "./interfaces";
-
 import {ENUM_USERS_STATUS} from "./enums";
+
+import {
+  IAddUserForm,
+  IUserData,
+  IKycVerification,
+  IKycVerificationData,
+  IRejectKycVerificationForm,
+} from "./interfaces";
+
 import {ICoinData} from "../coins/interfaces";
+
+import AppHelper from "@/helpers/appHelper";
 
 export const apiGetUsers = (
   type: ENUM_USERS_STATUS,
@@ -50,3 +59,31 @@ export const apiUpdateUser = (data: IAddUserForm & {id: string}) => {
     body: JSON.stringify(data),
   });
 };
+
+export const apiGetKycList = ({limit, page, search}: IQueryParams) => {
+  const data = AppHelper.urlSearchParams({
+    page,
+    length: limit,
+    "search[value]": search,
+    // searchableFields: '["kyc_status","kyc_level","kyc_level_name"]',
+  });
+  return InterceptorHelper.intercept<IResponse<IKycVerification[]>>(
+    `/admin/pending-id-verified-user?${data.toString()}`
+  );
+};
+
+export const apiGetKycVerificationDetails = (url: string) =>
+  InterceptorHelper.intercept<IKycVerificationData>(url, {}, false);
+
+export const apiAcceptKycVerification = (url: string) =>
+  InterceptorHelper.intercept<IKycVerificationData>(url, {}, false);
+
+export const apiRejectKycVerification = (url: string, data: IRejectKycVerificationForm) =>
+  InterceptorHelper.intercept<IKycVerificationData>(
+    url,
+    {
+      body: JSON.stringify(data),
+      method: "POST",
+    },
+    false
+  );

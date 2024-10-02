@@ -1,12 +1,6 @@
 import Status from "@/components/Status";
 
 import {
-  TableBoxedLayoutActionButtonActive,
-  TableBoxedLayoutActionButtonDelete,
-  TableBoxedLayoutActionButtonEdit,
-  TableBoxedLayoutActionButtonEmailVerify,
-  TableBoxedLayoutActionButtonPhoneVerify,
-  TableBoxedLayoutActionButtonSuspend,
   TableBoxedLayoutActionButtonView,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
@@ -26,27 +20,39 @@ import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
 
-import {IUserData} from "../interfaces";
-
 import DataNotFound from "@/components/DataNotFound";
 
-const UsersList = ({
-  users,
-  totalPages,
-  isLoading,
-}: {
-  users: IUserData[];
-  totalPages: number;
-  isLoading: boolean;
-}) => {
+import useQuery from "@/hooks/useQuery";
+
+import {apiGetKycList} from "../services";
+
+import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
+const KycVerificationList = () => {
+  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
+
+  const {data, isLoading} = useQuery({
+    queryFn: () =>
+      apiGetKycList({
+        limit: limitSearchParams,
+        page: pageSearchParams,
+        search: searchSearchParams,
+      }),
+    queryKey: ["admin-get-kyc-list"],
+  });
+
+  const totalPages = data?.recordsTotal ? Math.ceil(data.recordsTotal / limitSearchParams) : 1;
+
+  const kycVerificationsList = data?.data || [];
+
   return (
     <Box>
       <TableBoxedLayoutContainer>
         <TableBoxedLayoutTHead>
           <TableBoxedLayoutTR>
-            <TableBoxedLayoutTH>User Name</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>First Name</TableBoxedLayoutTH>
+            <TableBoxedLayoutTH>Last Name</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Email</TableBoxedLayoutTH>
-            <TableBoxedLayoutTH>Role</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Status</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Created at</TableBoxedLayoutTH>
             <TableBoxedLayoutTH>Actions</TableBoxedLayoutTH>
@@ -65,41 +71,23 @@ const UsersList = ({
                 <TableBoxedLayoutSkeleton />
               </TableBoxedLayoutTR>
             ))
-          ) : users.length > 0 ? (
-            users.map((item) => (
+          ) : kycVerificationsList.length > 0 ? (
+            kycVerificationsList.map((item) => (
               <TableBoxedLayoutTR key={item.id}>
-                <TableBoxedLayoutTD>
-                  {item.first_name} {item.last_name}
-                </TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.first_name}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.last_name}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>{item.email}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{item.role == 1 ? "Admin" : "User"}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
-                  <Status status={item.status} />
+                  <Status status={item.deposit_status} />
                 </TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
                   {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
                 </TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
                   <TableBoxedLayoutActions>
-                    {item.action.View && <TableBoxedLayoutActionButtonView data={item} />}
-                    {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
-                    {item.action.Suspend && (
-                      <TableBoxedLayoutActionButtonSuspend data={{path: item.action.Suspend}} />
-                    )}
-                    {item.action.Active && (
-                      <TableBoxedLayoutActionButtonActive data={{path: item.action.Active}} />
-                    )}
-                    {item.action.Delete && (
-                      <TableBoxedLayoutActionButtonDelete data={{path: item.action.Delete}} />
-                    )}
-                    {item.action.Phone_verify && (
-                      <TableBoxedLayoutActionButtonPhoneVerify
-                        data={{path: item.action.Phone_verify}}
-                      />
-                    )}
-                    {item.action.Email_verify && (
-                      <TableBoxedLayoutActionButtonEmailVerify
-                        data={{path: item.action.Email_verify}}
+                    {item.action.Details && (
+                      <TableBoxedLayoutActionButtonView
+                        data={{...item, className: "max-w-[50rem]"}}
                       />
                     )}
                   </TableBoxedLayoutActions>
@@ -120,4 +108,4 @@ const UsersList = ({
   );
 };
 
-export default UsersList;
+export default KycVerificationList;

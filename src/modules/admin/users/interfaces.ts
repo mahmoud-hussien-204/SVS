@@ -49,3 +49,54 @@ export interface IUserActions {
   Phone_verify: string;
   Active: string;
 }
+
+export interface IKycVerification {
+  id: number;
+  updated_at: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  deposit_status: string;
+  created_at: string;
+  action: {
+    Details: string;
+  };
+}
+
+export interface IKycVerificationData {
+  grouped_files: {
+    [key: string]: IKycVerificationDataGroupedFiles;
+  };
+  fields_name: {
+    nid_front: number;
+    nid_back: number;
+    pass_front: number;
+    pass_back: number;
+    drive_front: number;
+    drive_back: number;
+  };
+}
+
+export interface IKycVerificationDataGroupedFiles {
+  type: string;
+  status: string;
+  action: {
+    Accept: string;
+    Reject: string;
+  };
+  files: IKycVerificationDataGroupedFile[];
+}
+
+export interface IKycVerificationDataGroupedFile {
+  id: number;
+  field_name: string;
+  photo: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IRejectKycVerificationForm {
+  user_id: number;
+  couse: string;
+  type: string;
+}
