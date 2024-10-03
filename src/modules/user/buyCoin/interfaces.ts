@@ -79,6 +79,7 @@ export interface IBuyCoinPageData {
   coin_price: string;
   btc_dlr: string;
   no_phase: boolean;
+  STRIPE_KEY: string;
 }
 
 export interface IBuyCoinSettings {

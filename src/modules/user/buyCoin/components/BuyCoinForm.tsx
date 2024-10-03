@@ -35,7 +35,7 @@ const BuyCoinForm = () => {
       case ENUM_BUY_COIN_PAYMENT_TYPE.BANK_DEPOSIT:
         return <BankDepositsForm banks={data?.banks} />;
       case ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD:
-        return <CreditCardForm />;
+        return <CreditCardForm publishKey={data.STRIPE_KEY} />;
     }
   };
 
