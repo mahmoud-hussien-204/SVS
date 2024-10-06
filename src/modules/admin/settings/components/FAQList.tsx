@@ -9,6 +9,7 @@ import {useMemo} from "react";
 import Box from "@/components/Box";
 
 import {
+  TableBoxedLayoutActionButtonDelete,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
   TableBoxedLayoutSkeleton,
@@ -79,8 +80,8 @@ const FAQList = () => {
                 </TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
                   <TableBoxedLayoutActions>
-                    {/* {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />}
-                {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={item} />} */}
+                    {/* {item.action.Edit && <TableBoxedLayoutActionButtonEdit data={item} />} */}
+                    {item.action.Delete && <TableBoxedLayoutActionButtonDelete data={item} />}
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>
               </TableBoxedLayoutTR>
