@@ -1,4 +1,7 @@
+import Input from "@/components/Input";
+
 import Label from "@/components/Label";
+
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -18,15 +21,8 @@ interface IProps {
 function CreditCardForm({publishKey}: IProps) {
   const stripePromise = useMemo(() => loadStripe(publishKey), [publishKey]);
 
-  const options = {
-    // passing the client secret obtained from the server
-    // clientSecret: "{{CLIENT_SECRET}}",
-  };
-
-  // const form = useFormContext<ICreditCardForm>();
-
   return (
-    <Elements stripe={stripePromise} options={options}>
+    <Elements stripe={stripePromise}>
       <CheckoutForm />
     </Elements>
   );
@@ -35,31 +31,53 @@ function CreditCardForm({publishKey}: IProps) {
 export default CreditCardForm;
 
 const CheckoutForm = () => {
-  const s = useStripe();
+  const options = useMemo(
+    () => ({
+      classes: {
+        base: "px-1rem rounded rounded-1rem !text-white py-[1rem] border-base-200 border bg-base-300 text-white focus:outline-0",
+        invalid: "border-error",
+        focus: "!border-primary !text-white",
+      },
+      style: {
+        base: {
+          color: "#fff",
+        },
+      },
+    }),
+    []
+  );
+
+  const stripe = useStripe();
+
+  console.log(stripe);
 
   return (
-    <div>
-      <div className='mb-1.25rem'></div>
-
+    <>
       <div className='mb-1.25rem'>
-        <Label>Card Number</Label>
-        <CardNumberElement
-          options={{
-            showIcon: true,
-            placeholder: "Enter card number",
-            classes: {
-              base: "text-16 input input-bordered !h-3rem w-full rounded-0.5rem border-base-200 bg-base-300 text-white placeholder:text-14 placeholder:text-neutral-500 focus:border-primary focus:outline-0",
-              invalid: "border-error",
-            },
-          }}
-          id='cardNumber'
-        />
+        <Label htmlFor='cardHolderName'>Card Holder Name</Label>
+        <Input type='text' placeholder='Enter Card Holder Name' id='cardHolderName' />
       </div>
 
-      <div className='grid grid-cols-2 gap-1.25rem'>
-        <CardCvcElement options={{}} id='cardCvc' />
-        <CardExpiryElement options={{}} id='cardExpiry' />
+      <div className='grid grid-cols-4 gap-1.25rem'>
+        <div className='col-span-2'>
+          <Label>Card Number</Label>
+          <CardNumberElement
+            options={{
+              showIcon: true,
+              ...options,
+            }}
+            id='cardNumber'
+          />
+        </div>
+        <div>
+          <Label htmlFor='cardCvc'>CVC</Label>
+          <CardCvcElement options={options} id='cardCvc' />
+        </div>
+        <div>
+          <Label htmlFor='cardExpiry'>Expiration Date</Label>
+          <CardExpiryElement options={options} id='cardExpiry' />
+        </div>
       </div>
-    </div>
+    </>
   );
 };

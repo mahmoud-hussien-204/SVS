@@ -42,15 +42,17 @@ export default class InterceptorHelper {
 
     // handle response error
     if (!response.ok || responseJson.success == false) {
-      toast.error(message);
+      // if message is array
+      if (Array.isArray(message)) {
+        message.forEach((msg) => toast.error(msg));
+      } else {
+        toast.error(message);
+      }
 
       return Promise.reject(responseJson);
     }
 
-    // handle response success
-    // if (method && method.toLowerCase() !== "get") {
     toast.success(message);
-    // }
 
     return responseJson;
   }

@@ -1,4 +1,4 @@
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 
 import {IEditProfile, IUpdatePassword, IUpdatePhotoResponse} from "./interfaces";
 

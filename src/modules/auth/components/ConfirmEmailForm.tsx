@@ -6,12 +6,14 @@ import FormCardTitle from "./FormCardTitle";
 
 import IconLink from "@/components/icons/IconLink";
 
-import { IconSuccess } from "@/components/icons/IconSuccess";
+import {IconSuccess} from "@/components/icons/IconSuccess";
+
 import IconChevronLeft from "@/components/icons/IconChevronLeft";
-import { Link } from "react-router-dom";
+
+import {Link} from "react-router-dom";
 
 const ConfirmEmailForm = () => {
-  const { userEmail } = useAuthJourney();
+  const {userEmail} = useAuthJourney();
 
   return (
     <div>
@@ -44,7 +46,7 @@ const ConfirmEmailForm = () => {
         Create New Password
       </Link>
 
-      <Link to='/auth/login' className='flex items-center gap-0.75rem text-14 mt-4'>
+      <Link to='/auth/login' className='mt-4 flex items-center gap-0.75rem text-14'>
         <IconChevronLeft
           svgProps={{
             className: "w-0.75rem h-0.75rem",

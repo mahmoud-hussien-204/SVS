@@ -1,9 +1,9 @@
 import Box from "@/components/Box";
 
 import {
-  TableBoxedLayoutActionButton,
   TableBoxedLayoutActionButtonDeposit,
   TableBoxedLayoutActionButtonSwap,
+  TableBoxedLayoutActionButtonViewLink,
   TableBoxedLayoutActionButtonWithdraw,
   TableBoxedLayoutActions,
   TableBoxedLayoutContainer,
@@ -24,10 +24,6 @@ import Pagination from "@/components/Pagination";
 import PageLimit from "@/components/PageLimit";
 
 import DataNotFound from "@/components/DataNotFound";
-
-import {Link} from "react-router-dom";
-
-import IconEye from "@/components/icons/IconEye";
 
 interface IProps {
   Wallets: IWallet[];
@@ -72,13 +68,9 @@ const MyWalletList = ({Wallets, isLoading, totalPages}: IProps) => {
                   <TableBoxedLayoutActions>
                     <TableBoxedLayoutActionButtonDeposit data={item} />
                     <TableBoxedLayoutActionButtonWithdraw data={item} />
-                    <Link to={`/user/wallet-logs?id=${item.id}`} className=''>
-                      <TableBoxedLayoutActionButton
-                        icon={<IconEye />}
-                        title='View Logs'
-                        modal='accept'
-                      />
-                    </Link>
+                    <TableBoxedLayoutActionButtonViewLink
+                      to={`/user/my-wallets-wallet-logs?id=${item.id}`}
+                    />
                     <TableBoxedLayoutActionButtonSwap data={item} />
                   </TableBoxedLayoutActions>
                 </TableBoxedLayoutTD>

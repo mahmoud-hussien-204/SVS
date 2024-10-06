@@ -1,5 +1,5 @@
 import AppHelper from "@/helpers/appHelper";
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 import {
   IAllTransactions,
   IDefaultCoinsHistory,

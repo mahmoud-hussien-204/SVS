@@ -8,6 +8,7 @@ export interface IBuyCoinForm {
   coin: number;
   bank_id?: string;
   sleep?: string;
+  token?: string;
 }
 
 export interface IBuyCoinData {

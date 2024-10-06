@@ -16,22 +16,24 @@ import Input from "@/components/Input";
 
 import useQuery from "@/hooks/useQuery";
 
-import { apiGetCoinRequests } from "../services";
+import {apiGetCoinRequests} from "../services";
 
-import { constantRequestCoinType } from "../constants";
+import {constantRequestCoinType} from "../constants";
 
-import { ENUM_SEND_REQUEST_FORM_TYPE } from "../interfaces";
+import {ENUM_SEND_REQUEST_FORM_TYPE} from "../interfaces";
+
+import Note from "@/components/Note";
 
 const SendRequest = () => {
-  const { form, handleSubmit } = useSendRequestForm();
+  const {form, handleSubmit, isPending} = useSendRequestForm();
 
-  const { data, isLoading } = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: apiGetCoinRequests,
     queryKey: ["get-user-coin-requests"],
   });
 
-  const handelTypeOpthions = () => {
-    return data?.wallets.map((data) => ({ label: data.name, value: data.id })) ?? [];
+  const handelTypeOptions = () => {
+    return data?.wallets.map((data) => ({label: data.name, value: data.id})) ?? [];
   };
 
   return (
@@ -55,7 +57,7 @@ const SendRequest = () => {
             <Label htmlFor='send-request-wallet'>Select Your Wallet</Label>
             <Select
               {...form.register("wallet_id")}
-              options={[{ label: "Select Type", value: "", disabled: true }, ...handelTypeOpthions()]}
+              options={[{label: "Select Type", value: "", disabled: true}, ...handelTypeOptions()]}
               id='send-request-wallet'
               isError={!!form.formState.errors.wallet_id}
               defaultValue=''
@@ -75,10 +77,10 @@ const SendRequest = () => {
             isError={!!form.formState.errors.amount}
           />
           <ErrorMessage>{form.formState.errors.amount?.message}</ErrorMessage>
-          <p className='ml-2 mt-2 text-12 text-neutral-300'>
-            Minimum amount : {data?.coin.minimum_withdrawal} <br />
-            Maximum amount : {data?.coin.maximum_withdrawal}
-          </p>
+          <Note>
+            Minimum amount : {data?.coin.minimum_withdrawal} {data?.coin.name} - Maximum amount :{" "}
+            {data?.coin.maximum_withdrawal} {data?.coin.name}
+          </Note>
         </div>
 
         <div>
@@ -92,18 +94,16 @@ const SendRequest = () => {
           />
           <ErrorMessage>{form.formState.errors.email?.message}</ErrorMessage>
           {form.watch("type") == ENUM_SEND_REQUEST_FORM_TYPE.SEND_COIN ? (
-            <p className='ml-2 mt-2 text-12 text-neutral-300'>
+            <Note>
               Note : Input user email where you want to send coin. Coin will send to his/her primary
               wallet.
-            </p>
+            </Note>
           ) : (
-            <p className='ml-2 mt-2 text-12 text-neutral-300'>
-              Note : Input user email where you want to send request for coin.{" "}
-            </p>
+            <Note>Note : Input user email where you want to send request for coin. </Note>
           )}
         </div>
       </ModalBody>
-      <ModalFooter isLoading={false} title='Send Request' />
+      <ModalFooter isLoading={isPending} title='Send Request' />
     </form>
   );
 };

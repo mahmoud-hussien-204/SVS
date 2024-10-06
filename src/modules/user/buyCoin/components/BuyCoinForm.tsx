@@ -41,11 +41,11 @@ const BuyCoinForm = () => {
 
   return isLoading ? (
     <div>
-      <span className='loading-spinnee.target.valuer loading w-2rem'></span>
+      <span className='loading loading-spinner w-2rem'></span>
     </div>
   ) : (
     <FormProvider {...form}>
-      <form noValidate name='buy-coin' id='buy-coin' onSubmit={handleSubmit}>
+      <form name='buy-coin' id='buy-coin' onSubmit={handleSubmit}>
         <h2 className='mb-1.5rem'>Today’s Coin Rate</h2>
         <div className='mb-1.25rem flex w-full items-center justify-between rounded-lg bg-neutral-800 px-8 py-6'>
           <p>1 {data?.settings.coin_name}</p>
@@ -82,7 +82,6 @@ const BuyCoinForm = () => {
 
           <div className='mt-2rem border-t border-t-neutral-700 pt-2rem'>{renderPaymentForm()}</div>
         </div>
-
         <Button type='submit' className='mt-1.25rem min-w-[150px]' isLoading={isPending}>
           Buy Now
         </Button>

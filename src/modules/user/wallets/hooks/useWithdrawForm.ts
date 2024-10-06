@@ -4,16 +4,26 @@ import {useForm} from "react-hook-form";
 
 import * as Yup from "yup";
 
-import {IWalletDepositData, IWithdrawForm} from "../interfaces";
+import {IWallet, IWithdrawForm} from "../interfaces";
 
 import useModal from "@/hooks/useModal";
 
-import {apiWithdrawWallet} from "../services";
+import {apiGetWalletDetailsWithdraw, apiWithdrawWallet} from "../services";
 
 import useMutation from "@/hooks/useMutation";
 
-const useWithdrawForm = (detailsWallet?: IWalletDepositData) => {
-  const {hide} = useModal();
+import useQuery from "@/hooks/useQuery";
+
+const useWithdrawForm = () => {
+  const {hide, data} = useModal();
+
+  const walletData = data as IWallet;
+
+  const {data: walletDetails, isLoading} = useQuery({
+    queryFn: () => apiGetWalletDetailsWithdraw(walletData?.id),
+    queryKey: ["wallet-details-deposits", walletData?.id],
+    enabled: Boolean(walletData?.id),
+  });
 
   const schema: Yup.ObjectSchema<IWithdrawForm> = Yup.object().shape({
     address: Yup.string().required("Wallet address is required"),
@@ -24,7 +34,7 @@ const useWithdrawForm = (detailsWallet?: IWalletDepositData) => {
     message: Yup.string().optional(),
     wallet_id: Yup.number().required("Please select wallet"),
     code: Yup.string().when("wallet_id", () => {
-      if (detailsWallet && detailsWallet["2fa_enabled"])
+      if (walletDetails && walletDetails["2fa_enabled"])
         return Yup.string().required("2FA code is required");
 
       return Yup.string().optional();
@@ -34,6 +44,9 @@ const useWithdrawForm = (detailsWallet?: IWalletDepositData) => {
   const form = useForm<IWithdrawForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
+    defaultValues: {
+      wallet_id: walletData.id,
+    },
   });
 
   const {mutate, isPending} = useMutation({
@@ -49,7 +62,7 @@ const useWithdrawForm = (detailsWallet?: IWalletDepositData) => {
     });
   });
 
-  return {form, handleSubmit, isPending};
+  return {form, handleSubmit, isPending, walletDetails, isLoading};
 };
 
 export default useWithdrawForm;

@@ -10,24 +10,27 @@ import Button from "@/components/Button";
 
 import useEmailVerifyForm from "../hooks/useEmailVerifyForm";
 
+import ResendCode from "@/components/ResendCode";
+
 const EmailVerifyForm = () => {
-  const { form, handleSubmit, isPending } = useEmailVerifyForm();
+  const {form, handleSubmit, isPending} = useEmailVerifyForm();
 
   return (
     <form onSubmit={handleSubmit} noValidate id='email-verify-form'>
-      <FormCardTitle
-        title='Email Verification'
-        subtitle="Enter Code sent to your email address"
-      />
+      <FormCardTitle title='Email Verification' subtitle='Enter Code sent to your email address' />
 
       <div className='my-1.25rem'>
         <Label htmlFor='register-form-password'>Code</Label>
-        <Input
-          {...form.register("access_code")}
-          type={"text"}
-          placeholder='OTP Code'
-          isError={!!form.formState.errors.access_code}
-        />
+        <div className='relative'>
+          <Input
+            {...form.register("access_code")}
+            type={"text"}
+            placeholder='OTP Code'
+            isError={!!form.formState.errors.access_code}
+          />
+          <ResendCode email={form.getValues("email")} />
+        </div>
+
         <ErrorMessage>{form.formState.errors.access_code?.message}</ErrorMessage>
       </div>
 

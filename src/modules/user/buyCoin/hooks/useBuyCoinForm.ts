@@ -29,6 +29,7 @@ const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
   payment_type: Yup.string().required("Type is required"),
   bank_id: Yup.string(),
   sleep: Yup.mixed(),
+  token: Yup.string(),
 });
 
 const useSendRequestForm = () => {

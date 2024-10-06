@@ -1,4 +1,4 @@
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 
 import {IBankItem, ICreateBankForm, IEditBankForm} from "./interfaces";
 
