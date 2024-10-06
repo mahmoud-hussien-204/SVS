@@ -1,4 +1,4 @@
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 
 import {ENUM_WALLET_TYPE} from "./enums";
 import {IAdminWallet} from "./interfaces";

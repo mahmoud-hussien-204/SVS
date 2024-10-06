@@ -12,18 +12,16 @@ import DepositForm from "../components/DepositForm";
 
 import WithdrawForm from "../components/WithdrawForm";
 
-// import SwapForm from "../components/SwapForm";
-
 import MyWalletHead from "../components/MyWalletHead";
 
 import MyWalletList from "../components/MyWalletList";
 
-// import ConfirmationForm from "@/components/ConfirmationForm";
-
 import useQuery from "@/hooks/useQuery";
 
 import {apiGetWalletData} from "../services";
+
 import useApiUrlFilter from "@/hooks/useApiUrlFilter";
+
 import SwapForm from "../components/SwapForm";
 
 export const Component = () => {
@@ -58,13 +56,7 @@ export const Component = () => {
         </div>
       </TransitionPage>
 
-      <Modal
-        add={AddWalletForm}
-        deposit={DepositForm}
-        withdraw={WithdrawForm}
-        swap={SwapForm}
-        // confirmation={ConfirmationForm}
-      />
+      <Modal add={AddWalletForm} deposit={DepositForm} withdraw={WithdrawForm} swap={SwapForm} />
     </ModalProvider>
   );
 };

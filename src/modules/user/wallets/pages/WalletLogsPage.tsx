@@ -30,7 +30,11 @@ import Status from "@/components/Status";
 
 import {constantWalletLogsFilter} from "../constants";
 
+import usePageTitle from "@/hooks/usePageTitle";
+
 export const Component = () => {
+  usePageTitle("Wallet Logs");
+
   const {idParams, filterSearchParams} = useApiUrlFilter();
 
   const tab = (filterSearchParams as "deposit" | "withdraw") || "deposit";

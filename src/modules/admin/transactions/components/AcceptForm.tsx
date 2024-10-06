@@ -4,7 +4,7 @@ import {IPendingWithdrawal} from "../interfaces";
 
 import useMutation from "@/hooks/useMutation";
 
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 
 type IProps = IPendingWithdrawal;
 

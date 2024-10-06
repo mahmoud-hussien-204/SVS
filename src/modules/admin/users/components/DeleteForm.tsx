@@ -1,6 +1,6 @@
 import ConfirmationForm from "@/components/ConfirmationForm";
 
-import InterceptorHelper from "@/helpers/intercepterHelper";
+import InterceptorHelper from "@/helpers/interceptorHelper";
 
 import useMutation from "@/hooks/useMutation";
 

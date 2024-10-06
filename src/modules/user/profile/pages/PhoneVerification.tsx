@@ -12,12 +12,15 @@ import usePhoneVerificationForm from "../hooks/usePhoneVerificationForm";
 
 import ErrorMessage from "@/components/ErrorMessage";
 
-import ResendCode from "../components/ResendCode";
+import ResendCode from "@/components/ResendCode";
 
 import Button from "@/components/Button";
+import useAuth from "@/modules/auth/hooks/useAuth";
 
 export const Component = () => {
-  const { handleSubmit, form, isPending } = usePhoneVerificationForm();
+  const {handleSubmit, form, isPending} = usePhoneVerificationForm();
+
+  const {userData} = useAuth();
 
   return (
     <TransitionPage>
@@ -40,7 +43,7 @@ export const Component = () => {
                   placeholder='Enter your phone number'
                   isError={!!form.formState.errors.phone}
                 />
-                <ResendCode />
+                <ResendCode email={userData?.email || ""} />
               </div>
               <ErrorMessage>{form.formState.errors.phone?.message}</ErrorMessage>
             </div>

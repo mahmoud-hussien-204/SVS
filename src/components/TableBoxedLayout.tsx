@@ -27,6 +27,7 @@ import IconLock from "./icons/IconLock";
 import IconClose from "./icons/IconClose";
 
 import IconCheck from "./icons/IconCheck";
+import {Link} from "react-router-dom";
 
 const confirmationModalWidth = "max-w-[30rem]";
 
@@ -241,6 +242,22 @@ export const TableBoxedLayoutActionButtonView = ({data = {}}: IButtonProps) => {
       }
       data={data}
     />
+  );
+};
+
+export const TableBoxedLayoutActionButtonViewLink = ({to}: {to: string}) => {
+  return (
+    <Link
+      to={to}
+      className='flex cursor-pointer items-center gap-0.75rem rounded-btn py-0.5rem text-12 transition-all hover:bg-base-100 hover:ps-0.75rem'
+    >
+      <IconEye
+        svgProps={{
+          className: "w-1rem",
+        }}
+      />
+      View
+    </Link>
   );
 };
 
