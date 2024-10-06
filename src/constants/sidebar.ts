@@ -167,6 +167,14 @@ export const constantSidebar: ISidebarItem = {
           title: "Configurations",
           path: "/admin/settings/configuration",
         },
+        {
+          title: "Notifications",
+          path: "/admin/settings/notifications",
+        },
+        // {
+        //   title: "FAQ",
+        //   path: "/admin/settings/faq",
+        // },
       ],
     },
   ],

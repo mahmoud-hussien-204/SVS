@@ -52,6 +52,14 @@ export default [
         path: "configuration",
         lazy: () => import("./pages/ConfigurationsPage"),
       },
+      {
+        path: "notifications",
+        lazy: () => import("./pages/NotificationsPage"),
+      },
+      {
+        path: "faq",
+        lazy: () => import("./pages/FAQPage"),
+      },
     ],
   },
 ] as RouteObject[];

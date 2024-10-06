@@ -191,3 +191,30 @@ export interface IConfigurationsItem {
   linkTitle: string;
   id: string;
 }
+
+export interface ISendNotificationsForm {
+  title: string;
+  notification_body: string;
+}
+
+export interface IFAQ {
+  question: string;
+  answer: string;
+  id: number;
+  status: string;
+  updated_at: string;
+  action: {
+    Delete: string;
+    Edit: string;
+  };
+}
+
+export interface IFAQForm {
+  question: string;
+  answer: string;
+  status: number;
+}
+
+export interface IEditFAQForm extends IFAQForm {
+  edit_id: number;
+}

@@ -12,7 +12,12 @@ import {
   IGeneralKycSettingsForm,
   IFeatureSettingsForm,
   IPaymentMethodsForm,
+  ISendNotificationsForm,
+  IFAQ,
+  IFAQForm,
+  IEditFAQForm,
 } from "./interfaces";
+import AppHelper from "@/helpers/appHelper";
 
 export const apiRunConfigurationCommand = (id: string) =>
   InterceptorHelper.intercept(`/admin/run-admin-command/${id}`);
@@ -73,3 +78,34 @@ export const apiPostPaymentMethodsSettings = (data: {active_id: IPaymentMethodsF
 
 export const apiGetGeneralSettings = () =>
   InterceptorHelper.intercept<{settings: IGeneralSettings}>(`/admin/general-settings`);
+
+export const apiSendNotification = (data: ISendNotificationsForm) =>
+  InterceptorHelper.intercept<{message: string}>(`/admin/send-notification-process`, {
+    method: "Post",
+    body: JSON.stringify(data),
+  });
+
+export const apiGetFAQList = ({limit, page, search}: IQueryParams) => {
+  const data = AppHelper.urlSearchParams({
+    page,
+    length: limit,
+    "search[value]": search,
+    searchableFields: '["question"]',
+  });
+
+  return InterceptorHelper.intercept<IResponse<IFAQ[]>>(`/admin/faq-list?${data}`);
+};
+
+export const apiCreateFaq = (data: IFAQForm) =>
+  InterceptorHelper.intercept(`/admin/faq-save`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+
+export const apiEditFaq = (data: IEditFAQForm) =>
+  InterceptorHelper.intercept(`/admin/faq-save`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+
+export const apiDeleteFaq = (url: string) => InterceptorHelper.intercept(url, {}, false);
