@@ -15,7 +15,10 @@ import useQuery from "@/hooks/useQuery";
 import {IDashboardData} from "../interfaces";
 
 import LoadingScreen from "@/components/LoadingScreen";
-import {useMemo} from "react";
+
+import {lazy, Suspense, useMemo} from "react";
+
+const TradingViewTickerTape = lazy(() => import("../components/Bar"));
 
 export const Component = () => {
   usePageTitle("Dashboard");
@@ -40,7 +43,7 @@ export const Component = () => {
 
   const hasReportData = useMemo(() => {
     if (!Array.isArray(reportData)) return false;
-    let hasData = reportData.find((item) => item > 0);
+    const hasData = reportData.find((item) => item > 0);
     return reportData.length > 0 && hasData;
   }, [reportData]);
 
@@ -50,6 +53,9 @@ export const Component = () => {
 
   return (
     <TransitionPage>
+      <Suspense fallback=''>
+        <TradingViewTickerTape />
+      </Suspense>
       <div className='mb-2rem grid grid-cols-3 gap-1.5rem'>
         <StatsBox
           title='Available Coin'
