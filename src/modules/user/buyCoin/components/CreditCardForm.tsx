@@ -1,3 +1,5 @@
+import Button from "@/components/Button";
+
 import Input from "@/components/Input";
 
 import Label from "@/components/Label";
@@ -7,12 +9,15 @@ import {
   CardExpiryElement,
   CardNumberElement,
   Elements,
+  useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
 
 import {loadStripe} from "@stripe/stripe-js";
 
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
+
+import {useFormContext} from "react-hook-form";
 
 interface IProps {
   readonly publishKey: string;
@@ -49,7 +54,35 @@ const CheckoutForm = () => {
 
   const stripe = useStripe();
 
-  console.log(stripe);
+  const elements = useElements();
+
+  const submitRefBtn = useRef<HTMLButtonElement>(null);
+
+  const {setValue} = useFormContext();
+
+  const handleStripeSubmit = async () => {
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      return;
+    }
+
+    const cardElement = elements.getElement(CardNumberElement);
+
+    if (!cardElement) {
+      console.error("Card element not found");
+      return;
+    }
+
+    const {token, error} = await stripe.createToken(cardElement);
+
+    if (error) {
+      console.error("Error creating token:", error.message);
+    } else {
+      console.log("Token created:", token);
+      setValue("stripeToken", token?.id);
+      submitRefBtn.current?.click();
+    }
+  };
 
   return (
     <>
@@ -78,6 +111,17 @@ const CheckoutForm = () => {
           <CardExpiryElement options={options} id='cardExpiry' />
         </div>
       </div>
+
+      <Button
+        type='button'
+        className='mt-1.25rem min-w-[150px]'
+        isLoading={false}
+        onClick={handleStripeSubmit}
+      >
+        Buy Now
+      </Button>
+
+      <button type='submit' ref={submitRefBtn} className='hidden'></button>
     </>
   );
 };

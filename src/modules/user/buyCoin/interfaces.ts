@@ -8,7 +8,7 @@ export interface IBuyCoinForm {
   coin: number;
   bank_id?: string;
   sleep?: string;
-  token?: string;
+  stripeToken?: string;
 }
 
 export interface IBuyCoinData {
@@ -32,7 +32,7 @@ export interface IBuyCoinData {
   fees: string;
   referral_level: number;
   phase_id: number;
-  stripe_token: null;
+  stripeToken: null;
   created_at: string;
   updated_at: string;
   deposit_status: string;

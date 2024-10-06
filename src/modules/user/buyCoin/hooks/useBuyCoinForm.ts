@@ -29,7 +29,11 @@ const schema: Yup.ObjectSchema<IBuyCoinForm> = Yup.object().shape({
   payment_type: Yup.string().required("Type is required"),
   bank_id: Yup.string(),
   sleep: Yup.mixed(),
-  token: Yup.string(),
+  stripeToken: Yup.string().when("payment_type", {
+    is: ENUM_BUY_COIN_PAYMENT_TYPE.CREDIT_CARD.toString(),
+    then: (schema) => schema.required("Token is required"),
+    otherwise: (schema) => schema.optional(),
+  }),
 });
 
 const useSendRequestForm = () => {
