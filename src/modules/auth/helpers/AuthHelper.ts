@@ -19,6 +19,6 @@ export default class AuthHelper {
 
   static userLogout() {
     localStorage.clear();
-    window.location.pathname = "/auth";
+    window.location.href = import.meta.env.VITE_APP_WEBSITE_URL;
   }
 }
