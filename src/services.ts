@@ -5,3 +5,6 @@ export const apiResentOtp = (data: {email: string}) =>
     body: JSON.stringify(data),
     method: "POST",
   });
+
+export const apiGetUserNotifications = () =>
+  InterceptorHelper.intercept<IResponse<INotification>>("/user/get-notification");

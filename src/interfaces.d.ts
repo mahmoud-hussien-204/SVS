@@ -116,3 +116,7 @@ interface IBank {
   created_at: string;
   updated_at: string;
 }
+
+interface INotification {
+  id: number;
+}
