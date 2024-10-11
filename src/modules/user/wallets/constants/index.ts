@@ -17,10 +17,10 @@ export const constantWalletType = [
 export const constantWalletLogsFilter = [
   {
     label: "Deposit",
-    value: "deposit",
+    value: "deposits",
   },
   {
     label: "Withdraw",
-    value: "withdraw",
+    value: "withdraws",
   },
 ];
