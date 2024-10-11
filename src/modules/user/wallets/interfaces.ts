@@ -97,6 +97,7 @@ export interface IHistory {
   confirmations: number;
   created_at: string;
   updated_at: string;
+  deposit_status:string
 }
 
 export interface IWallet {

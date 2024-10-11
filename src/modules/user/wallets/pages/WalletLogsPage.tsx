@@ -31,13 +31,14 @@ import Status from "@/components/Status";
 import {constantWalletLogsFilter} from "../constants";
 
 import usePageTitle from "@/hooks/usePageTitle";
+import CopyText from "@/components/CopyText";
 
 export const Component = () => {
   usePageTitle("Wallet Logs");
 
   const {idParams, filterSearchParams} = useApiUrlFilter();
 
-  const tab = (filterSearchParams as "deposit" | "withdraw") || "deposit";
+  const tab = (filterSearchParams as "deposits" | "withdraws") || "deposits";
 
   const {isLoading, data} = useQuery({
     queryFn: () => apiGetWalletLogs(idParams, tab),
@@ -77,11 +78,11 @@ export const Component = () => {
               ) : data?.histories && data.histories.length > 0 ? (
                 data.histories.map((item) => (
                   <TableBoxedLayoutTR key={item.id}>
-                    <TableBoxedLayoutTD>{item.address}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD><CopyText text={item.address} /></TableBoxedLayoutTD>
                     <TableBoxedLayoutTD>{item.amount}</TableBoxedLayoutTD>
-                    <TableBoxedLayoutTD>{item.transaction_id}</TableBoxedLayoutTD>
+                    <TableBoxedLayoutTD><CopyText text={item.transaction_id}/></TableBoxedLayoutTD>
                     <TableBoxedLayoutTD>
-                      <Status status={item.status} />
+                      <Status status={String(item.deposit_status)} />
                     </TableBoxedLayoutTD>
                     <TableBoxedLayoutTD>
                       {dayjs(item.created_at).format("MMMM D, YYYY h:mm A")}
