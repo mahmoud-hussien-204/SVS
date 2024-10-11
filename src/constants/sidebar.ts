@@ -243,7 +243,7 @@ export const constantSidebar: ISidebarItem = {
       ],
     },
     {
-      title: "Membership",
+      title: "Stacked Coins",
       icon: "membership",
       path: "/user/membership",
       isSubmenu: true,
