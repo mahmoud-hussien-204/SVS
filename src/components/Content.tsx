@@ -1,11 +1,8 @@
-import useShowSideBar from "@/hooks/useShowSideBar";
+import {PropsWithChildren} from "react";
 
-import { PropsWithChildren } from "react";
-
-const Content = ({ children }: PropsWithChildren) => {
-  const { showSidebar } = useShowSideBar();
+const Content = ({children}: PropsWithChildren) => {
   return (
-    <section className={`mt-header-height-with-padding ${showSidebar && "ms-header-start"} duration-150 p-container-padding`}>
+    <section className='ms-0 mt-header-height-with-padding p-container-padding duration-150 peer-checked:ms-header-start lg:ms-header-start lg:peer-checked:ms-0'>
       {children}
     </section>
   );

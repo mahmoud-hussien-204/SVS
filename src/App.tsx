@@ -22,7 +22,7 @@ function App() {
     <QueryClientProvider client={client}>
       <AuthProvider>
         <ScreenTitleProvider>
-          <main className='font-poppins'>
+          <main className='overflow-x-hidden font-poppins'>
             <AnimatePresence>
               <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
             </AnimatePresence>

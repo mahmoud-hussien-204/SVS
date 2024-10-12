@@ -4,13 +4,13 @@ import {useForm} from "react-hook-form";
 
 import * as Yup from "yup";
 
-import {ITransferCoinForm} from "../interfaces";
+import {ITransferCoinForm, IWallet} from "../interfaces";
 
 import useModal from "@/hooks/useModal";
 
 import {constantTransferCoinMethods} from "../constants";
 
-import { apiTransferCoin } from "../services";
+import {apiTransferCoin} from "../services";
 
 import useMutation from "@/hooks/useMutation";
 
@@ -26,27 +26,33 @@ const schema: Yup.ObjectSchema<ITransferCoinForm> = Yup.object().shape({
 });
 
 const useTransferCoinForm = () => {
-  const {hide} = useModal();
+  const {hide, data} = useModal();
+
+  const wallets = data as IWallet[];
 
   const form = useForm<ITransferCoinForm>({
     resolver: yupResolver(schema),
     mode: "onTouched",
+    defaultValues: {
+      wallet_id: wallets[0].id.toString(),
+      type: constantTransferCoinMethods[0],
+    },
   });
 
-  const {mutate , isPending} = useMutation({
+  const {mutate, isPending} = useMutation({
     mutationFn: (values: ITransferCoinForm) => apiTransferCoin(values),
     mutationKey: ["user-transfer-coin"],
   });
 
   const handleSubmit = form.handleSubmit((values: ITransferCoinForm) => {
-    mutate(values,{
+    mutate(values, {
       onSuccess: () => {
         hide();
       },
     });
   });
 
-  return {form, handleSubmit , isPending};
+  return {form, handleSubmit, isPending};
 };
 
 export default useTransferCoinForm;

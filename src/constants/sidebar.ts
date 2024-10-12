@@ -257,7 +257,7 @@ export const constantSidebar: ISidebarItem = {
         //   path: "/user/membership-transfer-coin",
         // },
         {
-          title: "My Membership",
+          title: "My Stacked Coins",
           path: "/user/membership-history",
         },
       ],
