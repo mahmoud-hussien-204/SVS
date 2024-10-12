@@ -155,6 +155,7 @@ export default {
         "header-start": "calc(18rem + 1.5rem)",
         "sidebar-width-narrow": "6rem",
         "container-padding": "1.5rem",
+        "min-content-width": "calc(100vh - 21rem)",
       },
     },
   },

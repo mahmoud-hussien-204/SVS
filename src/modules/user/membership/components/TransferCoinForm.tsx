@@ -12,41 +12,26 @@ import Input from "@/components/Input";
 
 import ErrorMessage from "@/components/ErrorMessage";
 
-import Select from "@/components/Select";
-
-import RadioBoxInput from "@/components/RadioBoxInput";
-
-import { constantTransferCoinMethods } from "../constants";
-
-import { IWallet } from "../interfaces";
-
-import { useCallback } from "react";
-
-const TransferCoinForm = ({ data }: IModalComponentProps) => {
-  const { form, handleSubmit, isPending } = useTransferCoinForm();
-
-  const wallets = data as IWallet[]
-
-  const handelOpthions = useCallback(() => {
-    return wallets?.map((data) => {
-      return {
-        label: data.name,
-        value: data.id
-      }
-    })
-  }, [wallets])
+const TransferCoinForm = () => {
+  const {form, handleSubmit, isPending} = useTransferCoinForm();
 
   return (
     <form noValidate name='transfer-form' id='transfer-form' onSubmit={handleSubmit}>
       <ModalHeader title='Transfer Coin' />
       <ModalBody>
-        <div className='mb-1.25rem'>
+        {/* <div className='mb-1.25rem'>
           <Label>Select Transfer Coin Method</Label>
           <div className='flex flex-col gap-0.75rem'>
-            <RadioBoxInput
+          <RadioBoxInput
               {...form.register("type")}
-              label='From your main wallet to club wallet'
+              label='From your main wallet to stack wallet'
               value={constantTransferCoinMethods[0]}
+              defaultChecked
+            />   <RadioBoxInput
+              {...form.register("type")}
+              label='From your main wallet to stack wallet'
+              value={constantTransferCoinMethods[0]}
+              defaultChecked
             />
             <RadioBoxInput
               {...form.register("type")}
@@ -55,19 +40,20 @@ const TransferCoinForm = ({ data }: IModalComponentProps) => {
             />
           </div>
           <ErrorMessage>{form.formState.errors.type?.message}</ErrorMessage>
-        </div>
+        </div> */}
 
-        <div className='mb-1.25rem'>
+        {/* <div className='mb-1.25rem'>
           <Label htmlFor='transfer-form-wallet'>Select Wallet</Label>
           <Select
             {...form.register("wallet_id")}
-            options={handelOpthions()}
+            options={AppHelper.handleSelectBoxOptions(wallets, "name", "id") as TOptionItem[]}
             id='transfer-form-wallet'
             isError={!!form.formState.errors.wallet_id}
             defaultValue=''
+            disabled
           />
           <ErrorMessage>{form.formState.errors.wallet_id?.message}</ErrorMessage>
-        </div>
+        </div> */}
 
         <div className='mb-1.25rem'>
           <Label htmlFor='transfer-form-amount'>Amount</Label>

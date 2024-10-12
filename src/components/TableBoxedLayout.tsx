@@ -27,6 +27,7 @@ import IconLock from "./icons/IconLock";
 import IconClose from "./icons/IconClose";
 
 import IconCheck from "./icons/IconCheck";
+
 import {Link} from "react-router-dom";
 
 const confirmationModalWidth = "max-w-[30rem]";
@@ -37,7 +38,13 @@ interface IProps {
 }
 
 export const TableBoxedLayoutContainer = ({children, className}: IProps) => {
-  return <table className={AppHelper.classes("w-full align-middle", className)}>{children}</table>;
+  return (
+    <div className='overflow-x-auto'>
+      <table className={AppHelper.classes("w-full min-w-min align-middle", className)}>
+        {children}
+      </table>
+    </div>
+  );
 };
 
 export const TableBoxedLayoutTHead = ({children, className}: IProps) => {
@@ -56,7 +63,7 @@ export const TableBoxedLayoutTH = ({children, className}: IProps) => {
   return (
     <th
       className={AppHelper.classes(
-        "h-3.5rem px-1rem text-start text-12 font-normal text-neutral-300",
+        "h-3.5rem whitespace-nowrap px-1rem text-start text-12 font-normal text-neutral-300",
         className
       )}
     >
