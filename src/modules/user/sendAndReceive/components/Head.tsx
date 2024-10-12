@@ -10,17 +10,14 @@ import IconSendRequest from "@/components/icons/IconSendRequest";
 
 import useModal from "@/hooks/useModal";
 
-import { EnumModals } from "@/enums";
+import {EnumModals} from "@/enums";
 
 const Head = () => {
-  const { show } = useModal();
+  const {show} = useModal();
   return (
-    <div className='flex items-center justify-between'>
-      <div className='flex items-center gap-1.5rem'>
-        <div className='w-[450px] max-w-full'>
-          <Search placeholder='Search in sent coin history' />
-        </div>
-        {/* <PageFilterSelect options={constantRequestCoinStatus} /> */}
+    <div className='flex flex-wrap items-center justify-between gap-1.25rem'>
+      <div className='w-full max-w-full sm:w-[450px]'>
+        <Search placeholder='Search in sent coin history' />
       </div>
       <Button type='button' onClick={() => show(EnumModals.add)}>
         <IconSendRequest />

@@ -56,7 +56,7 @@ export const Component = () => {
       <Suspense fallback=''>
         <TradingViewTickerTape />
       </Suspense>
-      <div className='mb-2rem grid grid-cols-3 gap-1.5rem'>
+      <div className='mb-2rem grid grid-cols-1 gap-1.5rem lg:grid-cols-3'>
         <StatsBox
           title='Available Coin'
           value={handelNumber(dashboardData?.balance.available_coin) || 0}
@@ -77,7 +77,7 @@ export const Component = () => {
         />
       </div>
 
-      <div className='grid gap-6 xl:grid-cols-3'>
+      <div className='grid gap-6 lg:grid-cols-3'>
         <DepositAndWithdrawal
           withdrawals={Object.values(dashboardData?.monthly_withdrawal)}
           deposits={Object.values(dashboardData?.monthly_deposit)}
