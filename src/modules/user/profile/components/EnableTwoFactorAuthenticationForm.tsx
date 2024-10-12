@@ -30,7 +30,7 @@ const EnableTwoFactorAuthenticationForm = () => {
     >
       <ModalHeader title='Enable Two Factor Authentication' />
       <ModalBody>
-        <div className='flex items-center gap-1rem'>
+        <div className='flex flex-wrap items-center gap-1rem sm:flex-nowrap'>
           <div style={{background: "white", padding: "10px"}}>
             <QRCode
               value={getG2fUrl(data?.user.email ?? "", data?.google2fa_secret ?? "")}

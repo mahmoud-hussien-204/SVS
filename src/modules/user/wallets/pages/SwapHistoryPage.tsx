@@ -26,15 +26,16 @@ import useApiUrlFilter from "@/hooks/useApiUrlFilter";
 
 import useQuery from "@/hooks/useQuery";
 
-import { apiGetSwapHistory } from "../services";
+import {apiGetSwapHistory} from "../services";
+
 import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
   usePageTitle("Swap History");
 
-  const { limitSearchParams, pageSearchParams, searchSearchParams } = useApiUrlFilter();
+  const {limitSearchParams, pageSearchParams, searchSearchParams} = useApiUrlFilter();
 
-  const { data, isLoading } = useQuery({
+  const {data, isLoading} = useQuery({
     queryFn: () => apiGetSwapHistory(pageSearchParams, limitSearchParams, searchSearchParams),
     queryKey: ["swap-history", pageSearchParams, limitSearchParams, searchSearchParams],
     retry: false,
@@ -45,7 +46,7 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='w-[450px] max-w-full'>
+      <div className='w-full max-w-full sm:w-[450px]'>
         <Search placeholder='Search in Swap History' />
       </div>
       <div className='mt-2rem'>
@@ -64,7 +65,7 @@ export const Component = () => {
 
             <TableBoxedLayoutTBody>
               {isLoading ? (
-                Array.from({ length: 10 }).map((_, index) => (
+                Array.from({length: 10}).map((_, index) => (
                   <TableBoxedLayoutTR key={index} className='!bg-red-300'>
                     <TableBoxedLayoutSkeleton />
                     <TableBoxedLayoutSkeleton />

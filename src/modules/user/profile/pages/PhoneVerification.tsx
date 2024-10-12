@@ -32,7 +32,7 @@ export const Component = () => {
           noValidate
           onSubmit={handleSubmit}
         >
-          <div className='mb-2rem grid grid-cols-2 gap-1.25rem'>
+          <div className='mb-2rem grid gap-1.25rem md:grid-cols-2'>
             <div>
               <Label htmlFor='phone-verification-form-input'>Phone Number</Label>
               <div className='relative'>
