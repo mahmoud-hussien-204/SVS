@@ -14,7 +14,7 @@ const UpdatePasswordForm = () => {
   return (
     <form noValidate id='update-password-form' name='update-password-form' onSubmit={handleSubmit}>
       <input type='hidden' name='username' value='user123' aria-hidden='true' />
-      <div className='grid grid-cols-3 gap-1rem'>
+      <div className='grid gap-1rem md:grid-cols-3'>
         <div className='mb-1.25rem'>
           <Label htmlFor='update-password-current-password-form'>Current Password</Label>
           <Input

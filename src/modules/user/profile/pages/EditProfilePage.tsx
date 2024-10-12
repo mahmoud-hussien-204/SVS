@@ -40,7 +40,7 @@ export const Component = () => {
             </div>
           </div>
 
-          <div className='grid grid-cols-2 gap-1.5rem'>
+          <div className='grid grid-cols-1 gap-1.5rem md:grid-cols-2'>
             <div>
               <Label htmlFor='edit-profile-form-fullName'>First Name</Label>
               <Input

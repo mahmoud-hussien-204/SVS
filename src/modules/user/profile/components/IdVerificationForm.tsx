@@ -28,7 +28,7 @@ function IdVerificationForm() {
       >
         <ModalHeader title='ID Verification' />
         <ModalBody>
-          <div className='mb-2rem grid grid-cols-2 gap-1.25rem'>
+          <div className='mb-2rem grid gap-1.25rem sm:grid-cols-2'>
             <div>
               <div className='relative'>
                 <ImageUploader name='file_two' title='Front Side' locale={!data?.nid_front?.id} />
