@@ -15,7 +15,7 @@ const Tabs = ({tabs, to}: IProps) => {
   const {pathname} = useLocation();
 
   return (
-    <div role='tablist' className='inline-flex tabs-boxed'>
+    <div role='tablist' className='tabs-boxed flex overflow-x-auto'>
       {tabs.map((tab, index) => (
         <Link
           key={index}
@@ -27,7 +27,7 @@ const Tabs = ({tabs, to}: IProps) => {
                   search: `?tab=${tab.value}`,
                 }
           }
-          className={AppHelper.classes("tab max-w-fit", {
+          className={AppHelper.classes("tab max-w-fit whitespace-nowrap", {
             "tab-active": tabSearchParams === tab.value || pathname.endsWith(tab.value),
           })}
         >

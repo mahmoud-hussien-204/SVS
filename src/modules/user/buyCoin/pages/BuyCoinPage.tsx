@@ -16,7 +16,7 @@ export const Component = () => {
   return (
     <ModalProvider>
       <TransitionPage>
-        <div className='grid grid-cols-2 gap-3rem px-8'>
+        <div className='grid gap-3rem px-8 lg:grid-cols-2'>
           <BuyCoinForm />
           {/* <div className='flex justify-center'>
           <img

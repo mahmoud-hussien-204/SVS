@@ -30,8 +30,6 @@ export const Component = () => {
 
   const dashboardData = useMemo(() => data, [data]);
 
-  console.log(dashboardData);
-
   const handelNumber = (value: number) => {
     return +Number(value).toFixed(2);
   };
@@ -42,7 +40,7 @@ export const Component = () => {
         <LoadingScreen />
       ) : dashboardData ? (
         <>
-          <div className='mb-2rem grid grid-cols-3 gap-1.5rem'>
+          <div className='mb-2rem grid grid-cols-1 gap-1.5rem lg:grid-cols-3'>
             <StatsBox
               title='Total Sold Coin'
               value={handelNumber(dashboardData.total_sold_coin) || 0}
@@ -75,7 +73,7 @@ export const Component = () => {
             />
           </div>
 
-          <div className='grid gap-6 xl:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-6 xl:grid-cols-3'>
             <DepositAndWithdrawal
               withdrawals={Object.values(dashboardData?.monthly_withdrawal)}
               deposits={Object.values(dashboardData?.monthly_deposit)}
