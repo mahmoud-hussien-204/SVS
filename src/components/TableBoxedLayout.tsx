@@ -39,7 +39,7 @@ interface IProps {
 
 export const TableBoxedLayoutContainer = ({children, className}: IProps) => {
   return (
-    <div className='overflow-x-auto'>
+    <div className='overflow-hidden overflow-x-auto'>
       <table className={AppHelper.classes("w-full min-w-min align-middle", className)}>
         {children}
       </table>
@@ -82,7 +82,7 @@ export const TableBoxedLayoutTD = ({children, className, ...props}: TableBoxedLa
   return (
     <td
       className={AppHelper.classes(
-        "h-3.5rem px-1rem text-14 text-white first:rounded-es-btn first:rounded-ss-btn last:rounded-ee-btn last:rounded-se-btn",
+        "h-3.5rem whitespace-nowrap px-1rem text-14 text-white first:rounded-es-btn first:rounded-ss-btn last:rounded-ee-btn last:rounded-se-btn",
         className
       )}
       {...props}
