@@ -60,7 +60,7 @@ const MyWalletList = ({Wallets, isLoading, totalPages}: IProps) => {
               <TableBoxedLayoutTR key={item.id}>
                 <TableBoxedLayoutTD>{item.name}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>{item.coin_type}</TableBoxedLayoutTD>
-                <TableBoxedLayoutTD>{Number(item.balance).toFixed(2)}</TableBoxedLayoutTD>
+                <TableBoxedLayoutTD>{item.balance}</TableBoxedLayoutTD>
                 <TableBoxedLayoutTD>
                   {dayjs(item.updated_at).format("MMMM D, YYYY h:mm A")}
                 </TableBoxedLayoutTD>

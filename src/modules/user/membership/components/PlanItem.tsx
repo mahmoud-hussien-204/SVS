@@ -31,7 +31,7 @@ const PlanItem = (data: IPlan) => {
             />
           </span>
           <span className='text-neutral-400'>
-            <strong>{Number(data.amount).toFixed(2)}</strong> Minimum Amount
+            <strong>{data.amount}</strong> Minimum Amount
           </span>
         </li>
 
@@ -44,7 +44,7 @@ const PlanItem = (data: IPlan) => {
             />
           </span>
           <span className='text-neutral-400'>
-            <strong>{Number(data.duration).toFixed(2)}</strong> Minimum Duration
+            <strong>{data.duration}</strong> Minimum Duration
           </span>
         </li>
 
@@ -57,7 +57,7 @@ const PlanItem = (data: IPlan) => {
             />
           </span>
           <span className='text-neutral-400'>
-            <strong>{Number(data.bonus).toFixed(2)}</strong> Bonus Percentage
+            <strong>{data.bonus}</strong> Bonus Percentage
           </span>
         </li>
       </ul>
