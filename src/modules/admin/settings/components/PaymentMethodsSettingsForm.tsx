@@ -18,7 +18,7 @@ const PaymentMethodsForm = () => {
       name='payment-methods-settings-form'
       onSubmit={handleSubmit}
     >
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem'>
+      <div className='mb-1.25rem grid gap-1.25rem sm:grid-cols-3'>
         <div className='flex gap-0.75rem'>
           <Label htmlFor='payment-methods-coinPayment'>Coin Payment</Label>
           <SwitchInput

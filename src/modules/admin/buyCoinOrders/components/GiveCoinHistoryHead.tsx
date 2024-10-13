@@ -12,8 +12,8 @@ const GiveCoinHistoryHead = () => {
   const {show} = useModal();
 
   return (
-    <div className='flex items-center justify-between'>
-      <div className='w-[450px] max-w-full'>
+    <div className='flex flex-wrap items-center justify-between gap-1.25rem'>
+      <div className='w-full max-w-full sm:w-[450px]'>
         <Search placeholder='Search in give coin History' />
       </div>
 

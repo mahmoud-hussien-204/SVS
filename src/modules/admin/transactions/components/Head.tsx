@@ -6,8 +6,8 @@ import PageFilterSelect from "@/components/PageFilterSelect";
 
 const Head = () => {
   return (
-    <div className='flex items-center gap-1.5rem'>
-      <div className='w-[450px] max-w-full'>
+    <div className='flex flex-wrap items-center gap-1.5rem'>
+      <div className='w-full max-w-full sm:w-[450px]'>
         <Search placeholder='Search in withdrawals' />
       </div>
       <PageFilterSelect options={constantRequestStatus} />

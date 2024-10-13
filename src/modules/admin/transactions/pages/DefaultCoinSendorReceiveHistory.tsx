@@ -49,7 +49,7 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='w-[450px] max-w-full'>
+      <div className='w-full max-w-full sm:w-[450px]'>
         <Search placeholder='Search in Bonus Distribution' />
       </div>
       <div className='mt-2rem'>

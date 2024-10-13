@@ -24,7 +24,7 @@ const SettingsForm = () => {
     >
       <ModalHeader title='Membership Settings' />
       <ModalBody>
-        <div className='mb-1.25rem grid grid-cols-2 gap-1.25rem'>
+        <div className='mb-1.25rem grid gap-1.25rem md:grid-cols-2'>
           <div>
             <Label htmlFor='membership-settings-form-minimum-amount'>Minimum Amount</Label>
             <Input

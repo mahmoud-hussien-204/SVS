@@ -23,7 +23,7 @@ const EditCoinForm = () => {
       <form noValidate name='update-coin-form' id='update-coin-form' onSubmit={handleSubmit}>
         <ModalHeader title='Update Coin' />
         <ModalBody>
-          <div className='mb-1.25rem grid grid-cols-2 items-center gap-1.25rem'>
+          <div className='mb-1.25rem grid items-center gap-1.25rem sm:grid-cols-2'>
             <div>
               <FileUploader name='coin_icon' title='Plan Image' locale />
             </div>
@@ -40,7 +40,7 @@ const EditCoinForm = () => {
             </div>
           </div>
 
-          <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem'>
+          <div className='mb-1.25rem grid gap-1.25rem md:grid-cols-3'>
             <div>
               <Label htmlFor='update-coin-form-fees'>Withdrawal fees (%)</Label>
               <Input

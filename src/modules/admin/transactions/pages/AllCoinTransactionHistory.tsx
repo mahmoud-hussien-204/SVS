@@ -65,8 +65,8 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='flex items-center gap-1.5rem'>
-        <div className='w-[450px] max-w-full'>
+      <div className='flex flex-wrap items-center gap-1.5rem'>
+        <div className='w-full max-w-full sm:w-[450px]'>
           <Search placeholder='Search in Bonus Distribution' />
         </div>
 

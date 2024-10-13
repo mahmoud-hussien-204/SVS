@@ -1,8 +1,8 @@
 import useAuth from "@/modules/auth/hooks/useAuth";
 
-import Dropdown, { DropdownMenu } from "./Dropdown";
+import Dropdown, {DropdownMenu} from "./Dropdown";
 
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import IconUser from "./icons/IconUser";
 
@@ -13,18 +13,18 @@ import IconLogout from "./icons/IconLogout";
 import AuthHelper from "@/modules/auth/helpers/AuthHelper";
 
 const ProfileMenu = () => {
-  const { userData, basePath } = useAuth();
+  const {userData, basePath} = useAuth();
 
   return (
     <Dropdown
       button={
-        <div className='flex items-center gap-0.5rem rounded-full bg-base-300 p-0.5rem pe-1rem'>
+        <div className='flex items-center gap-0.5rem rounded-full bg-base-300 p-0.5rem sm:pe-1rem'>
           <img
             src={userData?.photo}
             alt='avatar'
-            className='h-2rem w-2rem rounded-full object-cover'
+            className='h-2rem min-w-2rem rounded-full object-cover'
           />
-          <h6 className='line-clamp-1 max-w-32 text-14'>
+          <h6 className='hidden max-w-32 text-14 sm:line-clamp-1'>
             {userData?.first_name + " " + userData?.last_name}
           </h6>
         </div>

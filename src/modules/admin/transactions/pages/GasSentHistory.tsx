@@ -31,6 +31,7 @@ import Search from "@/components/Search";
 import {apiGetGasSentHistory} from "../services";
 
 import CopyText from "@/components/CopyText";
+
 import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
@@ -50,7 +51,7 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='w-[450px] max-w-full'>
+      <div className='w-full max-w-full sm:w-[450px]'>
         <Search placeholder='Search in Bonus Distribution' />
       </div>
       <div className='mt-2rem'>

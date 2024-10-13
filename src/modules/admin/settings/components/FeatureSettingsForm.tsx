@@ -23,7 +23,7 @@ const FeatureSettingsForm = () => {
       onSubmit={handleSubmit}
     >
       <Title>Multi-signature Pocket</Title>
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem border-b border-b-neutral-800 pb-1rem'>
+      <div className='mb-1.25rem grid gap-1.25rem border-b border-b-neutral-800 pb-1rem md:grid-cols-3'>
         <div>
           <Label htmlFor='feature-settings-maxCo'>Max Co User For One Pocket</Label>
           <Input
@@ -64,7 +64,7 @@ const FeatureSettingsForm = () => {
       </div>
 
       <Title>Enable Google Re capcha</Title>
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem border-b border-b-neutral-800 pb-1rem'>
+      <div className='mb-1.25rem grid gap-1.25rem border-b border-b-neutral-800 pb-1rem md:grid-cols-3'>
         <div>
           <Label htmlFor='feature-settings-googleReCaptchaSecretKey'>Captcha Secret Key</Label>
           <Input
@@ -101,7 +101,7 @@ const FeatureSettingsForm = () => {
       </div>
 
       <Title>Swap Enable/Disable</Title>
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem border-b border-b-neutral-800 pb-1rem'>
+      <div className='mb-1.25rem grid gap-1.25rem border-b border-b-neutral-800 pb-1rem md:grid-cols-3'>
         <div>
           <Label htmlFor='feature-settings-swapStatus'>Enable/Disable Swap Feature</Label>
           <SwitchInput

@@ -18,14 +18,14 @@ const Head = () => {
   const {show} = useModal();
 
   return (
-    <div className='flex items-center justify-between'>
-      <div className='flex items-center gap-1.5rem'>
-        <div className='w-[450px] max-w-full'>
+    <div className='flex flex-wrap items-center justify-between gap-1.25rem'>
+      <div className='flex flex-wrap items-center gap-1.5rem'>
+        <div className='w-full max-w-full sm:w-[450px]'>
           <Search placeholder='Search in plans' />
         </div>
         <PageFilterSelect options={constantPlansStatus} />
       </div>
-      <div className='flex items-center gap-1.5rem'>
+      <div className='flex flex-wrap items-center gap-1.5rem'>
         <Button type='button' onClick={() => show(EnumModals.add)}>
           <IconPlus />
           Create Plan
