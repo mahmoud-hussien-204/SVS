@@ -35,6 +35,7 @@ import {constantTypeWallets} from "../constants";
 import {ENUM_WALLET_TYPE} from "../enums";
 
 import {Navigate} from "react-router";
+
 import DataNotFound from "@/components/DataNotFound";
 
 export const Component = () => {
@@ -60,8 +61,8 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='flex items-center gap-1.5rem'>
-        <div className='w-[450px] max-w-full'>
+      <div className='flex flex-wrap items-center gap-1.5rem'>
+        <div className='w-full max-w-full sm:w-[450px]'>
           <Search placeholder='Search in wallets' />
         </div>
         <PageFilterSelect options={constantTypeWallets} />

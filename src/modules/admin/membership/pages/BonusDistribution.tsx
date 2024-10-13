@@ -16,13 +16,21 @@ import {
   TableBoxedLayoutTHead,
   TableBoxedLayoutTR,
 } from "@/components/TableBoxedLayout";
+
 import Status from "@/components/Status";
+
 import dayjs from "dayjs";
+
 import Box from "@/components/Box";
+
 import PageLimit from "@/components/PageLimit";
+
 import Pagination from "@/components/Pagination";
+
 import Search from "@/components/Search";
+
 import Button from "@/components/Button";
+
 import useMutation from "@/hooks/useMutation";
 
 export const Component = () => {
@@ -46,8 +54,8 @@ export const Component = () => {
 
   return (
     <TransitionPage>
-      <div className='flex items-center justify-between'>
-        <div className='w-[450px] max-w-full'>
+      <div className='flex flex-wrap items-center justify-between gap-1.25rem'>
+        <div className='w-full max-w-full sm:w-[450px]'>
           <Search placeholder='Search in Bonus Distribution' />
         </div>
 

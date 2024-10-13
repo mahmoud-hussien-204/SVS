@@ -17,8 +17,11 @@ import PageLimit from "@/components/PageLimit";
 import Pagination from "@/components/Pagination";
 
 import dayjs from "dayjs";
+
 import {ICoinData} from "../interfaces";
+
 import Status from "@/components/Status";
+
 import DataNotFound from "@/components/DataNotFound";
 
 const CoinsList = ({

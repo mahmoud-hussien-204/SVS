@@ -6,23 +6,23 @@ import Label from "@/components/Label";
 
 import ModalBody from "@/components/ModalBody";
 
-import { UseFormReturn } from "react-hook-form";
+import {UseFormReturn} from "react-hook-form";
 
-import { IAddUserForm } from "../interfaces";
+import {IAddUserForm} from "../interfaces";
 
 import Select from "@/components/Select";
 
-import { constantRoles } from "@/constants";
+import {constantRoles} from "@/constants";
 
 interface IProps {
   form: UseFormReturn<IAddUserForm>;
   type: "add" | "edit";
 }
 
-const AddAndEditUserForm = ({ form, type }: IProps) => {
+const AddAndEditUserForm = ({form, type}: IProps) => {
   return (
     <ModalBody>
-      <div className='mb-1.25rem grid grid-cols-2 gap-1.25rem'>
+      <div className='mb-1.25rem grid gap-1.25rem sm:grid-cols-2'>
         <div>
           <Label htmlFor='user-form-first-name'>First Name</Label>
           <Input
@@ -71,16 +71,18 @@ const AddAndEditUserForm = ({ form, type }: IProps) => {
         <ErrorMessage>{form.formState.errors.phone?.message}</ErrorMessage>
       </div>
 
-      {type == "add" && <div className='mb-1.25rem'>
-        <Label htmlFor='user-form-role'>Select User Role</Label>
-        <Select
-          {...form.register("role")}
-          options={constantRoles}
-          id='user-form-role'
-          isError={!!form.formState.errors.role}
-        />
-        <ErrorMessage>{form.formState.errors.role?.message}</ErrorMessage>
-      </div>}
+      {type == "add" && (
+        <div className='mb-1.25rem'>
+          <Label htmlFor='user-form-role'>Select User Role</Label>
+          <Select
+            {...form.register("role")}
+            options={constantRoles}
+            id='user-form-role'
+            isError={!!form.formState.errors.role}
+          />
+          <ErrorMessage>{form.formState.errors.role?.message}</ErrorMessage>
+        </div>
+      )}
     </ModalBody>
   );
 };

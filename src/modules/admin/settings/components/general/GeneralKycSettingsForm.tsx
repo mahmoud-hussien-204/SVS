@@ -20,7 +20,7 @@ const GeneralKycSettingsForm = () => {
       name='general-kyc-settings-form'
       onSubmit={handleSubmit}
     >
-      <div className='mb-1.25rem grid grid-cols-4 gap-1.25rem'>
+      <div className='mb-1.25rem grid gap-1.25rem sm:grid-cols-4'>
         <div>
           <Label htmlFor='general-kyc-settings-kycMandatory'>KYC mandatory</Label>
           <Select

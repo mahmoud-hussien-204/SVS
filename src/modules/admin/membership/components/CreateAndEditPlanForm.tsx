@@ -25,6 +25,7 @@ import useModal from "@/hooks/useModal";
 import {useMemo} from "react";
 
 import {apiGetPlansFormData} from "../services";
+
 import {baseURL} from "@/constants";
 
 interface IProps {
@@ -41,7 +42,7 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
     queryKey: ["admin-get-one-plan", url],
   });
 
-  const getCoinsOpthions = useMemo(() => {
+  const getCoinsOptions = useMemo(() => {
     if (!coins) return [{value: "", label: "Select Coin", disabled: true}];
 
     const data = coins?.coins?.map((coin) => {
@@ -54,12 +55,12 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
     return [{value: "", label: "Select Coin", disabled: true}, ...(data || [])];
   }, [coins]);
 
-  const getBounsOpthions = useMemo(() => {
+  const getBonusOptions = useMemo(() => {
     const data: {value: string; label: string; disabled?: boolean}[] = [
       {value: "", label: "Select Fees Type", disabled: true},
     ];
 
-    for (let i in coins?.fees_types) {
+    for (const i in coins?.fees_types) {
       data.push({
         value: i,
         label: coins?.fees_types[i as keyof unknown],
@@ -72,7 +73,7 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
   return (
     <FormProvider {...form}>
       <ModalBody>
-        <div className='mb-1.25rem grid grid-cols-2 items-center gap-1.25rem'>
+        <div className='mb-1.25rem grid items-center gap-1.25rem md:grid-cols-2'>
           <div>
             <FileUploader name='image' title='Plan Image' locale />
           </div>
@@ -88,7 +89,7 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
             <ErrorMessage>{form.formState.errors.plan_name?.message}</ErrorMessage>
           </div>
         </div>
-        <div className='mb-1.25rem grid grid-cols-2 gap-1.25rem'>
+        <div className='mb-1.25rem grid gap-1.25rem md:grid-cols-2'>
           <div>
             <Label htmlFor='plan-form-duration'>Plan Duration</Label>
             <Input
@@ -117,19 +118,19 @@ const CreateAndEditPlanForm = ({form}: IProps) => {
           <Label htmlFor='plan-form-feesMethod'>Plan Fees Method</Label>
           <Select
             {...form.register("bonus_type")}
-            options={getBounsOpthions}
+            options={getBonusOptions}
             id='plan-form-feesMethod'
             isError={!!form.formState.errors.bonus_type}
           />
           <ErrorMessage>{form.formState.errors.bonus_type?.message}</ErrorMessage>
         </div>
 
-        <div className='mb-1.25rem grid grid-cols-2 gap-1.25rem'>
+        <div className='mb-1.25rem grid gap-1.25rem md:grid-cols-2'>
           <div>
             <Label htmlFor='plan-form-bonusCoinType'>Plan bonus coin type</Label>
             <Select
               {...form.register("bonus_coin_type")}
-              options={getCoinsOpthions}
+              options={getCoinsOptions}
               id='plan-form-feesMethod'
               isError={!!form.formState.errors.bonus_coin_type}
             />

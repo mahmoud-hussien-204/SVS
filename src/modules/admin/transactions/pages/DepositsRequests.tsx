@@ -18,7 +18,7 @@ export const Component = () => {
   return (
     <ModalProvider>
       <TransitionPage>
-        <div className='w-[450px] max-w-full'>
+        <div className='w-full max-w-full sm:w-[450px]'>
           <Search placeholder='Search in Deposit Requests' />
         </div>
         <div className='mt-2rem'>

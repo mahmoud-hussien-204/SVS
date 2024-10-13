@@ -18,7 +18,7 @@ const GeneralSettingsEmailForm = () => {
       name='general-settings-email-form'
       onSubmit={handleSubmit}
     >
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem'>
+      <div className='mb-1.25rem grid gap-1.25rem sm:grid-cols-3'>
         <div>
           <Label htmlFor='general-settings-email-mail_host'>Email Host</Label>
           <Input
@@ -54,7 +54,7 @@ const GeneralSettingsEmailForm = () => {
         </div>
       </div>
 
-      <div className='mb-1.25rem grid grid-cols-3 gap-1.25rem'>
+      <div className='mb-1.25rem grid gap-1.25rem sm:grid-cols-3'>
         <div>
           <Label htmlFor='general-settings-email-mail_password'>Email Password</Label>
           <Input
