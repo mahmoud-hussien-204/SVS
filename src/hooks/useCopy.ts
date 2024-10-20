@@ -19,6 +19,8 @@ const useCopy = () => {
     copiedCallback();
   }, [copiedCallback]);
 
+
+  
   return {
     elementRef,
     copied,
