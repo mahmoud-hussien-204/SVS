@@ -13,14 +13,9 @@ const useCopy = () => {
     }, 1000);
   }, []);
 
-  const copy = useCallback(() => {
+  const copy = useCallback(async () => {
     if (!elementRef.current) return;
-    const range = document.createRange();
-    range.selectNode(elementRef.current);
-    window.getSelection()?.removeAllRanges();
-    window.getSelection()?.addRange(range);
-    document.execCommand("copy");
-    window.getSelection()?.removeAllRanges();
+    await navigator.clipboard.writeText(elementRef.current.innerText);
     copiedCallback();
   }, [copiedCallback]);
 

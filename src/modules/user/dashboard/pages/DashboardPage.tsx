@@ -77,7 +77,7 @@ export const Component = () => {
         />
       </div>
 
-      <div className='grid gap-6 lg:grid-cols-3'>
+      <div className='grid gap-6 xl:grid-cols-3'>
         <DepositAndWithdrawal
           withdrawals={Object.values(dashboardData?.monthly_withdrawal)}
           deposits={Object.values(dashboardData?.monthly_deposit)}

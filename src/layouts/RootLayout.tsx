@@ -1,6 +1,6 @@
 import ProtectedRouter from "@/components/ProtectedRouter";
 
-import { Outlet } from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 import Header from "@/components/Header";
 
@@ -25,6 +25,7 @@ export const Component = () => {
             <Header />
             <Sidebar />
             <Content >
+              <Link to="/admin">asdnub</Link>
               <Outlet />
             </Content>
           </TransitionPage>
